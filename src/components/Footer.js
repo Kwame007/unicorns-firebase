@@ -5,7 +5,7 @@ const Footer = () => {
 
   const date = new Date();
   return (
-    <div className="w-full h-fit py-20 bg-indigo-700 text-white flex flex-col justify-center relative">
+    <div className="w-full h-fit py-20 text-center bg-indigo-700 text-white flex flex-col justify-center relative">
       {/* <p className="font-black">Unicorns</p>{" "} */}
       <div className="mb-5">
         <h1 className="text-3xl font-black">Unicorns 🏫 </h1>

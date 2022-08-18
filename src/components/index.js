@@ -4,6 +4,8 @@ import RecentReviews from "./RecentReviews";
 import ReviewGuide from "./ReviewGuide";
 import Layout from "./Layout";
 import Footer from "./Footer";
+import LogIn from "./LogIn";
+import SignUp from "./SignUp";
 import Input from "./Input";
 import Hero from "./Hero";
 import Card from "./Card";
@@ -18,4 +20,6 @@ export {
   TrendingUniversities,
   RecentReviews,
   ReviewGuide,
+  LogIn,
+  SignUp,
 };

@@ -18,7 +18,7 @@ const Hero = () => {
               <SearchIcon className="h-5 w-5 absolute top-4 ml-2 md:h-6 md:w-6" />
               <Input
                 type="text"
-                className="pl-10 pr-5 w-full h-12 rounded-2xl md:h-14 placeholder:text-sm focus:outline-none"
+                className="pl-10 pr-5 w-full h-12 rounded-2xl md:h-14 placeholder:text-sm focus:border-3 focus:border-indigo-500 focus:outline-none"
                 placeholder="Seach for your uni 🏫 or course 📚..."
               />
             </label>
