@@ -13,8 +13,8 @@ import {
 } from "../pages";
 
 const Routing = () => {
-  const test = useSelector((state) => state.Auth.isLoggedIn);
-  console.log(test);
+  const isLoggedIn = useSelector((state) => state.Auth.isLoggedIn);
+  console.log(isLoggedIn);
   return (
     <Layout>
       <Routes>
@@ -22,7 +22,9 @@ const Routing = () => {
           <Route index element={<Home />} />
           <Route path="/reviews">
             <Route index element={<Reviews />} />
-            {test && <Route path="write-review" element={<WriteReview />} />}
+            {isLoggedIn && (
+              <Route path="write-review" element={<WriteReview />} />
+            )}
             <Route path="write-course-review" element={<WriteCourseReview />} />
             <Route path="write-uni-review" element={<WriteUniReview />} />
           </Route>

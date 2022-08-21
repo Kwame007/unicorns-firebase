@@ -1,9 +1,15 @@
 import { UserCircleIcon } from "@heroicons/react/solid";
+import { useSelector, useDispatch } from "react-redux";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import UserProfile from "./UserProfile";
 
 const Navigation = () => {
+  const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const isLoggedIn = useSelector((state) => state.Auth.isLoggedIn);
+  console.log(isLoggedIn);
   return (
     <header className="relative h-24 w-full py-4 px-4 flex flex-row justify-between items-center">
       <div className="flex flex-col items-start">
@@ -27,13 +33,24 @@ const Navigation = () => {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
-          <li className="bg-indigo-500 text-white text-sm h-10 px-3 flex items-center rounded-lg font-bold uppercase transition-all duration-500 hover:bg-indigo-700">
-            <Link to="/auth">
-              Login <UserCircleIcon className="w-8 inline-block" />
-            </Link>
-          </li>
+          {!isLoggedIn ? (
+            <li className="bg-indigo-500 text-white text-sm h-10 px-3  flex items-center rounded-lg font-bold uppercase transition-all duration-500 hover:bg-indigo-700">
+              <Link to="/auth">
+                Login
+                <UserCircleIcon className="w-8 ml-2 inline-block" />
+              </Link>
+            </li>
+          ) : (
+            <div>
+              <UserCircleIcon
+                className="w-10 inline-block text-indigo-500 "
+                onClick={() => setShow((prev) => !prev)}
+              />
+            </div>
+          )}
         </ul>
       </nav>
+      <UserProfile show={show} />
       <nav className="px-8 sm:hidden text-lg font-mono absolute right-0 inset-y-0 ">
         {/* <button
           className="flex text-5xl font-black h-24 items-center"

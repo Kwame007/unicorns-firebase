@@ -17,12 +17,10 @@ module.exports = {
       boxShadow: {
         light: "0px 1px 6px rgba(0, 0, 0, 0.1)",
       },
-      borderWidth: {
-        3: "3px",
+
+      color: {
+        black: "#111723",
       },
-    color: {
-        'black': "#111723",
-      },  
     },
   },
   plugins: [],

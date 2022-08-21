@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 // show review author
 const ReviewBy = ({ reviewBy }) => {
   const [username] = reviewBy;
-  console.log(username);
+  // console.log(username);
   return (
     <>
       {!username && <small className="font-bold">@Anon</small>}
