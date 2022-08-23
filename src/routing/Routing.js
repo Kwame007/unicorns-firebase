@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Layout } from "../components";
 import {
   Home,
@@ -9,12 +9,13 @@ import {
   WriteReview,
   WriteUniReview,
   WriteCourseReview,
-  Authentication,
+  UserReviews,
 } from "../pages";
 
 const Routing = () => {
   const isLoggedIn = useSelector((state) => state.Auth.isLoggedIn);
   console.log(isLoggedIn);
+
   return (
     <Layout>
       <Routes>
@@ -23,12 +24,21 @@ const Routing = () => {
           <Route path="/reviews">
             <Route index element={<Reviews />} />
             {isLoggedIn && (
-              <Route path="write-review" element={<WriteReview />} />
+              <>
+                <Route path="write-review" element={<WriteReview />} />
+                <Route
+                  path="write-course-review"
+                  element={<WriteCourseReview />}
+                />
+                <Route path="write-uni-review" element={<WriteUniReview />} />
+              </>
             )}
-            <Route path="write-course-review" element={<WriteCourseReview />} />
-            <Route path="write-uni-review" element={<WriteUniReview />} />
           </Route>
-          <Route path="auth" element={<Authentication />} />
+          {isLoggedIn && (
+            <Route path="/dashboard">
+              <Route path="my-reviews" element={<UserReviews />} />
+            </Route>
+          )}
           <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>

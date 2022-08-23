@@ -5,11 +5,11 @@ import ReviewGuide from "./ReviewGuide";
 import UserProfile from "./UserProfile";
 import Layout from "./Layout";
 import Footer from "./Footer";
-import SignUp from "./SignUp";
-import LogIn from "./LogIn";
+import SignIn from "./SignIn";
 import Input from "./Input";
 import Hero from "./Hero";
 import Card from "./Card";
+import Modal from "./Modal";
 
 export {
   Navigation,
@@ -21,7 +21,7 @@ export {
   TrendingUniversities,
   RecentReviews,
   ReviewGuide,
-  LogIn,
-  SignUp,
   UserProfile,
+  SignIn,
+  Modal,
 };

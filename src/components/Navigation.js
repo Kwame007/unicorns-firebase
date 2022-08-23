@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
+import { showModal } from "../features";
 
 const Navigation = () => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.Auth.isLoggedIn);
+  const dispatch = useDispatch();
   console.log(isLoggedIn);
   return (
     <header className="relative h-24 w-full py-4 px-4 flex flex-row justify-between items-center">
@@ -35,10 +37,13 @@ const Navigation = () => {
           </li>
           {!isLoggedIn ? (
             <li className="bg-indigo-500 text-white text-sm h-10 px-3  flex items-center rounded-lg font-bold uppercase transition-all duration-500 hover:bg-indigo-700">
-              <Link to="/auth">
-                Login
+              <p
+                onClick={() => dispatch(showModal())}
+                className="hover:cursor-pointer"
+              >
+                Sign In
                 <UserCircleIcon className="w-8 ml-2 inline-block" />
-              </Link>
+              </p>
             </li>
           ) : (
             <div>
