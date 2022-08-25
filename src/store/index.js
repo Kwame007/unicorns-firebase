@@ -1,3 +1,4 @@
-import store from "./store";
+import ContextProvider from "./store";
+import { context } from "./store";
 
-export default store;
+export { ContextProvider, context };

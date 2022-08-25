@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Layout } from "../components";
+import { context } from "../store/store";
+import { Layout, SignIn } from "../components";
 import {
   Home,
   Contact,
@@ -13,7 +13,7 @@ import {
 } from "../pages";
 
 const Routing = () => {
-  const isLoggedIn = useSelector((state) => state.Auth.isLoggedIn);
+  const { isLoggedIn } = useContext(context);
   console.log(isLoggedIn);
 
   return (
@@ -21,6 +21,8 @@ const Routing = () => {
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
+          <Route path="sign-in" element={<SignIn />} />
+
           <Route path="/reviews">
             <Route index element={<Reviews />} />
             {isLoggedIn && (
@@ -34,11 +36,11 @@ const Routing = () => {
               </>
             )}
           </Route>
-          {isLoggedIn && (
-            <Route path="/dashboard">
+          <Route path="/dashboard">
+            {isLoggedIn && (
               <Route path="my-reviews" element={<UserReviews />} />
-            </Route>
-          )}
+            )}
+          </Route>
           <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
