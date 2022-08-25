@@ -26,7 +26,7 @@ const FeedBack = ({ isShowing = true, setEmailSentStatus }) => {
     <Modal isShowing={isShowing}>
       <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-4/12 m-auto  shadow-md z-50 rounded-lg ">
         <div className="text-center">
-          <h1 className="text-2xl mb-5 font-medium">
+          <h1 className="text-3xl font-semibold mb-3 leading-7">
             Email link successfully sent 📧
           </h1>
           <p className="text-sm text-slate-500">
@@ -36,7 +36,7 @@ const FeedBack = ({ isShowing = true, setEmailSentStatus }) => {
           </p>
 
           <button
-            className="bg-black text-white w-48 h-12 mt-5 mb-3 rounded-lg font-semibold"
+            className="bg-red-500  transition-all duration-500 text-md text-white w-32 h-12 mt-5 mb-3 rounded-lg font-semibold hover:bg-red-600"
             onClick={() => setEmailSentStatus(false)}
           >
             Close
@@ -56,6 +56,7 @@ const SignIn = ({ isShowing, showModal }) => {
   const [email, setEmail] = useState("");
   const [emailSentStatus, setEmailSentStatus] = useState(false);
   const [isSigning, setIsSigning] = useState(false);
+  const [emailIsValid, setEmailIsValid] = useState(false);
 
   // handle email change
   const handleEmailChange = (event) => {
@@ -164,6 +165,14 @@ const SignIn = ({ isShowing, showModal }) => {
     createNewUser();
   }, [db, navigate, signIn]);
 
+  useEffect(() => {
+    if (email.includes("@") && email.includes(".")) {
+      setEmailIsValid(true);
+    } else {
+      setEmailIsValid(false);
+    }
+  }, [email]);
+
   return (
     <>
       <Modal isShowing={isShowing}>
@@ -175,7 +184,9 @@ const SignIn = ({ isShowing, showModal }) => {
           <form onSubmit={sendUserSignInLink}>
             <div className="w-full mx-auto">
               <div className="mb-5">
-                <h1 className="text-2xl">Sign In for full access!</h1>
+                <h1 className="text-3xl font-semibold mb-3 leading-5">
+                  Sign In for full access!
+                </h1>
                 <p className="text-sm text-slate-500">
                   Enter your email and we'll send you a sign in link for
                   authentication. No password required!
@@ -185,7 +196,7 @@ const SignIn = ({ isShowing, showModal }) => {
                 <label htmlFor="email">
                   <Input
                     className="border-2 w-full h-12 px-2 rounded-lg focus:border-3 focus:border-indigo-500 focus:outline-none"
-                    placeholder="Email"
+                    placeholder="Enter your email"
                     type="email"
                     value={email}
                     onChange={handleEmailChange}
@@ -194,9 +205,9 @@ const SignIn = ({ isShowing, showModal }) => {
               </div>
 
               <button
-                className="bg-black text-white w-48 h-12 mt-5 mb-3 rounded-lg font-semibold disabled:bg-slate-600 disabled:cursor-not-allowed"
+                className="bg-indigo-500  transition-all duration-500 text-white w-32 h-12 mt-5 mb-3 rounded-lg font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-indigo-700"
                 type="submit"
-                // disabled={!isSigning}
+                disabled={!emailIsValid}
               >
                 Send email
               </button>
