@@ -4,8 +4,10 @@ import Reviews from "./reviews/Reviews";
 import WriteCourseReview from "./reviews/WriteCourseReview";
 import WriteReview from "./reviews/WriteReview";
 import WriteUniReview from "./reviews/WriteUniReview";
-import UserReviews from "./dashboard/UserReviews";
-
+import UserReviews from "./UserReviews";
+import Account from "./Account";
+import Dashboard from "./Dashboard";
+import Review from "./reviews/Review";
 
 export {
   Home,
@@ -15,4 +17,7 @@ export {
   WriteReview,
   WriteUniReview,
   UserReviews,
+  Account,
+  Dashboard,
+  Review,
 };

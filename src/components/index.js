@@ -10,6 +10,8 @@ import Input from "./Input";
 import Hero from "./Hero";
 import Card from "./Card";
 import Modal from "./Modal";
+import SideBar from "./SideBar";
+import Header from "./Header";
 
 export {
   Navigation,
@@ -24,4 +26,6 @@ export {
   UserProfile,
   SignIn,
   Modal,
+  SideBar,
+  Header
 };

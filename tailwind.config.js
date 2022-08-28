@@ -6,6 +6,8 @@ module.exports = {
       backgroundImage: {
         "hero-pattern":
           "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/assets/images/uni-bg.jpg')",
+        "campus-pattern":
+          "linear-gradient(to bottom,rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)), url('/src/assets/images/campus.jpg')",
         "footer-pattern":
           "linear-gradient(to left bottom, #4337c9, #3d4cd6, #395ee2, #3770ed, #3b81f6);",
         gradient:

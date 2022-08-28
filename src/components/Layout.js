@@ -4,16 +4,11 @@ import Footer from "./Footer";
 import Navigation from "./Navigation";
 
 const Layout = ({ children }) => {
- 
   return (
     <div>
       <Navigation />
-      <Outlet />
-      {/* {createPortal(
-        <SignIn isShowing={isShowing} toggleModal={toggleModal} />,
-        document.getElementById("root-modal")
-      )} */}
       {children}
+      <Outlet />
       <Footer />
     </div>
   );

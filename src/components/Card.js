@@ -1,11 +1,7 @@
 import React from "react";
 
-const Card = ({ children }) => {
-  return (
-    <article className="bg-white shadow-light w-4/5 mx-auto rounded-2xl hover:cursor-pointer">
-      {children}
-    </article>
-  );
+const Card = ({ children, className }) => {
+  return <article className={className}>{children}</article>;
 };
 
 export default Card;

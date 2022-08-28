@@ -17,14 +17,14 @@ import {
   isSignInWithEmailLink,
   signInWithEmailLink,
   getAdditionalUserInfo,
-  sendSignInLinkToEmail,
 } from "firebase/auth";
+import { useSendEmailLink, useSignInUser } from "../hooks";
 
 // feedback component
 const FeedBack = ({ isShowing = true, setEmailSentStatus }) => {
   return (
     <Modal isShowing={isShowing}>
-      <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-4/12 m-auto  shadow-md z-50 rounded-lg ">
+      <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-5/12 m-auto  shadow-md z-50 rounded-lg ">
         <div className="text-center">
           <h1 className="text-3xl font-semibold mb-3 leading-7">
             Email link successfully sent 📧
@@ -54,8 +54,7 @@ const SignIn = ({ isShowing, showModal }) => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
-  const [emailSentStatus, setEmailSentStatus] = useState(false);
-  const [isSigning, setIsSigning] = useState(false);
+  const [signingIn, setSigningIn] = useState(false);
   const [emailIsValid, setEmailIsValid] = useState(false);
 
   // handle email change
@@ -63,102 +62,80 @@ const SignIn = ({ isShowing, showModal }) => {
     setEmail(event.target.value);
   };
 
-  // send sign in link to email address
-  const sendUserSignInLink = (event) => {
-    console.log("clicked");
-    // prevent default
-    event.preventDefault();
-
-    // Confirm the link is a sign-in with email link.
-    const auth = getAuth();
-
-    sendSignInLinkToEmail(auth, email, {
-      url: "http://localhost:3000/sign-in",
-      handleCodeInApp: true,
-    })
-      .then(() => {
-        // Save the email locally so you don't need to ask the user for it again
-        // if they open the link on the same device.
-        window.localStorage.setItem("emailForSignIn", email);
-
-        // The link was successfully sent. Inform the user.
-        // show feedback message
-        setEmailSentStatus(true);
-
-        showModal();
-
-        // clear input value
-        setEmail("");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ...
-      });
-  };
-
-  //
+  // send email link hook
+  const { error, sendUserSignInLink, emailSentStatus, setEmailSentStatus } =
+    useSendEmailLink(email, { showModal, setEmail });
 
   useEffect(() => {
     const createNewUser = async () => {
-      // Confirm the link is a sign-in with email link.
-      const auth = getAuth();
-      if (isSignInWithEmailLink(auth, window.location.href)) {
-        // Get the email if available. This should be available if the user completes
-        // the flow on the same device where they started it.
-        let email = window.localStorage.getItem("emailForSignIn");
+      try {
+        // Confirm the link is a sign-in with email link.
+        const auth = getAuth();
+        if (isSignInWithEmailLink(auth, window.location.href)) {
+          // Get the email if available. This should be available if the user completes
+          // the flow on the same device where they started it.
+          let email = window.localStorage.getItem("emailForSignIn");
 
-        if (!email) {
-          // User opened the link on a different device. To prevent session fixation
-          // attacks, ask the user to provide the associated email again. For example:
-          email = window.prompt("Please provide your email for confirmation");
-        }
+          console.log(email);
 
-        const result = await signInWithEmailLink(
-          auth,
-          email,
-          window.location.href
-        );
+          if (!email) {
+            // User opened the link on a different device. To prevent session fixation
+            // attacks, ask the user to provide the associated email again. For example:
+            email = window.prompt("Please provide your email for confirmation");
 
-        const userInfo = getAdditionalUserInfo(result);
+            return (isShowing = true);
+          }
 
-        window.localStorage.removeItem("emailForSignIn");
-
-        const { accessToken, expirationTime } = result.user.stsTokenManager;
-
-        const expirationDate = new Date(expirationTime);
-
-        signIn(accessToken, expirationDate);
-
-        const docRef = doc(db, "users", email);
-        const docSnap = await getDoc(docRef);
-
-        setIsSigning(true);
-
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-        } else {
-          await setDoc(docRef, {
+          const result = await signInWithEmailLink(
+            auth,
             email,
-            createdAt: serverTimestamp(),
-          });
+            window.location.href
+          );
 
-          console.log("No such document!");
-          console.log("new user");
+          // signed in user additional data
+          const userInfo = getAdditionalUserInfo(result);
 
+          // destructure accessToken & expiration date from results
+          const { accessToken, expirationTime } = result.user.stsTokenManager;
+
+          // get expiration date from expiration time ( from firebase)
+          const expirationDate = new Date(expirationTime);
+
+          // document reference
+          const docRef = doc(db, "users", email);
+          const docSnap = await getDoc(docRef);
+
+          setSigningIn(true);
+
+          // store signed in user in local storage
           localStorage.setItem("id", email);
+
+          // check signed user exists or not
+          if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+          } else {
+            await setDoc(docRef, {
+              email,
+              createdAt: serverTimestamp(),
+            });
+
+            console.log("No such document!");
+            console.log("new user");
+          }
+
+          setSigningIn(false);
+
+          // remove email from local storage
+          window.localStorage.removeItem("emailForSignIn");
+
+          // redirect to homepage
+          navigate("/", { replace: true });
+
+          // sign in user
+          signIn(accessToken, expirationDate);
         }
-
-        console.log(result);
-        console.log(userInfo);
-        console.log(accessToken);
-        console.log(expirationTime);
-        console.log(result.user.uid);
-        console.log(expirationDate);
-        console.log(docSnap.data());
-        setIsSigning(false);
-
-        navigate("/", { replace: true });
+      } catch (error) {
+        console.log(error);
       }
     };
 
@@ -176,7 +153,7 @@ const SignIn = ({ isShowing, showModal }) => {
   return (
     <>
       <Modal isShowing={isShowing}>
-        <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-4/12 m-auto  shadow-md z-50 rounded-lg ">
+        <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-5/12 m-auto  shadow-md z-50 rounded-lg ">
           <XIcon
             className="w-6 absolute top-2 right-2 cursor-pointer"
             onClick={showModal}
@@ -221,7 +198,7 @@ const SignIn = ({ isShowing, showModal }) => {
           setEmailSentStatus={setEmailSentStatus}
         />
       )}
-      {isSigning && <p>Signing in</p>}
+      {signingIn && <p>Signing in</p>}
     </>
   );
 };

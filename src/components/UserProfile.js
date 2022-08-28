@@ -21,10 +21,10 @@ const UserProfile = ({ show }) => {
           </h3>
           <h4 className="font-bold my-3 uppercase">Logout</h4>
           <Link
-            to="reviews/write-review"
+            to="dashboard/my-reviews"
             className="bg-indigo-500 w-full text-white text-sm h-10 px-3 flex justify-center items-center rounded-lg font-bold uppercase transition-all duration-500 hover:bg-indigo-700"
           >
-            Write review
+            Dashboard
           </Link>
         </div>
       </aside>

@@ -10,6 +10,9 @@ import {
   WriteUniReview,
   WriteCourseReview,
   UserReviews,
+  Account,
+  Dashboard,
+  Review,
 } from "../pages";
 
 const Routing = () => {
@@ -23,8 +26,7 @@ const Routing = () => {
           <Route index element={<Home />} />
           <Route path="sign-in" element={<SignIn />} />
 
-          <Route path="/reviews">
-            <Route index element={<Reviews />} />
+          <Route path="reviews" element={<Reviews />}>
             {isLoggedIn && (
               <>
                 <Route path="write-review" element={<WriteReview />} />
@@ -36,11 +38,13 @@ const Routing = () => {
               </>
             )}
           </Route>
-          <Route path="/dashboard">
-            {isLoggedIn && (
+          <Route path="reviews/:reviewId" element={<Review />} />
+          {isLoggedIn && (
+            <Route path="dashboard" element={<Dashboard />}>
               <Route path="my-reviews" element={<UserReviews />} />
-            )}
-          </Route>
+              <Route path="account" element={<Account />} />
+            </Route>
+          )}
           <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>

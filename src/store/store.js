@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 let signOutTimer;
 
@@ -44,6 +45,8 @@ const retrieveStoredToken = () => {
 
 const ContextProvider = ({ children }) => {
   const tokenData = retrieveStoredToken();
+  const navigate = useNavigate();
+
   let initialToken;
 
   if (tokenData) {
@@ -70,6 +73,9 @@ const ContextProvider = ({ children }) => {
     if (signOutTimer) {
       clearTimeout(signOutTimer);
     }
+
+    // redirect to home page
+    navigate("/", { replace: true });
   }, []);
 
   const signInHandler = (token, expirationTime) => {
@@ -84,9 +90,6 @@ const ContextProvider = ({ children }) => {
 
     signOutTimer = setTimeout(signOutHandler, remainingTime);
   };
-
-  console.log(tokenData);
-  console.log(initialToken);
 
   // show modal
   const toggleModal = () => {

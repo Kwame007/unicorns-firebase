@@ -72,7 +72,7 @@ const TrendingUniversities = () => {
         Universities 🔥
       </h2>
       <aside className=" grid grid-cols-1 gap-5 md:grid-cols-3 ">
-        <Card>
+        <Card className="bg-white shadow-light w-4/5 mx-auto rounded-2xl hover:cursor-pointer">
           <div className="p-5">
             <img src={img} alt="" className="w-full h-52 rounded-2xl" />
             <div>
@@ -92,7 +92,7 @@ const TrendingUniversities = () => {
             </div>
           </div>
         </Card>
-        <Card>
+        <Card className="bg-white shadow-light w-4/5 mx-auto rounded-2xl hover:cursor-pointer">
           <div className="p-5">
             <img src={img3} alt="" className="w-full h-52 rounded-2xl" />
             <div>
@@ -112,7 +112,7 @@ const TrendingUniversities = () => {
             </div>
           </div>
         </Card>
-        <Card>
+        <Card className="bg-white shadow-light w-4/5 mx-auto rounded-2xl hover:cursor-pointer">
           <div className="p-5">
             <img src={img2} alt="" className="w-full h-52 rounded-2xl" />
             <div>
