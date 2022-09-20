@@ -1,49 +1,180 @@
-import { StarIcon } from "@heroicons/react/solid";
-import React from "react";
-import { Card, Header } from "../../components";
-import img from "../../assets/images/asu.jpg";
+import React, { useEffect, useState, useContext } from "react";
+import { createPortal } from "react-dom";
+import { AddUniversity, Card, Header, Input, Stats } from "../../components";
+import img from "../../assets/images/campus.jpg";
+import {
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  limit,
+} from "firebase/firestore";
+import { db } from "../../firebase";
+import { SearchIcon } from "@heroicons/react/outline";
+import { context } from "../../store";
+import { Link } from "react-router-dom";
 
 const Reviews = () => {
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // global state
+  const { isShowing, toggleModal, universities, setUniversities } =
+    useContext(context);
+
+  // handle change
+  const handleChange = (event) => setSearchQuery(event.target.value);
+
+  useEffect(() => {
+    setLoading(true);
+    // fetch all universities
+    const fetchAllUni = async () => {
+      try {
+        const q = query(
+          collection(db, "universities"),
+          orderBy("rating", "desc"),
+          limit("5")
+        );
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          let responds = [];
+          querySnapshot.forEach((doc) => {
+            responds.push(doc.data());
+          });
+
+          setUniversities(responds);
+          setSearchResults(responds);
+          setLoading(false);
+        });
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+        console.log(error);
+      }
+    };
+
+    // run fetch
+    fetchAllUni();
+  }, [setUniversities]);
+
+  useEffect(() => {
+    const searchUniversity = (uniQuery) => {
+      if (uniQuery) {
+        const test = universities?.filter((uni) => {
+          const name = uni?.name.toLowerCase();
+          const slug = uni?.nickname.toLowerCase();
+
+          return (
+            name.includes(uniQuery.toLowerCase()) ||
+            slug.includes(uniQuery.toLowerCase())
+          );
+        });
+
+        console.log(test);
+        setSearchResults(test);
+      }
+      if (!uniQuery) {
+        console.log("search query is empty");
+        setSearchResults(universities);
+      }
+    };
+
+    // run search
+    searchUniversity(searchQuery);
+  }, [searchQuery, universities, setUniversities]);
+
   return (
     <>
-      <Header title="All universities & courses" image={img} />
+      <Header title="All university reviews" image={img} />
       <div className="max-w-5xl mx-auto p-5 text-gray-800 my-10">
-        <div className="flex justify-between mb-28 ">
+        <div className="flex justify-between mb-20 ">
           <h2 className="text-2xl font-semibold">
-            Browse 300 universities & courses reviews
+            Browse universities in Ghana
           </h2>
           <div>
             <label htmlFor="sort">Sort by</label>
             <select
               name="sort"
               id="sort"
-              className="border-2 border-slate-400 h-10 rounded-lg ml-3 focus:outline-none focus:border-indigo-500"
+              className="border-2 border-slate-300 h-10 rounded-lg ml-3 focus:outline-none focus:border-indigo-500"
             >
               <option value="Name">All</option>
-              <option value="Name">Universities</option>
-              <option value="Name">Courses</option>
+              <option value="Name">Names</option>
               <option value="Name">Number of reviews</option>
               <option value="Name">Highest rating</option>
             </select>
           </div>
         </div>
-        {[1, 2, 3, 4, 5].map((data) => (
-          <Card className="bg-white shadow-light mb-10  rounded-2xl h-fit hover:cursor-pointer">
-            <div className="flex items-center gap-5 text-slate-600">
-              <div className="w-3/12">
-                <img src={img} alt="" className="w-full h-full rounded-lg" />
-              </div>
-              <div className="w-full grid grid-rows-2 items-center gap-5">
-                <h3 className="text-lg font-medium">University of Ghana</h3>
-                <div>
-                  <StarIcon className="w-6" />
-                  <p className="text-sm">5 reviews</p>
+
+        <div className="w-1/2 text-center mx-auto mb-20">
+          <label htmlFor="" className="w-full relative">
+            <SearchIcon className="h-5 w-5 absolute text-slate-500 top-4 ml-2 md:h-6 md:w-6" />
+            <Input
+              type="text"
+              className="border-2 border-slate-300 pl-10 pr-5 w-full h-12 rounded-2xl md:h-14 placeholder:text-sm focus:border-3 focus:border-indigo-500 focus:outline-none"
+              placeholder="Search for your university 🏫"
+              onChange={handleChange}
+            />
+          </label>
+          <p className="mt-3 text-base font-medium text-slate-500">
+            Can't find your university or college?{" "}
+            <span
+              className="text-indigo-500 cursor-pointer"
+              onClick={toggleModal}
+            >
+              Add it here
+            </span>{" "}
+          </p>
+        </div>
+
+        {searchResults?.map((data) => (
+          <Link to={`${data.nickname}`}>
+            <Card className="bg-white shadow-md rounded-xl mb-10  h-fit hover:cursor-pointer">
+              <div className="flex items-center gap-5 text-slate-600">
+                <div className="w-60 h-36">
+                  <img
+                    src={data?.imageUrl}
+                    alt=""
+                    className="w-full h-full rounded-lg"
+                  />
+                </div>
+                <div className="w-full grid grid-rows-2 items-center gap-11">
+                  <h3 className="text-lg font-medium">{data.name}</h3>
+                  <Stats
+                    rating={data.rating}
+                    totalReviews={data.totalReviews}
+                  />
                 </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </Link>
         ))}
+
+        {loading && searchResults.length === 0 && (
+          <div className="h-60 w-60 text-center mx-auto">
+            <div class="progress"></div>
+
+            <p className="font-bold text-lg text-indigo-500">
+              Loading universities
+            </p>
+          </div>
+        )}
+
+        {searchResults.length === 0 && !loading && (
+          <di>
+            <h2 className="text-2xl text-slate-600 font-medium h-96  flex items-center justify-center">
+              No University reviews yet
+            </h2>
+          </di>
+        )}
       </div>
+
+      {/* portal */}
+      {createPortal(
+        <AddUniversity isShowing={isShowing} toggleModal={toggleModal} />,
+        document.getElementById("uni-modal")
+      )}
     </>
   );
 };

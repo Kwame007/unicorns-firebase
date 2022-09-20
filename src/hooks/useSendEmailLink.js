@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 
 const useSendEmailLink = (email, callbackFn) => {
@@ -25,11 +25,15 @@ const useSendEmailLink = (email, callbackFn) => {
       // show feedback message (modal)
       setEmailSentStatus(true);
 
-      // hide sign in form modal
-      callbackFn.showModal();
+      if (emailSentStatus) {
+        // hide sign in form modal
+        callbackFn.showModal();
+      }
 
       // clear input value
       callbackFn.setEmail("");
+
+      console.log(emailSentStatus);
     } catch (error) {
       const errorMessage = error.message;
       setError(errorMessage);

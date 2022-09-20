@@ -19,7 +19,7 @@ const Hero = () => {
               <Input
                 type="text"
                 className="pl-10 pr-5 w-full h-12 rounded-2xl md:h-14 placeholder:text-sm focus:border-3 focus:border-indigo-500 focus:outline-none"
-                placeholder="Seach for your uni 🏫 or course 📚..."
+                placeholder="Search for your uni 🏫 or course 📚..."
               />
             </label>
           </div>

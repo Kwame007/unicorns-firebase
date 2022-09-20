@@ -1,6 +1,4 @@
 import React, { useState, useContext } from "react";
-import { UserCircleIcon } from "@heroicons/react/outline";
-import { MdSpaceDashboard } from "react-icons/md";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { context } from "../store";
@@ -35,9 +33,7 @@ const Navigation = () => {
             <li>
               <Link to="/reviews">Reviews</Link>
             </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
+
             {!isLoggedIn ? (
               <li className="bg-indigo-400 text-white text-sm h-10 px-3  flex items-center rounded-lg font-bold uppercase transition-all duration-500 hover:bg-indigo-500">
                 <p onClick={showModal} className="hover:cursor-pointer">

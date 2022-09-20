@@ -18,10 +18,10 @@ import {
   signInWithEmailLink,
   getAdditionalUserInfo,
 } from "firebase/auth";
-import { useSendEmailLink, useSignInUser } from "../hooks";
+import { useSendEmailLink } from "../hooks";
 
 // feedback component
-const FeedBack = ({ isShowing = true, setEmailSentStatus }) => {
+const FeedBack = ({ isShowing = true, setEmailSentStatus, showModal }) => {
   return (
     <Modal isShowing={isShowing}>
       <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-5/12 m-auto  shadow-md z-50 rounded-lg ">
@@ -37,7 +37,10 @@ const FeedBack = ({ isShowing = true, setEmailSentStatus }) => {
 
           <button
             className="bg-red-500  transition-all duration-500 text-md text-white w-32 h-12 mt-5 mb-3 rounded-lg font-semibold hover:bg-red-600"
-            onClick={() => setEmailSentStatus(false)}
+            onClick={() => {
+              showModal();
+              setEmailSentStatus(false);
+            }}
           >
             Close
           </button>
@@ -66,6 +69,10 @@ const SignIn = ({ isShowing, showModal }) => {
   const { error, sendUserSignInLink, emailSentStatus, setEmailSentStatus } =
     useSendEmailLink(email, { showModal, setEmail });
 
+  console.log(error);
+  console.log(emailSentStatus);
+  console.log(email);
+
   useEffect(() => {
     const createNewUser = async () => {
       try {
@@ -82,8 +89,6 @@ const SignIn = ({ isShowing, showModal }) => {
             // User opened the link on a different device. To prevent session fixation
             // attacks, ask the user to provide the associated email again. For example:
             email = window.prompt("Please provide your email for confirmation");
-
-            return (isShowing = true);
           }
 
           const result = await signInWithEmailLink(
@@ -152,46 +157,48 @@ const SignIn = ({ isShowing, showModal }) => {
 
   return (
     <>
-      <Modal isShowing={isShowing}>
-        <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-5/12 m-auto  shadow-md z-50 rounded-lg ">
-          <XIcon
-            className="w-6 absolute top-2 right-2 cursor-pointer"
-            onClick={showModal}
-          />
-          <form onSubmit={sendUserSignInLink}>
-            <div className="w-full mx-auto">
-              <div className="mb-5">
-                <h1 className="text-3xl font-semibold mb-3 leading-5">
-                  Sign In for full access!
-                </h1>
-                <p className="text-sm text-slate-500">
-                  Enter your email and we'll send you a sign in link for
-                  authentication. No password required!
-                </p>
-              </div>
-              <div className="mb-0">
-                <label htmlFor="email">
-                  <Input
-                    className="border-2 w-full h-12 px-2 rounded-lg focus:border-3 focus:border-indigo-500 focus:outline-none"
-                    placeholder="Enter your email"
-                    type="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                  />
-                </label>
-              </div>
+      {!emailSentStatus && isShowing && (
+        <Modal isShowing={isShowing}>
+          <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-5/12 m-auto  shadow-md z-50 rounded-lg ">
+            <XIcon
+              className="w-6 absolute top-2 right-2 cursor-pointer"
+              onClick={showModal}
+            />
+            <form onSubmit={sendUserSignInLink}>
+              <div className="w-full mx-auto">
+                <div className="mb-5">
+                  <h1 className="text-3xl font-semibold mb-3 leading-5">
+                    Sign In for full access!
+                  </h1>
+                  <p className="text-sm text-slate-500">
+                    Enter your email and we'll send you a sign in link for
+                    authentication. No password required!
+                  </p>
+                </div>
+                <div className="mb-0">
+                  <label htmlFor="email">
+                    <Input
+                      className="border-2 w-full h-12 px-2 rounded-lg focus:border-3 focus:border-indigo-500 focus:outline-none"
+                      placeholder="Enter your email"
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                    />
+                  </label>
+                </div>
 
-              <button
-                className="bg-indigo-500  transition-all duration-500 text-white w-32 h-12 mt-5 mb-3 rounded-lg font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-indigo-700"
-                type="submit"
-                disabled={!emailIsValid}
-              >
-                Send email
-              </button>
-            </div>
-          </form>
-        </div>
-      </Modal>
+                <button
+                  className="bg-indigo-500  transition-all duration-500 text-white w-32 h-12 mt-5 mb-3 rounded-lg font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-indigo-700"
+                  type="submit"
+                  disabled={!emailIsValid}
+                >
+                  Send email
+                </button>
+              </div>
+            </form>
+          </div>
+        </Modal>
+      )}
       {emailSentStatus && (
         <FeedBack
           showModal={showModal}

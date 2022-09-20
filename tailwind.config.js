@@ -23,7 +23,10 @@ module.exports = {
       color: {
         black: "#111723",
       },
+      height: {
+        100: "800px",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };

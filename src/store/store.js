@@ -56,6 +56,9 @@ const ContextProvider = ({ children }) => {
   const [token, setToken] = useState(initialToken);
   const [isShowing, setIsShowing] = useState(false);
 
+  // all rated universities
+  const [universities, setUniversities] = useState([]);
+
   const isLoggedIn = !!token;
 
   const signOutHandler = useCallback(() => {
@@ -76,7 +79,7 @@ const ContextProvider = ({ children }) => {
 
     // redirect to home page
     navigate("/", { replace: true });
-  }, []);
+  }, [navigate]);
 
   const signInHandler = (token, expirationTime) => {
     setToken(token);
@@ -103,10 +106,14 @@ const ContextProvider = ({ children }) => {
     }
   }, [tokenData, signOutHandler]);
 
+  console.log(universities);
+
   const contextValue = {
     isLoggedIn,
     token,
     isShowing,
+    universities,
+    setUniversities,
     toggleModal,
     signIn: signInHandler,
     signOut: signOutHandler,

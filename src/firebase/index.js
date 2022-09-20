@@ -1,2 +1,4 @@
 import { app } from "./config";
-export { app };
+import { db } from "./config";
+
+export { app, db };
