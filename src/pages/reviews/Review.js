@@ -48,9 +48,6 @@ const Review = () => {
   const { ID } = useParams();
   const navigate = useNavigate();
 
-  // clear current university
-  // localStorage.removeItem("currentUniversity");
-
   // toggle modal
   const showModal = () => {
     setIsShowing((prevState) => !prevState);
@@ -135,63 +132,6 @@ const Review = () => {
 
     fetchAllReviews();
   }, [ID]);
-
-  // fetch all course reviews
-  // useEffect(() => {
-  //   const fetchCourseReviews = async () => {
-  //     try {
-  //       let allReviews = [];
-
-  //       const courseQuery = query(
-  //         collection(db, "universities", ID, "programmes")
-  //       );
-
-  //       const unsubscribe = onSnapshot(courseQuery, (querySnapshot) => {
-  //         querySnapshot.forEach(async (doc) => {
-  //           // reviews collection reference {reviews inside programmes}
-  //           const docs = await getDocs(
-  //             collection(
-  //               db,
-  //               "universities",
-  //               ID,
-  //               "programmes",
-  //               doc.id,
-  //               "reviews"
-  //             )
-  //           );
-
-  //           docs.forEach((doc_1) => {
-  //             if (doc_1) {
-  //               allReviews.push(doc_1.data());
-  //               console.log(allReviews);
-  //             }
-  //           });
-  //         });
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   // fetchCourseReviews();
-  // }, [ID]);
-
-  // // fetch all uni reviews
-  // useEffect(() => {
-  //   const fetchAllUniReviews = async () => {
-  //     let allReviews = [];
-
-  //     const uniQuery = query(collection(db, "universities", ID, "reviews"));
-
-  //     const unsubscribe = onSnapshot(uniQuery, (querySnapshot) => {
-  //       querySnapshot.forEach((doc) => allReviews.push(doc.data()));
-  //     });
-
-  //     // setReviews(allReviews);
-  //   };
-
-  //   // fetchAllUniReviews();
-  // }, [ID]);
 
   useEffect(() => {
     const getAllReviews = async () => {
@@ -283,7 +223,6 @@ const Review = () => {
     getAllReviews().then(() => {
       // current university reference
       const uniRef = doc(db, "universities", ID);
-      console.log(uniRef);
 
       //update if uni rating value is available
       if (uniRating) {
@@ -372,7 +311,10 @@ const Review = () => {
                   </div>
                 ))}
                 {ratingBreakDown.length === 0 &&
-                  [0, 0, 0, 0].map((rating) => <RatingBreakDownPlaceHolder />)}
+                  // create an array with N number of elements
+                  Array.from(Array(4).keys()).map(() => (
+                    <RatingBreakDownPlaceHolder />
+                  ))}
               </div>
             </div>
             <div>
@@ -382,48 +324,8 @@ const Review = () => {
               </h3>
 
               <div className="mt-5">
-                {/* <div className="flex items-center mb-5 ">
-                  <h3 className="text-xl font-medium w-1/3">Freshman</h3>
-
-                  <div className=" w-1/2 ">
-                    <div class="bg-indigo-400 h-3 rounded w-full"></div>
-                  </div>
-                  <div class="ml-4 font-semibold">10</div>
-                </div>
-                <div className="flex items-center mb-5 ">
-                  <h3 className="text-xl font-medium w-1/3">Sophomore</h3>
-
-                  <div className=" w-1/2 ">
-                    <div class="bg-slate-300 h-3 rounded w-full"></div>
-                  </div>
-                  <div class="ml-4 font-semibold">13</div>
-                </div>
-                <div className="flex items-center mb-5 ">
-                  <h3 className="text-xl font-medium w-1/3">Junior</h3>
-
-                  <div className=" w-1/2 ">
-                    <div class="bg-slate-300 h-3 rounded w-full"></div>
-                  </div>
-                  <div class="ml-4 font-semibold">13</div>
-                </div>
-                <div className="flex items-center mb-5 ">
-                  <h3 className="text-xl font-medium w-1/3">Senior</h3>
-
-                  <div className=" w-1/2 ">
-                    <div class="bg-indigo-400 h-3 rounded w-full"></div>
-                  </div>
-                  <div class="ml-4 font-semibold">13</div>
-                </div>
-                <div className="flex items-center mb-5 ">
-                  <h3 className="text-xl font-medium w-1/3">Graduate</h3>
-
-                  <div className=" w-1/2 ">
-                    <div class="bg-indigo-400 h-3 rounded w-full"></div>
-                  </div>
-                  <div class="ml-4 font-semibold">13</div>
-                </div> */}
-
-                {[0, 0, 0, 0, 0].map((rating) => (
+                {/* // create an array with N number of elements */}
+                {Array.from(Array(5).keys()).map(() => (
                   <ClassYearsPlaceHolder />
                 ))}
               </div>
@@ -449,7 +351,7 @@ const Review = () => {
               </div>
             </div>
 
-            <div>
+            <div className="">
               {!loading && reviews?.map((data) => <ReviewCard review={data} />)}
 
               {reviews.length === 0 && loading && (
@@ -469,6 +371,13 @@ const Review = () => {
                   </h2>
                 </di>
               )}
+              {/* load more reviews  */}
+              <button
+                className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-200"
+                // onClick={loadMore}
+              >
+                Load More
+              </button>
             </div>
           </div>
         </div>

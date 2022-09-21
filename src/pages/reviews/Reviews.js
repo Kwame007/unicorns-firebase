@@ -35,7 +35,7 @@ const Reviews = () => {
         const q = query(
           collection(db, "universities"),
           orderBy("rating", "desc"),
-          limit("5")
+          limit(10)
         );
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
           let responds = [];

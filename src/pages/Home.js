@@ -34,24 +34,21 @@ const Home = () => {
 
   // update state func
   const updateState = (query) => {
-    // check if query is empty
-    const isCollectionEmpty = query.size === 0;
+    getDocs(query).then((doc) => {
+      const response = doc.docs.map((doc_1) => doc_1.data());
+      // check if query is empty
+      if (response.length === 0) {
+        setIsEmpty(true);
+      }
 
-    if (!isCollectionEmpty) {
-      getDocs(query).then((doc) => {
-        const response = doc.docs.map((doc_1) => doc_1.data());
+      setTrendingUniversities((prevState) => [...prevState, ...response]);
 
-        setTrendingUniversities((prevState) => [...prevState, ...response]);
+      // get last document
+      const lastVisible = doc.docs[doc.docs.length - 1];
 
-        // get last document
-        const lastVisible = doc.docs[doc.docs.length - 1];
-
-        // set last visible
-        setLastElement(lastVisible);
-      });
-    } else {
-      setIsEmpty(true);
-    }
+      // set last visible
+      setLastElement(lastVisible);
+    });
 
     setLoading(false);
   };
@@ -198,7 +195,7 @@ const Home = () => {
 
   return (
     <>
-      <Hero />
+      <Hero results={trendingUniversities} />
       <TrendingUniversities
         data={trendingUniversities}
         loadMore={loadMore}

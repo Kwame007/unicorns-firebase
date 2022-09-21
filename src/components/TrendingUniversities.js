@@ -77,7 +77,8 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
                     </>
                   ))}
                   {data.length === 0 &&
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map((uni) => (
+                    // create an array with N number of elements
+                    Array.from(Array(10).keys()).map(() => (
                       <TrendingUniversitiesPlaceHolder />
                     ))}
                 </tbody>
@@ -85,9 +86,9 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
             </div>
 
             {!isEmpty && (
-              <div className="w-1/4 mb-3">
+              <div className="w-1/4 mb-5">
                 <button
-                  className=" px-3 rounded-md text-white font-bold bg-indigo-400 h-9 transition-all duration-500 hover:bg-indigo-500"
+                  className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-200"
                   onClick={loadMore}
                 >
                   Load More
