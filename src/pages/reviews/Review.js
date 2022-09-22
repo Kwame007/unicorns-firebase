@@ -21,6 +21,8 @@ import {
   onSnapshot,
   doc,
   getDocs,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { context } from "../../store";
@@ -93,7 +95,14 @@ const Review = () => {
       try {
         let allReviews = [];
 
-        const uniQuery = query(collection(db, "universities", ID, "reviews"));
+        // reference to university reviews collection
+        const uniQuery = query(
+          collection(db, "universities", ID, "reviews")
+          // orderBy("createdAt", "asc"),
+          // limit(1)
+        );
+
+        // reference to courses collection
         const courseQuery = query(
           collection(db, "universities", ID, "programmes")
         );
@@ -106,13 +115,15 @@ const Review = () => {
           querySnapshot.forEach(async (doc) => {
             // reviews collection reference {reviews inside programmes}
             const docs = await getDocs(
-              collection(
-                db,
-                "universities",
-                ID,
-                "programmes",
-                doc.id,
-                "reviews"
+              query(
+                collection(
+                  db,
+                  "universities",
+                  ID,
+                  "programmes",
+                  doc.id,
+                  "reviews"
+                )
               )
             );
 
@@ -372,12 +383,14 @@ const Review = () => {
                 </di>
               )}
               {/* load more reviews  */}
-              <button
-                className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-200"
-                // onClick={loadMore}
-              >
-                Load More
-              </button>
+              {reviews.length !== 0 && (
+                <button
+                  className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-200"
+                  // onClick={loadMore}
+                >
+                  Load More
+                </button>
+              )}
             </div>
           </div>
         </div>

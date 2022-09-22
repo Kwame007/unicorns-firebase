@@ -2,7 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import ReactStars from "react-rating-stars-component";
+import moment from "moment/moment";
+
 const RecentReviewsCard = ({ review }) => {
+  // convert server timeStamp to milliseconds
+  let epochTimestamp = review.createdAt.toMillis();
+
+  // date posted
+  const postedOn = moment(epochTimestamp).fromNow();
+
   return (
     <Card className="bg-white shadow-md rounded-xl h-80 p-5 hover:cursor-pointer">
       <section>
@@ -29,8 +37,8 @@ const RecentReviewsCard = ({ review }) => {
                 </Link>{" "}
                 <span class="text-gray-600">Student</span>
               </div>
-              <span className="block text-sm mt-2 text-gray-600 font-semibold">
-                08/08/2020
+              <span className="block text-xs mt-2 text-gray-600 font-semibold">
+                Posted : {postedOn}
               </span>
             </div>
           </div>

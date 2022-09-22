@@ -17,9 +17,8 @@ import {
   getDoc,
   serverTimestamp,
   collection,
-  query,
-  onSnapshot,
   getDocs,
+  Firestore,
 } from "firebase/firestore";
 import { useCallback } from "react";
 
@@ -68,13 +67,13 @@ const reviewReducer = (state, action) => {
   }
 };
 
-function calculateOverallRating(...ratings) {
-  let totalRating = 0;
-  ratings.forEach((rating) => {
-    totalRating += rating;
-  });
-  return totalRating / ratings.length;
-}
+// function calculateOverallRating(...ratings) {
+//   let totalRating = 0;
+//   ratings.forEach((rating) => {
+//     totalRating += rating;
+//   });
+//   return totalRating / ratings.length;
+// }
 
 // check if user already course review
 const checkUserCourseAssociation = async (nickname, userId, ref) => {
@@ -100,6 +99,8 @@ const checkUserCourseAssociation = async (nickname, userId, ref) => {
     });
   });
 };
+
+
 
 const WriteReview = () => {
   // track the current step state
@@ -145,6 +146,7 @@ const WriteReview = () => {
     createdAt: serverTimestamp(),
   };
 
+  // store in local storage
   const docId = localStorage.getItem("id");
 
   // check if user has already written a review for a university
