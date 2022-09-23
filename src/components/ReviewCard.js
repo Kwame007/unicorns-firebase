@@ -16,7 +16,7 @@ firstElement([1, 2, 3, 4, 5]);
 
 const ReviewCard = ({ review }) => {
   // convert server timeStamp to milliseconds
-  let epochTimestamp = review.createdAt.toMillis();
+  let epochTimestamp = review?.createdAt.toMillis();
 
   // date posted
   const postedOn = moment(epochTimestamp).fromNow();

@@ -118,7 +118,7 @@ const Home = () => {
           const q2 = query(
             collection(db, "universities", doc.id, "reviews"),
             orderBy("createdAt"),
-            limit(1)
+            limit(3)
           );
 
           // university collection id's
@@ -144,7 +144,6 @@ const Home = () => {
         const querySnapshot = await getDocs(collection(db, "universities"));
 
         let uniID = [];
-        let courseID = [];
         let recentReviews = [];
 
         querySnapshot.forEach((doc) => {
@@ -170,7 +169,7 @@ const Home = () => {
                   "reviews"
                 ),
                 orderBy("createdAt"),
-                limit("1")
+                limit(1)
               );
 
               getDocs(q3).then((doc_2) => {
@@ -187,8 +186,9 @@ const Home = () => {
       }
     };
 
+    // execute both promise at the same time
     Promise.all([getRecentUniversityReviews(), getRecentCourseReviews()]).then(
-      (res) =>
+      () =>
         setAllReviews([...recentUniversitiesReviews, ...recentCourseReviews])
     );
   }, [recentCourseReviews.length, recentUniversitiesReviews.length]);

@@ -111,7 +111,7 @@ const AddCourse = ({ isShowing, toggleModal, name, nickname }) => {
             <div class="progress"></div>
 
             <p className="font-semibold text-lg text-indigo-500">
-              Adding Universitys
+              Adding Programme
             </p>
           </div>
         )}

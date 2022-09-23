@@ -96,11 +96,7 @@ const Review = () => {
         let allReviews = [];
 
         // reference to university reviews collection
-        const uniQuery = query(
-          collection(db, "universities", ID, "reviews")
-          // orderBy("createdAt", "asc"),
-          // limit(1)
-        );
+        const uniQuery = query(collection(db, "universities", ID, "reviews"));
 
         // reference to courses collection
         const courseQuery = query(
@@ -115,16 +111,14 @@ const Review = () => {
           querySnapshot.forEach(async (doc) => {
             // reviews collection reference {reviews inside programmes}
             const docs = await getDocs(
-              query(
-                collection(
-                  db,
-                  "universities",
-                  ID,
-                  "programmes",
-                  doc.id,
-                  "reviews"
-                )
-              )
+              collection(
+                db,
+                "universities",
+                ID,
+                "programmes",
+                doc.id,
+                "reviews"
+              ) 
             );
 
             docs.forEach((doc_1) => {

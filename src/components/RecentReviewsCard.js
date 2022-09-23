@@ -9,7 +9,7 @@ const RecentReviewsCard = ({ review }) => {
   let epochTimestamp = review.createdAt.toMillis();
 
   // date posted
-  const postedOn = moment(epochTimestamp).fromNow();
+  const postedOn = moment(epochTimestamp).fromNow(); 
 
   return (
     <Card className="bg-white shadow-md rounded-xl h-80 p-5 hover:cursor-pointer">
