@@ -8,6 +8,7 @@ import {
   ReviewCard,
   SignIn,
   Stats,
+  UniReviews,
 } from "../../components";
 import { UploadIcon } from "@heroicons/react/outline";
 import { Link, useParams } from "react-router-dom";
@@ -44,6 +45,7 @@ const Review = () => {
   const [ratingBreakDown, setRatingBreakDown] = useState([]);
   const [isShowing, setIsShowing] = useState(false);
   const [ratings, setRatings] = useState({});
+  const [filter, setFilter] = useState("uni");
 
   const { isLoggedIn } = useContext(context);
 
@@ -118,7 +120,7 @@ const Review = () => {
                 "programmes",
                 doc.id,
                 "reviews"
-              ) 
+              )
             );
 
             docs.forEach((doc_1) => {
@@ -239,6 +241,8 @@ const Review = () => {
     });
   }, [ID, reviews.length, uniRating]);
 
+  console.log(filter);
+
   return (
     <>
       <Header title={university?.name} image={university?.imageUrl} />
@@ -347,17 +351,17 @@ const Review = () => {
                   name="sort"
                   id="sort"
                   className="border-2 h-10 rounded-lg ml-3 focus:outline-none focus:border-indigo-500"
+                  onChange={(event) => setFilter(event.target.value)}
                 >
-                  <option value="Name">All</option>
-                  <option value="Name">Recent</option>
-                  <option value="Name">Course</option>
-                  <option value="Name">University</option>
+                  <option value="uni">University</option>
+                  <option value="course">Course</option>
                 </select>
               </div>
             </div>
 
             <div className="">
-              {!loading && reviews?.map((data) => <ReviewCard review={data} />)}
+              {/* {!loading && reviews?.map((data) => <ReviewCard review={data} />)} */}
+              {filter === "uni" ? <UniReviews /> : <p>course</p>}
 
               {reviews.length === 0 && loading && (
                 <div className="h-96 w-60 text-center pt-32 mx-auto">
@@ -376,6 +380,7 @@ const Review = () => {
                   </h2>
                 </di>
               )}
+
               {/* load more reviews  */}
               {reviews.length !== 0 && (
                 <button

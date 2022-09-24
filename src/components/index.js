@@ -30,6 +30,7 @@ import RatingBreakDownPlaceHolder from "./RatingBreakDownPlaceHolder";
 import ClassYearsPlaceHolder from "./ClassYearsPlaceHolder";
 import RatingPlaceHolder from "./RatingPlaceHolder";
 import Pagination from "./Pagination";
+import UniReviews from "./UniReviews";
 
 export {
   Navigation,
@@ -54,6 +55,7 @@ export {
   StepIndicator,
   StepControl,
   AddUniversity,
+  UniReviews,
   Stats,
   ProgressBar,
   AddCourse,
