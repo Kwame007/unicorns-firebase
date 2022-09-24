@@ -363,32 +363,12 @@ const Review = () => {
               {/* {!loading && reviews?.map((data) => <ReviewCard review={data} />)} */}
               {filter === "uni" ? <UniReviews /> : <p>course</p>}
 
-              {reviews.length === 0 && loading && (
-                <div className="h-96 w-60 text-center pt-32 mx-auto">
-                  <div class="progress"></div>
-
-                  <p className="font-bold text-lg text-indigo-500">
-                    Loading reviews
-                  </p>
-                </div>
-              )}
-
               {reviews.length === 0 && !loading && (
                 <di>
                   <h2 className="text-2xl text-slate-600 font-medium h-96  flex items-center justify-center">
                     No University reviews yet
                   </h2>
                 </di>
-              )}
-
-              {/* load more reviews  */}
-              {reviews.length !== 0 && (
-                <button
-                  className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-200"
-                  // onClick={loadMore}
-                >
-                  Load More
-                </button>
               )}
             </div>
           </div>
