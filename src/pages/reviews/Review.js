@@ -362,14 +362,6 @@ const Review = () => {
             <div className="">
               {/* {!loading && reviews?.map((data) => <ReviewCard review={data} />)} */}
               {filter === "uni" ? <UniReviews /> : <p>course</p>}
-
-              {reviews.length === 0 && !loading && (
-                <di>
-                  <h2 className="text-2xl text-slate-600 font-medium h-96  flex items-center justify-center">
-                    No University reviews yet
-                  </h2>
-                </di>
-              )}
             </div>
           </div>
         </div>
