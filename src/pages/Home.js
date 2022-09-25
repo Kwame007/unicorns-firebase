@@ -186,9 +186,10 @@ const Home = () => {
       }
     };
 
-    // execute both promise at the same time
+    // execute both getRecentUniversityReviews & getRecentCourseReviews at the same time
     Promise.all([getRecentUniversityReviews(), getRecentCourseReviews()]).then(
       () =>
+        // spread recent uni reviews & recent course reviews into all reviews array 
         setAllReviews([...recentUniversitiesReviews, ...recentCourseReviews])
     );
   }, [recentCourseReviews.length, recentUniversitiesReviews.length]);
