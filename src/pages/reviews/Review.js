@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
   ClassYearsPlaceHolder,
+  CoursesList,
   Header,
   Modal,
   RatingBreakDownPlaceHolder,
@@ -361,7 +362,7 @@ const Review = () => {
 
             <div className="">
               {/* {!loading && reviews?.map((data) => <ReviewCard review={data} />)} */}
-              {filter === "uni" ? <UniReviews /> : <p>course</p>}
+              {filter === "uni" ? <UniReviews /> : <CoursesList />}
             </div>
           </div>
         </div>

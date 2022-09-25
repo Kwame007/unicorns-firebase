@@ -31,9 +31,13 @@ import ClassYearsPlaceHolder from "./ClassYearsPlaceHolder";
 import RatingPlaceHolder from "./RatingPlaceHolder";
 import Pagination from "./Pagination";
 import UniReviews from "./UniReviews";
+import CoursesList from "./CoursesList";
+import CourseReviews from "./CourseReviews";
 
 export {
   Navigation,
+  CoursesList,
+  CourseReviews,
   Layout,
   Footer,
   Hero,
