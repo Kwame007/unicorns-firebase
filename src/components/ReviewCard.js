@@ -1,25 +1,17 @@
 import React from "react";
 import Card from "./Card";
 import ReactStars from "react-rating-stars-component";
-import moment from "moment/moment";
-
-// function to return first element in an array
-const firstElement = (array) => {
-  array.forEach((element, index) => {
-    if (index === 0) {
-      // console.log(element);
-      return element;
-    }
-  });
-};
-firstElement([1, 2, 3, 4, 5]);
+import { useDatePosted, useShowLineClamp } from "../hooks";
 
 const ReviewCard = ({ review }) => {
-  // convert server timeStamp to milliseconds
-  let epochTimestamp = review?.createdAt.toMillis();
+  // show line clamp hook
+  const { showMore, showMoreBtn, setShowMore } = useShowLineClamp({
+    par: review,
+    maxNum: 300,
+  });
 
-  // date posted
-  const postedOn = moment(epochTimestamp).fromNow();
+  // show days posted hook
+  const { postedOn } = useDatePosted(review);
 
   return (
     <Card className=" bg-white shadow-md rounded-xl  mb-10 h-full p-5 hover:cursor-pointer">
@@ -75,14 +67,22 @@ const ReviewCard = ({ review }) => {
             </span>
           </div>
           <div className="mt-10">
-            <p class=" text-gray-600 font-light text-lg">
+            <p
+              class={` text-gray-600 font-light text-lg line-clamp-2  ${
+                showMore ? "line-clamp-none" : "line-clamp-2"
+              }`}
+            >
               {review.course ? review.courseSummary : review.universitySummary}
-              <button
-                type="button"
-                class="text-primary text-sm ml-2 text-indigo-500 hover:underline"
-              >
-                See More
-              </button>
+              {/* hide show more button if showMore===true */}
+              {!showMore && showMoreBtn && (
+                <button
+                  type="button"
+                  class="text-sm text-indigo-500 hover:underline"
+                  onClick={() => setShowMore(true)}
+                >
+                  See More
+                </button>
+              )}
             </p>
           </div>
           <div class="flex justify-between mt-5">

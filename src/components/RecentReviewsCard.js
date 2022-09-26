@@ -2,14 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import ReactStars from "react-rating-stars-component";
-import moment from "moment/moment";
+import { useDatePosted } from "../hooks";
+import { useShowLineClamp } from "../hooks";
 
 const RecentReviewsCard = ({ review }) => {
-  // convert server timeStamp to milliseconds
-  let epochTimestamp = review.createdAt.toMillis();
+  const { showMore, showMoreBtn, setShowMore } = useShowLineClamp({
+    par: `${review.course ? review.courseSummary : review.universitySummary}`,
+    maxNum: 100,
+  });
 
-  // date posted
-  const postedOn = moment(epochTimestamp).fromNow(); 
+  // show days posted hook
+  const { postedOn } = useDatePosted(review);
 
   return (
     <Card className="bg-white shadow-md rounded-xl h-80 p-5 hover:cursor-pointer">
@@ -66,15 +69,24 @@ const RecentReviewsCard = ({ review }) => {
             </div>
           </div>
           <div className="mt-10">
-            <p class="text-gray-600 text-lg font-light line-clamp-2">
+            <p
+              class={`text-gray-600 text-lg font-light ${
+                showMore ? "line-clamp-none" : "line-clamp-2"
+              }`}
+            >
               {review.course ? review.courseSummary : review.universitySummary}
             </p>
-            <button
-              type="button"
-              class="text-sm text-indigo-500 hover:underline"
-            >
-              See More
-            </button>
+
+            {/* hide show more button if showMore===true */}
+            {!showMore && showMoreBtn && (
+              <button
+                type="button"
+                class="text-sm text-indigo-500 hover:underline"
+                onClick={() => setShowMore(true)}
+              >
+                See More
+              </button>
+            )}
           </div>
           <div class="flex justify-between mt-5">
             <div class="flex items-center">
