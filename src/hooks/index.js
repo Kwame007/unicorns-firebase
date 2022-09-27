@@ -3,6 +3,7 @@ import useSignInUser from "./useSignInUser";
 import useStorage from "./useStorage";
 import useShowLineClamp from "./useShowLineClamp";
 import useDatePosted from "./useDatePosted";
+import useLikeReviews from "./useLikeReviews";
 
 export {
   useSendEmailLink,
@@ -10,4 +11,5 @@ export {
   useStorage,
   useShowLineClamp,
   useDatePosted,
+  useLikeReviews,
 };

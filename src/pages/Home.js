@@ -15,6 +15,8 @@ import {
   startAfter,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { data } from "autoprefixer";
+import Reviews from "./reviews/Reviews";
 
 const Home = () => {
   const [trendingUniversities, setTrendingUniversities] = useState([]);
@@ -175,6 +177,7 @@ const Home = () => {
               getDocs(q3).then((doc_2) => {
                 doc_2.forEach((doc) => {
                   recentReviews.push(doc.data());
+
                   setRecentCourseReviews(recentReviews);
                 });
               });
@@ -189,7 +192,7 @@ const Home = () => {
     // execute both getRecentUniversityReviews & getRecentCourseReviews at the same time
     Promise.all([getRecentUniversityReviews(), getRecentCourseReviews()]).then(
       () =>
-        // spread recent uni reviews & recent course reviews into all reviews array 
+        // spread recent uni reviews & recent course reviews into all reviews array
         setAllReviews([...recentUniversitiesReviews, ...recentCourseReviews])
     );
   }, [recentCourseReviews.length, recentUniversitiesReviews.length]);

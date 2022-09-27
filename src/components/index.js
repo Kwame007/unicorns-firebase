@@ -33,11 +33,13 @@ import Pagination from "./Pagination";
 import UniReviews from "./UniReviews";
 import CoursesList from "./CoursesList";
 import CourseReviews from "./CourseReviews";
+import LikeReview from "./LikeReview";
 
 export {
   Navigation,
   CoursesList,
   CourseReviews,
+  LikeReview,
   Layout,
   Footer,
   Hero,

@@ -12,8 +12,8 @@ const AddCourse = ({ isShowing, toggleModal, name, nickname }) => {
   const [courseIsNew, setCourseIsNew] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // course id
   const courseId = course.split(" ").join("-").toLocaleLowerCase();
-  console.log(courseId);
 
   // handle change
   const handleChange = (event) => {

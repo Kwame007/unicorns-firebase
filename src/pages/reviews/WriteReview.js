@@ -100,8 +100,6 @@ const checkUserCourseAssociation = async (nickname, userId, ref) => {
   });
 };
 
-
-
 const WriteReview = () => {
   // track the current step state
   const [currentStep, setCurrentStep] = useState(1);
@@ -133,6 +131,7 @@ const WriteReview = () => {
     nickname,
     createdAt: serverTimestamp(),
     likes: 0,
+    id: userId,
   };
 
   const courseSummary = {
@@ -143,6 +142,7 @@ const WriteReview = () => {
     likes: 0,
     university: reviewSummary.university,
     nickname,
+    id: userId,
     createdAt: serverTimestamp(),
   };
 
@@ -275,7 +275,6 @@ const WriteReview = () => {
         return <Step4 {...reviewSummary} dispatch={dispatch} />;
     }
   };
-  console.log("test");
 
   return (
     <div>

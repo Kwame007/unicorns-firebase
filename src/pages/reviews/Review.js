@@ -242,8 +242,6 @@ const Review = () => {
     });
   }, [ID, reviews.length, uniRating]);
 
-  console.log(filter);
-
   return (
     <>
       <Header title={university?.name} image={university?.imageUrl} />
