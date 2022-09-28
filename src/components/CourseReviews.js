@@ -15,7 +15,14 @@ import {
 } from "firebase/firestore";
 import ReviewCard from "./ReviewCard";
 
-const CourseReviews = ({ ID, courseID }) => {
+const CourseReviews = ({
+  ID,
+  courseID,
+  filter,
+  setCourse,
+  setUni,
+  setFilter,
+}) => {
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [lastElement, setLastElement] = useState(null);
@@ -83,7 +90,7 @@ const CourseReviews = ({ ID, courseID }) => {
   }, [ID, courseID]);
 
   return (
-    <div>
+    <div className="mt-5">
       {reviews?.map((review) => (
         <ReviewCard review={review} />
       ))}

@@ -34,12 +34,14 @@ import UniReviews from "./UniReviews";
 import CoursesList from "./CoursesList";
 import CourseReviews from "./CourseReviews";
 import LikeReview from "./LikeReview";
+import FilterBy from "./FilterBy";
 
 export {
   Navigation,
   CoursesList,
   CourseReviews,
   LikeReview,
+  FilterBy,
   Layout,
   Footer,
   Hero,

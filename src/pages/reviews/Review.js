@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   ClassYearsPlaceHolder,
   CoursesList,
+  FilterBy,
   Header,
   Modal,
   RatingBreakDownPlaceHolder,
@@ -46,7 +47,17 @@ const Review = () => {
   const [ratingBreakDown, setRatingBreakDown] = useState([]);
   const [isShowing, setIsShowing] = useState(false);
   const [ratings, setRatings] = useState({});
-  const [filter, setFilter] = useState("uni");
+  const [filter, setFilter] = useState(false);
+  const [course, setCourse] = useState("");
+  const [uni, setUni] = useState("uni");
+
+  // test
+  const config = {
+    filter: course,
+    setCourse,
+    setUni,
+    setFilter,
+  };
 
   const { isLoggedIn } = useContext(context);
 
@@ -56,6 +67,20 @@ const Review = () => {
   // toggle modal
   const showModal = () => {
     setIsShowing((prevState) => !prevState);
+  };
+
+  // handle filter change
+  const handleFilterChange = (event) => {
+    setFilter(false);
+
+    // check if uni is truthy, then setUni('') & setCourse(course) vice versa
+    if (uni) {
+      setUni("");
+      setCourse(event.target.value);
+    } else {
+      setUni(event.target.value);
+      setCourse("");
+    }
   };
 
   useEffect(() => {
@@ -340,7 +365,7 @@ const Review = () => {
             </div>
           </div>
           <div className="w-full">
-            <div className="flex justify-between mb-10  border-b-2 pb-5 ">
+            <div className="flex justify-between   border-b-2 pb-5 ">
               <h2 className="text-lg font-semibold">
                 All reviews ({university?.totalReviews})
               </h2>
@@ -350,17 +375,22 @@ const Review = () => {
                   name="sort"
                   id="sort"
                   className="border-2 h-10 rounded-lg ml-3 focus:outline-none focus:border-indigo-500"
-                  onChange={(event) => setFilter(event.target.value)}
+                  onChange={handleFilterChange}
                 >
-                  <option value="uni">University</option>
+                  <option value="uni" selected={filter}>
+                    University
+                  </option>
                   <option value="course">Course</option>
                 </select>
               </div>
             </div>
 
-            <div className="">
-              {/* {!loading && reviews?.map((data) => <ReviewCard review={data} />)} */}
-              {filter === "uni" ? <UniReviews /> : <CoursesList />}
+            {/* show filter component */}
+            {course && <FilterBy {...config} />}
+
+            <div>
+              {/* show university reviews or course list */}
+              {uni ? <UniReviews /> : <CoursesList />}
             </div>
           </div>
         </div>

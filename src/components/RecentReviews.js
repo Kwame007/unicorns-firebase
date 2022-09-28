@@ -10,10 +10,12 @@ const RecentReviews = ({ review }) => {
       </h2>
       <div className="grid grid-cols-1 gap-8 justify-center items-center w-full hover:cursor-pointer md:grid-cols-3 ">
         {review?.map((data) => (
-          <RecentReviewsCard review={data} />
+          <RecentReviewsCard review={data} key={data.id} />
         ))}
         {review.length === 0 &&
-          [0, 0, 0, 0, 0, 0].map((item) => <ReviewPlaceHolder />)}
+          [0, 0, 0, 0, 0, 0].map((_, index) => (
+            <ReviewPlaceHolder key={index} />
+          ))}
       </div>
     </div>
   );

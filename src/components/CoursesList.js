@@ -29,6 +29,12 @@ const CoursesList = () => {
   // courseID ref
   const courseIdRef = useRef("");
 
+  // config
+  const config = {
+    ID,
+    courseID: courseIdRef.current,
+  };
+
   // handle input change
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -128,9 +134,7 @@ const CoursesList = () => {
       )}
 
       {/* show course reviews component */}
-      {isCourseClicked && (
-        <CourseReviews ID={ID} courseID={courseIdRef.current} />
-      )}
+      {isCourseClicked && <CourseReviews {...config} />}
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "./Card";
 import ReactStars from "react-rating-stars-component";
+import LikeReview from "./LikeReview";
 import { useDatePosted, useShowLineClamp } from "../hooks";
 
 const ReviewCard = ({ review }) => {
@@ -49,17 +50,17 @@ const ReviewCard = ({ review }) => {
           </div>
           <div class="text-sm text-white mt-5 flex gap-3">
             <span>
-              <span class="inline-flex rounded-full items-center px-2 py-1 text-xs bg-indigo-400  font-medium">
+              <span class="inline-flex rounded-full items-center px-2 py-1 text-xs bg-indigo-400  font-light">
                 {review.year}
               </span>
             </span>
             <span>
-              <span class="inline-flex rounded-full items-center px-2 py-1 text-xs bg-indigo-400  font-medium">
+              <span class="inline-flex rounded-full items-center px-2 py-1 text-xs bg-indigo-400  font-light">
                 {review.course ? `Course` : ` University`}
               </span>
             </span>
             <span>
-              <span class="inline-flex rounded-full items-center px-2 py-1  text-xs bg-indigo-400  font-medium">
+              <span class="inline-flex rounded-full items-center px-2 py-1  text-xs bg-indigo-400 font-light">
                 {review.course
                   ? `${review.course}`
                   : ` graduating year ${new Date(review.date).getFullYear()}`}
@@ -86,23 +87,7 @@ const ReviewCard = ({ review }) => {
             </p>
           </div>
           <div class="flex justify-between mt-5">
-            <div class="flex items-center">
-              <span class="text-gray-600 text-sm mr-1">{review.likes}</span>
-              <button type="button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 transition-colors text-gray-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
+            <LikeReview review={review} />
           </div>
         </div>
       </section>

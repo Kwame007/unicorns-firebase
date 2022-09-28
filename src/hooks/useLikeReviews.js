@@ -6,6 +6,7 @@ import {
   increment,
   arrayRemove,
   arrayUnion,
+  onSnapshot,
 } from "firebase/firestore";
 import { context } from "../store";
 
@@ -19,6 +20,7 @@ const useLikeReviews = (review) => {
 
   // likes ref
   const likesRef = useRef(review.likes);
+  const likedBy = useRef([]);
 
   // auth context
   const { isLoggedIn } = useContext(context);
@@ -32,9 +34,16 @@ const useLikeReviews = (review) => {
     review.id
   );
 
+  // get the recent data of clicked review
+  const getRecentReviewData = (ref) => {
+    const unsub = onSnapshot(ref, (doc) => {
+      likedBy.current = doc.data().likedBy;
+    });
+  };
+
   // update likes function {updates likes field based on provided reference}
-  const updateLikes = (review, reviewRef) => {
-    if (review?.likedBy?.includes(userId) && isLiked) {
+  const updateLikes = (reviewRef, likedBy) => {
+    if (likedBy.current.includes(userId) && isLiked) {
       setLikesCount((prevState) => --prevState);
       setIsLiked((prevState) => !prevState);
 
@@ -43,8 +52,7 @@ const useLikeReviews = (review) => {
         likedBy: arrayRemove(userId),
       })
         .then(() => {
-          console.log("unliked");
-          console.log(review);
+          console.log("unLiked");
         })
         .catch((e) => {
           console.log(e);
@@ -59,7 +67,6 @@ const useLikeReviews = (review) => {
       })
         .then(() => {
           console.log("liked");
-          console.log(review);
         })
         .catch((e) => {
           console.log(e);
@@ -90,15 +97,26 @@ const useLikeReviews = (review) => {
         review.id
       );
 
+      getRecentReviewData(docRefCourse);
       // update course review likes
-      updateLikes(review, docRefCourse);
+      updateLikes(docRefCourse, likedBy);
     } else {
+      getRecentReviewData(docRefUni);
+
       // update university review likes
-      updateLikes(review, docRefUni);
+      updateLikes(docRefUni, likedBy);
     }
+
+    // unsubscribe
   };
 
-  return { likesRef, likesCount, isLiked, isShowing, setIsShowing, handleLike };
+  return {
+    likesCount,
+    isLiked,
+    isShowing,
+    setIsShowing,
+    handleLike,
+  };
 };
 
 export default useLikeReviews;

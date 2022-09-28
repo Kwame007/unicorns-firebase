@@ -1,5 +1,5 @@
 import React from "react";
-import { LocationMarkerIcon, StarIcon } from "@heroicons/react/solid";
+import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import TrendingUniversitiesPlaceHolder from "./TrendingUniversitiesPlaceHolder";
@@ -25,9 +25,12 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
                   </tr>
                 </thead>
                 <tbody class="text-gray-600 text-lg font-light">
-                  {data?.map((universities) => (
+                  {data?.map((universities, index) => (
                     <>
-                      <tr class="border-b border-gray-200  hover:bg-gray-100">
+                      <tr
+                        class="border-b border-gray-200  hover:bg-gray-100"
+                        key={index}
+                      >
                         <Link
                           to={`reviews/${universities.nickname}`}
                           className="w-full hover:text-indigo-500 hover:underline"
@@ -78,8 +81,8 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
                   ))}
                   {data.length === 0 &&
                     // create an array with N number of elements
-                    Array.from(Array(10).keys()).map(() => (
-                      <TrendingUniversitiesPlaceHolder />
+                    Array.from(Array(10).keys()).map((_, index) => (
+                      <TrendingUniversitiesPlaceHolder key={index} />
                     ))}
                 </tbody>
               </table>

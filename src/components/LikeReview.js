@@ -16,7 +16,11 @@ const LikeReview = ({ review }) => {
     <>
       <div class="flex items-center">
         <span class="text-gray-600 text-sm mr-1">{likesCount}</span>
-        <button type="button" onClick={handleLike}>
+        <button
+          className="disabled:cursor-not-allowed"
+          type="button"
+          onClick={handleLike}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class={`h-5 w-5 transition-colors ${

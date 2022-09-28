@@ -2,13 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import ReactStars from "react-rating-stars-component";
-import { useDatePosted, useShowLineClamp, useLikeReviews } from "../hooks";
-import SignIn from "./SignIn";
+import { useDatePosted, useShowLineClamp } from "../hooks";
 import { LikeReview } from ".";
 
 const RecentReviewsCard = ({ review }) => {
-  const { likesCount, isLiked, likesRef } = useLikeReviews(review);
-
   // show line clamp hook
   const { showMore, showMoreBtn, setShowMore } = useShowLineClamp({
     par: `${review.course ? review.courseSummary : review.universitySummary}`,

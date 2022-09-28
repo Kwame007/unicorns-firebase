@@ -86,7 +86,7 @@ const UniReviews = () => {
   console.log(reviews);
   console.log(loading);
   return (
-    <div>
+    <div className="mt-5">
       {reviews?.map((review) => (
         <ReviewCard review={review} />
       ))}
