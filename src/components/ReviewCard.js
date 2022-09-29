@@ -15,14 +15,14 @@ const ReviewCard = ({ review }) => {
   const { postedOn } = useDatePosted(review);
 
   return (
-    <Card className=" bg-white shadow-md rounded-xl  mb-10 h-full p-5 hover:cursor-pointer">
+    <Card className=" bg-white shadow-sm border rounded-lg  mb-10 h-full p-5 hover:cursor-pointer">
       <section>
         <div>
           <div className="flex gap-5 items-center">
             <div className="">
               <span class="inline-block h-14 w-14 rounded-full overflow-hidden bg-gray-100">
                 <svg
-                  class="h-full w-full text-gray-300"
+                  className="h-full w-full text-gray-300"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >

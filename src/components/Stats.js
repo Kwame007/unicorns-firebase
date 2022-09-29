@@ -6,7 +6,7 @@ const Stats = ({ rating, totalReviews }) => {
     <div className=" flex gap-1 text-sm font-bold">
       <span className="mr-2">{rating?.toFixed(1)}</span>
 
-      {rating && (
+      {rating ? (
         <ReactStars
           className="text-xl"
           count={5}
@@ -16,6 +16,8 @@ const Stats = ({ rating, totalReviews }) => {
           value={rating}
           edit={false}
         />
+      ) : (
+        <ReactStars className="text-xl" count={5} size={15} edit={false} />
       )}
 
       <span className="ml-2">{totalReviews} reviews</span>

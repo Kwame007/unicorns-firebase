@@ -17,7 +17,7 @@ const RecentReviewsCard = ({ review }) => {
 
   return (
     <>
-      <Card className="bg-white shadow-md rounded-xl h-80 p-5 hover:cursor-pointer">
+      <Card className="bg-white shadow-sm border rounded-lg h-80 p-5 hover:cursor-pointer">
         <section>
           <div>
             <div className="flex gap-5 items-center">
