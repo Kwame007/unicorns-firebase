@@ -82,10 +82,11 @@ const Review = () => {
       setCourse("");
     }
   };
-
+  console.log(loading);
   useEffect(() => {
     const getUniversity = async () => {
       setLoading(true);
+
       try {
         // university doc ref
         const universityRef = query(collection(db, "universities"));

@@ -80,7 +80,7 @@ const UniReviews = () => {
     return () => {
       // clear all uni reviews
       setReviews([]);
-      // setLoading(true);
+      setLoading(false);
     };
   }, [ID]);
   console.log(reviews);
@@ -92,7 +92,7 @@ const UniReviews = () => {
       ))}
 
       {/* loading spinner */}
-      {reviews.length === 0 && (
+      {reviews.length === 0 && loading && (
         <div className="h-96 w-60 text-center pt-32 mx-auto">
           <div class="progress"></div>
 
