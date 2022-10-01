@@ -1,4 +1,5 @@
 import React from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Input = ({
@@ -14,6 +15,9 @@ const Input = ({
   // keys
   const keys = ["name", "nickname"];
 
+  // nothing found
+  const noResults = useRef();
+
   return (
     <>
       <div>
@@ -26,6 +30,7 @@ const Input = ({
           value={value}
         />
       </div>
+
       {searchQuery && (
         <div className="h-40 bg-white mt-1 rounded-bl-2xl rounded-br-2xl pb-3 overflow-scroll">
           {/* filter data(universities) based on name or nickname & map through it  */}
@@ -36,7 +41,7 @@ const Input = ({
             .map((university) => (
               <Link
                 to={`reviews/${university.nickname}`}
-                className="text-left h-14 pl-3 font-semibold text-sm border-b flex items-center transition-all duration-500 hover:text-indigo-500 hover:bg-gray-200"
+                className="text-left h-14 pl-3 font-semibold text-sm border-b flex items-center transition-all duration-500 hover:text-indigo-500 hover:bg-gray-100"
               >
                 {university.name}
               </Link>

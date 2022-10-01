@@ -35,6 +35,7 @@ import CoursesList from "./CoursesList";
 import CourseReviews from "./CourseReviews";
 import LikeReview from "./LikeReview";
 import FilterBy from "./FilterBy";
+import LoadMore from "./LoadMore";
 
 export {
   Navigation,
@@ -51,6 +52,7 @@ export {
   RecentReviewsCard,
   RecentReviews,
   ReviewGuide,
+  LoadMore,
   UserProfile,
   SignIn,
   Modal,

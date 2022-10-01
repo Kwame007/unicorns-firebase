@@ -375,7 +375,7 @@ const Review = () => {
                 <select
                   name="sort"
                   id="sort"
-                  className="border-2 h-10 rounded-lg ml-3 focus:outline-none focus:border-indigo-500"
+                  className="border font-medium text-gray-700 text-sm  h-10 rounded-lg ml-3 focus:outline-none focus:border-indigo-500"
                   onChange={handleFilterChange}
                 >
                   <option value="uni" selected={filter}>

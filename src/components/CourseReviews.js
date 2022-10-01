@@ -14,6 +14,8 @@ import {
   limit,
 } from "firebase/firestore";
 import ReviewCard from "./ReviewCard";
+import { useGetCollectionSize } from "../hooks";
+import LoadMore from "./LoadMore";
 
 const CourseReviews = ({
   ID,
@@ -27,6 +29,11 @@ const CourseReviews = ({
   const [reviews, setReviews] = useState([]);
   const [lastElement, setLastElement] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
+
+  // hook
+  const collectionSize = useGetCollectionSize(
+    query(collection(db, "universities", ID, "programmes", courseID, "reviews"))
+  );
 
   // update state func
   const updateState = (query) => {
@@ -89,6 +96,15 @@ const CourseReviews = ({
     };
   }, [ID, courseID]);
 
+  // config
+  const config = {
+    data: reviews,
+    loadMore,
+    isEmpty,
+    type: "courses",
+    collectionRef: collectionSize,
+  };
+
   return (
     <div className="mt-5">
       {reviews?.map((review) => (
@@ -114,14 +130,7 @@ const CourseReviews = ({
       )}
 
       {/* load more reviews  */}
-      {reviews.length !== 0 && !isEmpty && (
-        <button
-          className="border-2 h-12 mt-40 m cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-200"
-          onClick={loadMore}
-        >
-          Load More
-        </button>
-      )}
+      <LoadMore {...config} />
     </div>
   );
 };

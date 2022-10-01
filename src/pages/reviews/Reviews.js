@@ -1,6 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { createPortal } from "react-dom";
-import { AddUniversity, Card, Header, Input, Stats } from "../../components";
+import {
+  AddUniversity,
+  Card,
+  Header,
+  Input,
+  LoadMore,
+  Stats,
+} from "../../components";
 import img from "../../assets/images/campus.jpg";
 import {
   collection,
@@ -8,17 +15,36 @@ import {
   onSnapshot,
   orderBy,
   limit,
+  getDocs,
+  startAfter,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { SearchIcon } from "@heroicons/react/outline";
 import { context } from "../../store";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { useCallback } from "react";
+import { useGetCollectionSize } from "../../hooks";
 
 const Reviews = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [lastElement, setLastElement] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [sortBy, setSortBy] = useState("");
+
+  // hook
+  const collectionSize = useGetCollectionSize(
+    query(collection(db, "universities"))
+  );
+
+  // sorting function
+  const changeSortingHandler = (event) => {
+    setSortBy(event.target.value);
+  };
+  console.log(sortBy);
 
   // global state
   const { isShowing, toggleModal, universities, setUniversities } =
@@ -27,6 +53,56 @@ const Reviews = () => {
   // handle change
   const handleChange = (event) => setSearchQuery(event.target.value);
 
+  // update state func
+  const updateState = useCallback(
+    (query) => {
+      getDocs(query).then((doc) => {
+        const response = doc.docs.map((doc_1) => doc_1.data());
+        // check if query is empty
+        if (response.length === 0) {
+          setIsEmpty(true);
+        }
+
+        setUniversities((prevState) => [...prevState, ...response]);
+
+        // get last document
+        const lastVisible = doc.docs[doc.docs.length - 1];
+
+        // set last visible
+        setLastElement(lastVisible);
+        setLoading(false);
+      });
+    },
+
+    [setUniversities]
+  );
+
+  // load more universities
+  const loadMore = () => {
+    setLoading(true);
+
+    const nextQuery = query(
+      collection(db, "universities"),
+      orderBy(
+        `${sortBy === "name" ? "name" : "rating"}`,
+        `${sortBy === "name" ? "asc" : "desc"}`
+      ),
+      startAfter(lastElement),
+      limit(4)
+    );
+
+    updateState(nextQuery);
+  };
+
+  // config
+  const config = {
+    data: universities,
+    loadMore,
+    isEmpty,
+    type: "universities",
+    collectionRef: collectionSize,
+  };
+
   useEffect(() => {
     setLoading(true);
     // fetch all universities
@@ -34,19 +110,14 @@ const Reviews = () => {
       try {
         const q = query(
           collection(db, "universities"),
-          orderBy("rating", "desc"),
-          limit(10)
+          orderBy(
+            `${sortBy === "name" ? "name" : "rating"}`,
+            `${sortBy === "name" ? "asc" : "desc"}`
+          ),
+          limit(4)
         );
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          let responds = [];
-          querySnapshot.forEach((doc) => {
-            responds.push(doc.data());
-          });
 
-          setUniversities(responds);
-          setSearchResults(responds);
-          setLoading(false);
-        });
+        updateState(q);
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -56,7 +127,12 @@ const Reviews = () => {
 
     // run fetch
     fetchAllUni();
-  }, [setUniversities]);
+
+    return () => {
+      setUniversities([]);
+    };
+  }, [setUniversities, sortBy, updateState]);
+  console.log(universities.length);
 
   useEffect(() => {
     const searchUniversity = (uniQuery) => {
@@ -93,16 +169,18 @@ const Reviews = () => {
             Browse universities in Ghana
           </h2>
           <div>
-            <label htmlFor="sort">Sort by</label>
+            <label htmlFor="sort" className="font-medium text-gray-700 text-sm">
+              Sort by
+            </label>
             <select
               name="sort"
               id="sort"
-              className="border-2 border-slate-300 h-10 rounded-lg ml-3 focus:outline-none focus:border-indigo-500"
+              className="border h-10 rounded-lg ml-3 font-medium text-gray-700 text-sm focus:outline-none focus:border-indigo-500"
+              onChange={changeSortingHandler}
             >
-              <option value="Name">All</option>
-              <option value="Name">Names</option>
-              <option value="Name">Number of reviews</option>
-              <option value="Name">Highest rating</option>
+              <option value="all">All</option>
+              <option value="name">Names</option>
+              {/* <option value="reviews">Number of reviews</option> */}
             </select>
           </div>
         </div>
@@ -112,7 +190,7 @@ const Reviews = () => {
             <SearchIcon className="h-5 w-5 absolute text-slate-500 top-4 ml-2 md:h-6 md:w-6" />
             <Input
               type="text"
-              className="border-2 border-slate-300 pl-10 pr-5 w-full h-12 rounded-2xl md:h-14 placeholder:text-sm focus:border-3 focus:border-indigo-500 focus:outline-none"
+              className="border  pl-10 pr-5 w-full h-12 rounded-2xl md:h-14 placeholder:text-sm focus:border-3 focus:border-indigo-500 focus:outline-none"
               placeholder="Search for your university 🏫"
               onChange={handleChange}
             />
@@ -130,13 +208,13 @@ const Reviews = () => {
 
         {searchResults?.map((data) => (
           <Link to={`${data.nickname}`}>
-            <Card className="bg-white shadow-md rounded-xl mb-10  h-fit hover:cursor-pointer">
+            <Card className="bg-white border shadow-md rounded-xl mb-10  h-fit hover:cursor-pointer">
               <div className="flex items-center gap-5 text-slate-600">
-                <div className="w-60 h-36">
+                <div className="w-60 h-36 ">
                   <img
                     src={data?.imageUrl}
                     alt=""
-                    className="w-full h-full rounded-lg"
+                    className="w-full h-full rounded-tl-lg rounded-bl-lg"
                   />
                 </div>
                 <div className="w-full grid grid-rows-2 items-center gap-11">
@@ -151,6 +229,8 @@ const Reviews = () => {
           </Link>
         ))}
 
+        {/* load more reviews  */}
+        {!loading && <LoadMore {...config} />}
         {loading && searchResults.length === 0 && (
           <div className="h-60 w-60 text-center mx-auto">
             <div class="progress"></div>

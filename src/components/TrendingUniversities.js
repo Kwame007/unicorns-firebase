@@ -3,8 +3,26 @@ import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import TrendingUniversitiesPlaceHolder from "./TrendingUniversitiesPlaceHolder";
+import { LoadMore } from ".";
+import { useGetCollectionSize } from "../hooks";
+import { db } from "../firebase";
+import { query, collection } from "firebase/firestore";
 
 const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
+  console.log(data);
+  // hook
+  const collectionSize = useGetCollectionSize(
+    query(collection(db, "universities"))
+  );
+
+  // config
+  const config = {
+    data,
+    loadMore,
+    isEmpty,
+    type: "universities",
+    collectionRef: collectionSize,
+  };
   return (
     <section className="container mx-auto mt-20 mb-10 py-10 relative">
       <h2 className="font-semibold  container mx-auto p-5 text-3xl text-gray-600 uppercase  leading-normal md:mb-20 md:text-4xl md:text-center">
@@ -88,16 +106,7 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
               </table>
             </div>
 
-            {!isEmpty && (
-              <div className="w-1/4 mb-5">
-                <button
-                  className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-200"
-                  onClick={loadMore}
-                >
-                  Load More
-                </button>
-              </div>
-            )}
+            <LoadMore {...config} />
           </div>
         </div>
       </div>
