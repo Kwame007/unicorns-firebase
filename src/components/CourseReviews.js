@@ -101,7 +101,7 @@ const CourseReviews = ({
     data: reviews,
     loadMore,
     isEmpty,
-    type: "courses",
+    type: "reviews",
     collectionRef: collectionSize,
   };
 

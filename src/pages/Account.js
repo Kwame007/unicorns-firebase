@@ -3,14 +3,14 @@ import { Card } from "../components";
 
 const Account = () => {
   return (
-    <div>
+    <div className="h-100">
       <div className="mb-10">
         <h1 className="text-3xl font-medium">My Account</h1>
         <p className="text-lg pt-2">darteyw@gmail.com</p>
       </div>
       <div className="grid grid-cols-2 gap-10">
         <div>
-          <Card className="bg-white p-5 shadow-light mx-auto rounded-2xl h-60 hover:cursor-pointer">
+          <Card className="bg-white p-5 shadow-xs border mx-auto rounded-2xl h-60 transition-all duration-500 hover:cursor-pointer hover:shadow-md">
             <div className="grid grid-rows-2 items-center gap-8">
               <div className="">
                 <h2 className="text-2xl font-light mb-5">Sign Out</h2>
@@ -22,7 +22,10 @@ const Account = () => {
               <div className="flex justify-between items-end">
                 <div></div>
                 <div className="flex items-center gap-2">
-                  <button className=" text-white font-bold bg-indigo-400 py-2 px-8 rounded-lg duration-500 transition-all hover:bg-indigo-500">
+                  <button
+                    className=" py-2 px-8 rounded font-medium 
+       border   border-gray-300  text-white  bg-indigo-400 duration-500 transition-all hover:bg-indigo-500"
+                  >
                     Sign Out
                   </button>
                 </div>
@@ -31,7 +34,7 @@ const Account = () => {
           </Card>
         </div>
         <div>
-          <Card className="bg-white p-5 shadow-light mx-auto rounded-2xl h-60 hover:cursor-pointer">
+          <Card className="bg-white p-5 shadow-xs border mx-auto rounded-2xl h-60 transition-all duration-500 hover:cursor-pointer hover:shadow-md">
             <div className="grid grid-rows-2 items-center gap-8">
               <div className="">
                 <h2 className="text-2xl font-light mb-5">Delete Account</h2>
@@ -43,7 +46,10 @@ const Account = () => {
               <div className="flex justify-between items-end">
                 <div></div>
                 <div className="flex items-center gap-2">
-                  <button className=" text-white font-bold bg-red-400 py-2 px-6 rounded-lg duration-500 transition-all hover:bg-red-500">
+                  <button
+                    className=" py-2 px-8 rounded font-medium 
+      text-white bg-red-400  duration-500 transition-all hover:bg-red-500"
+                  >
                     Delete Account
                   </button>
                 </div>

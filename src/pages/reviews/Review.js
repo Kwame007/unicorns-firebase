@@ -184,6 +184,7 @@ const Review = () => {
               // get the current university data
               if (doc.id === ID) {
                 totalReviews = doc.data().totalReviews;
+                localStorage.setItem("uniID", doc.id);
               }
 
               // sub-collection reference

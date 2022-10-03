@@ -126,7 +126,7 @@ function Step1({
       <div className="px-6 flex  space-y-8 mx-auto my-12 justify-between max-w-4xl gap-x-0 md:gap-x-4 md:flex-row md:space-y-0">
         <div className="w-full">
           <select
-            className="w-full p-2 text-base font-semibold text-slate-700  border-2 border-slate-400 h-12 rounded-lg focus:outline-none focus:border-indigo-500 "
+            className="w-full p-2 text-base font-semibold text-slate-700  border border-slate-400 h-12 rounded-lg focus:outline-none focus:border-indigo-500 "
             onChange={handleUniChange}
             value={university}
           >
@@ -137,7 +137,7 @@ function Step1({
 
         <div className="w-full">
           <select
-            className="w-full p-2 text-base font-semibold text-slate-700 border-2 border-slate-400 h-12 rounded-lg focus:outline-none focus:border-indigo-500 "
+            className="w-full p-2 text-base font-semibold text-slate-700 border border-slate-400 h-12 rounded-lg focus:outline-none focus:border-indigo-500 "
             onChange={handleProgramChange}
             value={programme}
           >

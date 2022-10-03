@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <aside className="bg-slate-100 text-white shadow-lg h-screen top-0 bottom-0 font-semibold p-10 text-primary">
+    <aside className="bg-slate-100 text-white shadow-sm border h-full top-0 bottom-0 font-semibold p-10 text-primary">
       <div>
         <div className=" mb-10 rounded-lg  cursor-pointer">
           <Link
             to="my-reviews"
-            className="pl-5 flex justify-start items-center  bg-indigo-400 h-14 w-full rounded-lg duration-500 transition-all hover:bg-indigo-500"
+            className="py-2 px-8 rounded font-medium 
+            text-white   duration-500 transition-all  pl-5 flex justify-start items-center  bg-indigo-400 h-14 w-full  hover:bg-indigo-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +33,8 @@ const SideBar = () => {
         <div className=" rounded-lg  cursor-pointer ">
           <Link
             to="account"
-            className="pl-5 flex justify-start items-center bg-indigo-400 h-14 w-full rounded-lg duration-500 transition-all hover:bg-indigo-500"
+            className="py-2 px-8 rounded font-medium 
+            text-white   duration-500 transition-all  pl-5 flex justify-start items-center  bg-indigo-400 h-14 w-full  hover:bg-indigo-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

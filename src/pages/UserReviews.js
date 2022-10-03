@@ -1,81 +1,99 @@
 import React from "react";
-import { Card } from "../components";
-import { StarIcon } from "@heroicons/react/solid";
+import { ReviewCard, UserReviewsPlaceHolder } from "../components";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+import { useCallback } from "react";
+import { useRef } from "react";
+
 const UserReviews = () => {
+  const [userReviews, setUserReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [uniID, setUniID] = useState(false);
+
+  // get current user id
+  const userID = localStorage.getItem("id");
+
+  // get all university reviews by current user
+  const getUserReviews = useCallback(async () => {
+    // setLoading(true);
+    try {
+      // universities collection ref
+      const querySnapshot = await getDocs(collection(db, "universities"));
+
+      querySnapshot.forEach(async (doc) => {
+        // universities reviews reference
+        const docSnap = await getDocs(
+          collection(db, "universities", doc.id, "reviews")
+        );
+
+        // find doc with same id as current logged in user
+        docSnap.forEach((doc_1) => {
+          if (doc_1.id === userID) {
+            // set current university id
+            setUniID(doc_1.data().nickname);
+
+            // set review
+            setUserReviews([doc_1.data()]);
+
+            return;
+          }
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userID]);
+
+  // get all course reviews by current user
+  const getCourseInfo = useCallback(async () => {
+    try {
+      // universities collection ref
+      getDocs(collection(db, "universities", uniID, "programmes")).then(
+        (querySnapshot) => {
+          querySnapshot.forEach((doc_1) => {
+            getDocs(
+              collection(
+                db,
+                "universities",
+                uniID,
+                "programmes",
+                doc_1.id,
+                "reviews"
+              )
+            ).then((doc_2) => {
+              doc_2.forEach((doc) => {
+                if (doc.id === userID) {
+                  setUserReviews((prev) => [...prev, doc.data()]);
+                }
+              });
+            });
+          });
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, [uniID, userID]);
+
+  useEffect(() => {
+    Promise.all([getUserReviews(), getCourseInfo()]);
+
+    setLoading(false);
+  }, [getUserReviews, getCourseInfo]);
+
   return (
     <div>
       <div className="mb-10">
-        <h1 className="text-3xl font-medium">My Reviews (0)</h1>
-        <p className="text-lg pt-2">darteyw@gmail.com</p>
+        <h1 className="text-3xl font-medium">{`My Reviews (${userReviews.length})`}</h1>
+        <p className="text-lg pt-2">{userID}</p>
       </div>
-      <div className="grid grid-cols-2 gap-10">
-        <div>
-          <Card className="bg-white p-5 shadow-light mx-auto rounded-2xl h-60 hover:cursor-pointer">
-            <div className="grid grid-rows-2 items-center gap-20">
-              <div className="flex items-center gap-5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-10 h-10 text-indigo-400"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
-                  />
-                </svg>
-
-                <h2 className="text-2xl font-light">University of Ghana</h2>
-              </div>
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-md ">Total reviews</p>
-                  <span className="text-3xl font-semibold">100</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <StarIcon className="w-5 text-indigo-400" />
-                  <span>4.5</span>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-        <div>
-          <Card className="bg-white p-5 shadow-light mx-auto rounded-2xl h-60 hover:cursor-pointer">
-            <div className="grid grid-rows-2 items-center gap-20">
-              <div className="flex items-center gap-5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-10 h-10 text-indigo-400"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                  />
-                </svg>
-                <h2 className="text-2xl font-light">Bsc. Computer Science</h2>
-              </div>
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-md ">Total reviews</p>
-                  <span className="text-3xl font-semibold">5</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <StarIcon className="w-5 text-indigo-400" />
-                  <span>4.0</span>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
+      <div className="grid grid-cols-1 gap-10">
+        {/* show all current user reviews */}
+        {!loading &&
+          userReviews.map((data) => <ReviewCard review={data} config={true} />)}
+        {userReviews.length === 0 &&
+          Array.from(Array(2).keys()).map(() => <UserReviewsPlaceHolder />)}
       </div>
     </div>
   );

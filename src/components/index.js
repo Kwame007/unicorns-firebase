@@ -33,6 +33,7 @@ import Pagination from "./Pagination";
 import UniReviews from "./UniReviews";
 import CoursesList from "./CoursesList";
 import CourseReviews from "./CourseReviews";
+import UserReviewsPlaceHolder from "./UserReviewsPlaceHolder";
 import LikeReview from "./LikeReview";
 import FilterBy from "./FilterBy";
 import LoadMore from "./LoadMore";
@@ -49,6 +50,7 @@ export {
   Input,
   Card,
   TrendingUniversities,
+  UserReviewsPlaceHolder,
   RecentReviewsCard,
   RecentReviews,
   ReviewGuide,

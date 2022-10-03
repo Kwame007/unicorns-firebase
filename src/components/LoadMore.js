@@ -12,7 +12,7 @@ const LoadMore = ({ data, isEmpty, loadMore, type, collectionRef }) => {
       {data.length !== 0 && !isEmpty && (
         <button
           type="button"
-          class="transition-colors py-2 px-8 rounded font-medium hover:bg-gray-100
+          className="transition-colors py-2 px-8 rounded font-medium hover:bg-gray-100
        border bg-white text-gray-700 border-gray-300 "
           onClick={loadMore}
         >

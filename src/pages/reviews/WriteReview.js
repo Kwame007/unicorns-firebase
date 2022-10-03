@@ -18,7 +18,6 @@ import {
   serverTimestamp,
   collection,
   getDocs,
-  Firestore,
 } from "firebase/firestore";
 import { useCallback } from "react";
 
@@ -66,14 +65,6 @@ const reviewReducer = (state, action) => {
       return state;
   }
 };
-
-// function calculateOverallRating(...ratings) {
-//   let totalRating = 0;
-//   ratings.forEach((rating) => {
-//     totalRating += rating;
-//   });
-//   return totalRating / ratings.length;
-// }
 
 // check if user already course review
 const checkUserCourseAssociation = async (nickname, userId, ref) => {
@@ -280,9 +271,9 @@ const WriteReview = () => {
     <div>
       <Header title={name} image={imageUrl} />
       <section className="max-w-4xl mx-auto my-20">
-        <div className=" flex gap-3 mb-5 text-xl">
+        <div className=" flex gap-3 mb-5 text-xl hover:text-indigo-500 ">
           <ArrowLeftIcon className="w-6 " />{" "}
-          <Link to="reviews">All reviews {name}</Link>
+          <Link to={`/reviews/${nickname}`}>All reviews {name}</Link>
         </div>
         <StepIndicator steps={steps} currentStep={currentStep} />
 

@@ -9,7 +9,6 @@ import { db } from "../firebase";
 import { query, collection } from "firebase/firestore";
 
 const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
-  console.log(data);
   // hook
   const collectionSize = useGetCollectionSize(
     query(collection(db, "universities"))
@@ -106,6 +105,7 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
               </table>
             </div>
 
+            {/* load more  */}
             <LoadMore {...config} />
           </div>
         </div>

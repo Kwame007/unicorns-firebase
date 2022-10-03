@@ -96,7 +96,7 @@ const UniReviews = () => {
     data: reviews,
     loadMore,
     isEmpty,
-    type: "universities",
+    type: "reviews",
     collectionRef: collectionSize,
   };
 
