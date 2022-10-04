@@ -25,7 +25,7 @@ const CourseReviews = ({
   setUni,
   setFilter,
 }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   const [lastElement, setLastElement] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
@@ -70,7 +70,6 @@ const CourseReviews = ({
   };
 
   useEffect(() => {
-    setLoading(true);
     const fetchAllReviews = async () => {
       try {
         // reference to university reviews collection
@@ -92,9 +91,9 @@ const CourseReviews = ({
     return () => {
       // clear all uni reviews
       setReviews([]);
-      // setLoading(true);
     };
   }, [ID, courseID]);
+  console.log(loading);
 
   // config
   const config = {
@@ -112,7 +111,7 @@ const CourseReviews = ({
       ))}
 
       {/* loading spinner */}
-      {reviews.length === 0 && (
+      {loading && (
         <div className="h-96 w-60 text-center pt-32 mx-auto">
           <div class="progress"></div>
 

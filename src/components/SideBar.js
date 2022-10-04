@@ -1,6 +1,4 @@
 import React from "react";
-import { VscAccount } from "react-icons/vsc";
-
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
@@ -11,7 +9,7 @@ const SideBar = () => {
           <Link
             to="my-reviews"
             className="py-2 px-8 rounded font-medium 
-            text-white   duration-500 transition-all  pl-5 flex justify-start items-center  bg-indigo-400 h-14 w-full  hover:bg-indigo-500"
+            text-white   duration-500 transition-all  pl-5 flex justify-start items-center  bg-indigo-400 h-12 w-full  hover:bg-indigo-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +32,7 @@ const SideBar = () => {
           <Link
             to="account"
             className="py-2 px-8 rounded font-medium 
-            text-white   duration-500 transition-all  pl-5 flex justify-start items-center  bg-indigo-400 h-14 w-full  hover:bg-indigo-500"
+            text-white   duration-500 transition-all  pl-5 flex justify-start items-center  bg-indigo-400 h-12 w-full  hover:bg-indigo-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

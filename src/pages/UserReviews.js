@@ -49,34 +49,35 @@ const UserReviews = () => {
   const getCourseInfo = useCallback(async () => {
     try {
       // universities collection ref
-      getDocs(collection(db, "universities", uniID, "programmes")).then(
-        (querySnapshot) => {
-          querySnapshot.forEach((doc_1) => {
-            getDocs(
-              collection(
-                db,
-                "universities",
-                uniID,
-                "programmes",
-                doc_1.id,
-                "reviews"
-              )
-            ).then((doc_2) => {
-              doc_2.forEach((doc) => {
-                if (doc.id === userID) {
-                  setUserReviews((prev) => [...prev, doc.data()]);
-                }
-              });
-            });
-          });
-        }
+      const querySnapshot = await getDocs(
+        collection(db, "universities", uniID, "programmes")
       );
+
+      querySnapshot.forEach((doc_1) => {
+        getDocs(
+          collection(
+            db,
+            "universities",
+            uniID,
+            "programmes",
+            doc_1.id,
+            "reviews"
+          )
+        ).then((doc_2) => {
+          doc_2.forEach((doc) => {
+            if (doc.id === userID) {
+              setUserReviews((prev) => [...prev, doc.data()]);
+            }
+          });
+        });
+      });
     } catch (error) {
       console.log(error);
     }
   }, [uniID, userID]);
 
   useEffect(() => {
+    // execute both promises at once
     Promise.all([getUserReviews(), getCourseInfo()]);
 
     setLoading(false);
@@ -92,6 +93,8 @@ const UserReviews = () => {
         {/* show all current user reviews */}
         {!loading &&
           userReviews.map((data) => <ReviewCard review={data} config={true} />)}
+
+        {/* show placeholder when empty */}
         {userReviews.length === 0 &&
           Array.from(Array(2).keys()).map(() => <UserReviewsPlaceHolder />)}
       </div>

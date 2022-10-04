@@ -18,6 +18,10 @@ import {
   serverTimestamp,
   collection,
   getDocs,
+  increment,
+  updateDoc,
+  query,
+  onSnapshot,
 } from "firebase/firestore";
 import { useCallback } from "react";
 
@@ -91,24 +95,39 @@ const checkUserCourseAssociation = async (nickname, userId, ref) => {
   });
 };
 
+// calculate overall rating
+function calculateOverallRating(...ratings) {
+  let totalRating = 0;
+  ratings.forEach((rating) => {
+    totalRating += rating;
+  });
+  return totalRating / ratings.length;
+}
+
 const WriteReview = () => {
+  // current uni
+  const current = JSON.parse(localStorage.getItem("currentUniversity"));
+
   // track the current step state
   const [currentStep, setCurrentStep] = useState(1);
   const [reviewSummary, dispatch] = useReducer(reviewReducer, initialState);
 
+  // duplicate review
   const duplicateReview = useRef(false);
+  // current university
+  const currentUniversity = useRef(current);
 
+  // current course id
   const courseId = localStorage.getItem("courseId");
+  // current user id
   const userId = localStorage.getItem("id");
 
   // current uni
-  const current = JSON.parse(localStorage.getItem("currentUniversity"));
-
-  const currentUniversity = useRef(current);
   const { imageUrl, name, nickname } = currentUniversity.current;
 
   const navigate = useNavigate();
 
+  // university review summary
   const uniSummary = {
     overallRating: reviewSummary.overallRating,
     facultyRating: reviewSummary.facilityRating,
@@ -125,6 +144,7 @@ const WriteReview = () => {
     id: userId,
   };
 
+  // course review summary
   const courseSummary = {
     courseRating: reviewSummary.courseRating,
     courseSummary: reviewSummary.courseSummary,
@@ -169,11 +189,7 @@ const WriteReview = () => {
     });
   }, [docId, navigate]);
 
-  useEffect(() => {
-    checkUserUniAssociation();
-  }, [checkUserUniAssociation]);
-
-  // submit review function
+  // create university review function
   const createUniReview = async () => {
     // document reference
     const docRef = doc(db, "universities", nickname, "reviews", docId);
@@ -191,6 +207,7 @@ const WriteReview = () => {
     }
   };
 
+  // create course review function
   const createCourseReview = async () => {
     // document reference
     const docRef = doc(
@@ -214,8 +231,6 @@ const WriteReview = () => {
     } else {
       // Add a new document in collection course reviews
       await setDoc(docRef, courseSummary);
-
-      console.log("No such document!");
     }
   };
 
@@ -223,6 +238,37 @@ const WriteReview = () => {
   const createReview = async () => {
     // wait for all promises to resolve
     Promise.all([createCourseReview(), createUniReview()]).then(() => {
+      // current university reference
+      const currentUniversityRef = doc(db, "universities", nickname);
+
+      // reference to university collection
+      const currentUniversityReviewsRef = query(
+        collection(db, "universities", nickname, "reviews")
+      );
+
+      // overall rating
+      const overallRatings = [];
+
+      // subscribe to sub-collection (reviews)
+      const unsubscribe = onSnapshot(
+        currentUniversityReviewsRef,
+        (querySnapshot) => {
+          querySnapshot.forEach((doc_1) => {
+            // push overall ratings from each university into one array
+            overallRatings.push(Number(doc_1.data().overallRating));
+          });
+
+          // if duplicate review prevent update
+          if (!duplicateReview.current) {
+            //  update total reviews & rating for current university
+            updateDoc(currentUniversityRef, {
+              totalReviews: increment(2),
+              rating: calculateOverallRating(...overallRatings),
+            });
+          }
+        }
+      );
+
       //  redirect to review page
       navigate(`/reviews/${nickname}`, { replace: true });
     });
@@ -240,6 +286,7 @@ const WriteReview = () => {
   const handleStepChange = (direction) => {
     let nextStep = currentStep;
 
+    // step direction
     direction === "next" ? nextStep++ : nextStep--;
 
     // check if next step is within boundaries
@@ -267,6 +314,10 @@ const WriteReview = () => {
     }
   };
 
+  useEffect(() => {
+    checkUserUniAssociation();
+  }, [checkUserUniAssociation]);
+
   return (
     <div>
       <Header title={name} image={imageUrl} />
@@ -284,7 +335,7 @@ const WriteReview = () => {
             handleStepChange={handleStepChange}
             currentStep={currentStep}
             steps={steps}
-            test={createReview}
+            createReview={createReview}
             reviewSummary={reviewSummary}
           />
         </div>

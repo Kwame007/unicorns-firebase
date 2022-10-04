@@ -24,7 +24,7 @@ const Account = () => {
                 <div className="flex items-center gap-2">
                   <button
                     className=" py-2 px-8 rounded font-medium 
-       border   border-gray-300  text-white  bg-indigo-400 duration-500 transition-all hover:bg-indigo-500"
+        text-white  bg-indigo-400 duration-500 transition-all hover:bg-indigo-500"
                   >
                     Sign Out
                   </button>

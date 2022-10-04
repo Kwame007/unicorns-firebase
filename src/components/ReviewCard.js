@@ -3,6 +3,8 @@ import Card from "./Card";
 import ReactStars from "react-rating-stars-component";
 import LikeReview from "./LikeReview";
 import { useDatePosted, useShowLineClamp } from "../hooks";
+import { db } from "../firebase";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const ReviewCard = ({ review, config }) => {
   // show line clamp hook
@@ -13,6 +15,44 @@ const ReviewCard = ({ review, config }) => {
 
   // show days posted hook
   const { postedOn } = useDatePosted(review);
+
+  // delete review
+  const deleteReview = async (review) => {
+    if (review.course) {
+      // course id
+      const courseID = review.course.split(" ").join("-").toLowerCase();
+
+      // course doc ref
+      const courseRef = doc(
+        db,
+        "universities",
+        review.nickname,
+        "programmes",
+        courseID,
+        "reviews",
+        review.id
+      );
+
+      // confirm("are you sure");
+      // delete
+      await deleteDoc(courseRef);
+      console.log(courseRef);
+    } else {
+      // uni doc ref
+      const uniRef = doc(
+        db,
+        "universities",
+        review.nickname,
+        "reviews",
+        review.id
+      );
+      // confirm("are you sure");
+
+      // delete
+      await deleteDoc(uniRef);
+      console.log("uni");
+    }
+  };
 
   return (
     <Card className=" bg-white shadow-sm border rounded-lg  mb-10 h-fit p-5 hover:cursor-pointer">
@@ -95,7 +135,8 @@ const ReviewCard = ({ review, config }) => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-6 h-6"
+                class="w-6 h-6 transition-colors duration-500 hover:text-red-500"
+                onClick={() => deleteReview(review)}
               >
                 <path
                   stroke-linecap="round"

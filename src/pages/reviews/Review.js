@@ -40,16 +40,16 @@ function calculateOverallRating(...ratings) {
 }
 
 const Review = () => {
-  const [university, setUniversity] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [reviews, setReviews] = useState([]);
-  const [uniRating, setUniRating] = useState();
-  const [ratingBreakDown, setRatingBreakDown] = useState([]);
-  const [isShowing, setIsShowing] = useState(false);
-  const [ratings, setRatings] = useState({});
-  const [filter, setFilter] = useState(false);
-  const [course, setCourse] = useState("");
   const [uni, setUni] = useState("uni");
+  const [course, setCourse] = useState("");
+  const [ratings, setRatings] = useState({});
+  const [uniRating, setUniRating] = useState();
+  const [filter, setFilter] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isShowing, setIsShowing] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [university, setUniversity] = useState([]);
+  const [ratingBreakDown, setRatingBreakDown] = useState([]);
 
   // test
   const config = {
@@ -82,8 +82,9 @@ const Review = () => {
       setCourse("");
     }
   };
-  console.log(loading);
+
   useEffect(() => {
+    // get the uni current user is reviewing & store in local storage
     const getUniversity = async () => {
       setLoading(true);
 
@@ -94,7 +95,6 @@ const Review = () => {
         // setup listener for universities document
         const unsubscribe = onSnapshot(universityRef, (querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log(doc.id);
             if (doc.id === ID) {
               console.log("Document data:", doc.data());
               setUniversity(doc.data());
@@ -106,7 +106,6 @@ const Review = () => {
               setLoading(false);
             } else {
               // doc.data() will be undefined in this case
-              console.log("No such document!");
               setLoading(false);
             }
           });
@@ -117,54 +116,6 @@ const Review = () => {
     };
 
     getUniversity();
-  }, [ID, setUniversity]);
-
-  useEffect(() => {
-    const fetchAllReviews = async () => {
-      try {
-        let allReviews = [];
-
-        // reference to university reviews collection
-        const uniQuery = query(collection(db, "universities", ID, "reviews"));
-
-        // reference to courses collection
-        const courseQuery = query(
-          collection(db, "universities", ID, "programmes")
-        );
-
-        const unsubscribes = onSnapshot(uniQuery, (querySnapshot) => {
-          querySnapshot.forEach((doc) => allReviews.push(doc.data()));
-        });
-
-        const unsubscribe = onSnapshot(courseQuery, (querySnapshot) => {
-          querySnapshot.forEach(async (doc) => {
-            // reviews collection reference {reviews inside programmes}
-            const docs = await getDocs(
-              collection(
-                db,
-                "universities",
-                ID,
-                "programmes",
-                doc.id,
-                "reviews"
-              )
-            );
-
-            docs.forEach((doc_1) => {
-              if (doc_1) {
-                allReviews.push(doc_1.data());
-
-                setReviews(allReviews);
-              }
-            });
-          });
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchAllReviews();
   }, [ID]);
 
   useEffect(() => {
@@ -173,101 +124,67 @@ const Review = () => {
         // reference to university collection
         const q = query(collection(db, "universities"));
 
-        // total reviews for a specific university
-        let totalReviews = 0;
-
         // subscribe to collection
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          //check if collection is not empty
-          if (!querySnapshot.empty) {
-            querySnapshot.forEach((doc) => {
-              // get the current university data
-              if (doc.id === ID) {
-                totalReviews = doc.data().totalReviews;
-                localStorage.setItem("uniID", doc.id);
-              }
+          querySnapshot.forEach((doc) => {
+            // get the current university data
+            if (doc.id === ID) {
+              localStorage.setItem("uniID", doc.id);
+            }
 
-              // sub-collection reference
-              const q2 = query(collection(db, "universities", ID, "reviews"));
+            // sub-collection reference
+            const q2 = query(collection(db, "universities", ID, "reviews"));
 
-              // university collection id's
-              const overallRatings = [];
-              const courseRating = [];
-              const facultyRating = [];
-              const facilitiesRating = [];
-              const recommendationRating = [];
+            const courseRating = [];
+            const facultyRating = [];
+            const facilitiesRating = [];
+            const recommendationRating = [];
 
-              // subscribe to sub-collection (reviews)
-              const unsubscribe = onSnapshot(q2, (querySnapshot) => {
-                querySnapshot.forEach((doc_1) => {
-                  // push overall ratings from each university into one array
-                  overallRatings.push(Number(doc_1.data().overallRating));
+            // subscribe to sub-collection (reviews)
+            const unsubscribe = onSnapshot(q2, (querySnapshot) => {
+              querySnapshot.forEach((doc_1) => {
+                // push faculty ratings from each university into one array
+                facultyRating.push(doc_1.data().facultyRating);
 
-                  // push faculty ratings from each university into one array
-                  facultyRating.push(doc_1.data().facultyRating);
+                // push facilities ratings from each university into one array
+                facilitiesRating.push(doc_1.data().facilityRating);
 
-                  // push facilities ratings from each university into one array
-                  facilitiesRating.push(doc_1.data().facilityRating);
+                // push recommendation ratings from each university into one array
+                recommendationRating.push(doc_1.data().recommendationRating);
 
-                  // push recommendation ratings from each university into one array
-                  recommendationRating.push(doc_1.data().recommendationRating);
-
-                  // push course ratings from each university into one array
-                  courseRating.push(doc_1.data().courseRating);
-
-                  setRatings({
-                    facilities: doc_1.data().facilityRating,
-                    faculty: doc_1.data().facilityRating,
-                    recommendation: doc_1.data().facilityRating,
-                  });
-                });
-
-                // rating breakdown
-                setRatingBreakDown([
-                  {
-                    value: calculateOverallRating(...courseRating),
-                    title: "course",
-                  },
-                  {
-                    value: calculateOverallRating(...facultyRating),
-                    title: "faculty",
-                  },
-                  {
-                    value: calculateOverallRating(...facilitiesRating),
-                    title: "facilities",
-                  },
-                  {
-                    value: calculateOverallRating(...recommendationRating),
-                    title: "recommendation",
-                  },
-                ]);
-
-                // calculate rating based on overall ratings
-                setUniRating(calculateOverallRating(...overallRatings));
+                // push course ratings from each university into one array
+                courseRating.push(doc_1.data().courseRating);
               });
+
+              // rating breakdown
+              setRatingBreakDown([
+                {
+                  value: calculateOverallRating(...courseRating),
+                  title: "course",
+                },
+                {
+                  value: calculateOverallRating(...facultyRating),
+                  title: "faculty",
+                },
+                {
+                  value: calculateOverallRating(...facilitiesRating),
+                  title: "facilities",
+                },
+                {
+                  value: calculateOverallRating(...recommendationRating),
+                  title: "recommendation",
+                },
+              ]);
             });
-          }
+          });
         });
-        console.log(totalReviews);
-        console.log(uniRating);
       } catch (error) {
         console.log(error);
       }
     };
 
-    getAllReviews().then(() => {
-      // current university reference
-      const uniRef = doc(db, "universities", ID);
-
-      //update if uni rating value is available
-      if (uniRating) {
-        updateDoc(uniRef, {
-          totalReviews: reviews.length,
-          rating: uniRating,
-        });
-      }
-    });
-  }, [ID, reviews.length, uniRating]);
+    getAllReviews();
+  }, [ID]);
 
   return (
     <>
