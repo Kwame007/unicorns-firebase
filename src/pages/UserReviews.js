@@ -4,12 +4,10 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { useCallback } from "react";
-import { useRef } from "react";
 
 const UserReviews = () => {
   const [userReviews, setUserReviews] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [uniID, setUniID] = useState(false);
 
   // get current user id
   const userID = localStorage.getItem("id");
@@ -30,14 +28,10 @@ const UserReviews = () => {
         // find doc with same id as current logged in user
         docSnap.forEach((doc_1) => {
           if (doc_1.id === userID) {
-            // set current university id
-            setUniID(doc_1.data().nickname);
-
             // set review
             setUserReviews([doc_1.data()]);
-
-            return;
           }
+          return;
         });
       });
     } catch (error) {
@@ -48,33 +42,42 @@ const UserReviews = () => {
   // get all course reviews by current user
   const getCourseInfo = useCallback(async () => {
     try {
-      // universities collection ref
-      const querySnapshot = await getDocs(
-        collection(db, "universities", uniID, "programmes")
-      );
+      // {get the university associated with the current user}
+      // universities collection reference
+      const querySnapshot = await getDocs(collection(db, "universities"));
 
-      querySnapshot.forEach((doc_1) => {
-        getDocs(
-          collection(
-            db,
-            "universities",
-            uniID,
-            "programmes",
-            doc_1.id,
-            "reviews"
-          )
-        ).then((doc_2) => {
-          doc_2.forEach((doc) => {
-            if (doc.id === userID) {
-              setUserReviews((prev) => [...prev, doc.data()]);
-            }
-          });
-        });
+      // {loop through documents in the universities collection & create a reference to the programmes sub-collection}
+      querySnapshot.forEach((doc) => {
+        // reference to the programmes sub-collection
+        getDocs(collection(db, "universities", doc.id, "programmes")).then(
+          (doc_1) =>
+            // {loop through documents in the programmes sub-collection and create a reference to each reviews sub-collection}
+            doc_1.forEach((doc_2) => {
+              // reference to the programmes reviews sub-collection
+              getDocs(
+                collection(
+                  db,
+                  "universities",
+                  doc.id,
+                  "programmes",
+                  doc_2.id,
+                  "reviews"
+                )
+              ).then((doc_3) => {
+                // {loop through documents in the programmes reviews sub-collection  & return review who's id === current user id}
+                doc_3.forEach((review) => {
+                  if (review.id === userID) {
+                    setUserReviews((prev) => [...prev, review.data()]);
+                  }
+                });
+              });
+            })
+        );
       });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
-  }, [uniID, userID]);
+  }, [userID]);
 
   useEffect(() => {
     // execute both promises at once
@@ -96,6 +99,7 @@ const UserReviews = () => {
 
         {/* show placeholder when empty */}
         {userReviews.length === 0 &&
+          !loading &&
           Array.from(Array(2).keys()).map(() => <UserReviewsPlaceHolder />)}
       </div>
     </div>

@@ -8,7 +8,7 @@ const Dashboard = () => {
       <section className="w-4/12">
         <SideBar />
       </section>
-      <section className="py-10 px-40 w-full">
+      <section className="py-10 px-40 w-full h-100">
         <Outlet />
       </section>
     </main>

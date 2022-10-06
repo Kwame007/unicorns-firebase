@@ -69,10 +69,6 @@ const SignIn = ({ isShowing, showModal }) => {
   const { error, sendUserSignInLink, emailSentStatus, setEmailSentStatus } =
     useSendEmailLink(email, { showModal, setEmail });
 
-  console.log(error);
-  console.log(emailSentStatus);
-  console.log(email);
-
   useEffect(() => {
     const createNewUser = async () => {
       try {
@@ -82,8 +78,6 @@ const SignIn = ({ isShowing, showModal }) => {
           // Get the email if available. This should be available if the user completes
           // the flow on the same device where they started it.
           let email = window.localStorage.getItem("emailForSignIn");
-
-          console.log(email);
 
           if (!email) {
             // User opened the link on a different device. To prevent session fixation

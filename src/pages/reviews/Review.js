@@ -42,12 +42,9 @@ function calculateOverallRating(...ratings) {
 const Review = () => {
   const [uni, setUni] = useState("uni");
   const [course, setCourse] = useState("");
-  const [ratings, setRatings] = useState({});
-  const [uniRating, setUniRating] = useState();
   const [filter, setFilter] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isShowing, setIsShowing] = useState(false);
-  const [reviews, setReviews] = useState([]);
   const [university, setUniversity] = useState([]);
   const [ratingBreakDown, setRatingBreakDown] = useState([]);
 

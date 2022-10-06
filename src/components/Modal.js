@@ -6,9 +6,6 @@ const BackDrop = () => {
 };
 
 const Modal = ({ children, isShowing }) => {
-  // const { isShowing, toggleModal } = useContext(context);
-  console.log(isShowing);
-
   return (
     isShowing && (
       <>
