@@ -93,7 +93,6 @@ const Review = () => {
         const unsubscribe = onSnapshot(universityRef, (querySnapshot) => {
           querySnapshot.forEach((doc) => {
             if (doc.id === ID) {
-              console.log("Document data:", doc.data());
               setUniversity(doc.data());
               // store the university the user is reviewing in local storage
               localStorage.setItem(

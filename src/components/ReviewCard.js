@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Card from "./Card";
 import ReactStars from "react-rating-stars-component";
 import LikeReview from "./LikeReview";
@@ -9,12 +9,11 @@ import {
   doc,
   query,
   collection,
-  onSnapshot,
   updateDoc,
   getDoc,
+  getDocs,
 } from "firebase/firestore";
 import Modal from "./Modal";
-import { useRef } from "react";
 
 // calculate overall rating
 function calculateOverallRating(...ratings) {
@@ -24,11 +23,11 @@ function calculateOverallRating(...ratings) {
   });
   return totalRating / ratings.length;
 }
-   
+
 const ReviewCard = ({ review, config }) => {
   const [isShowing, setIsShowing] = useState(false);
+  const [totalReviews, setTotalReviews] = useState(0);
   const confirm = useRef(false);
-  const totalReview = useRef(0);
 
   // show line clamp hook
   const { showMore, showMoreBtn, setShowMore } = useShowLineClamp({
@@ -39,7 +38,7 @@ const ReviewCard = ({ review, config }) => {
   // show days posted hook
   const { postedOn } = useDatePosted(review);
 
-  // toggle modal
+  //function to toggle modal
   const showModal = () => {
     setIsShowing((prevState) => !prevState);
   };
@@ -48,34 +47,45 @@ const ReviewCard = ({ review, config }) => {
   const deleteReview = async (review) => {
     if (review.course) {
       setIsShowing(false);
+
+      // set current to true {meaning proceed to delete the course review}
       confirm.current = true;
 
-      // course id
+      // construct current user course ID from the review
       const courseID = review.course.split(" ").join("-").toLowerCase();
 
-      // course doc ref
-      const courseRef = doc(
-        db,
-        "universities",
-        review.nickname,
-        "programmes",
-        courseID,
-        "reviews",
-        review.id
-      );
-
       if (confirm) {
-        console.log("okay");
+        // course document reference
+        const courseRef = doc(
+          db,
+          "universities",
+          review.nickname,
+          "programmes",
+          courseID,
+          "reviews",
+          review.id
+        );
+        const docSnap = await getDoc(courseRef);
+
+        if (docSnap.exists()) {
+          // delete
+          deleteDoc(courseRef).then(() => {
+            //  update total reviews & rating for current university
+            updateDoc(doc(db, "universities", review.nickname), {
+              totalReviews: totalReviews - 1,
+            }).then(() => {
+              window.location.reload();
+            });
+          });
+        }
       }
-      // delete
-      // await deleteDoc(courseRef);
     } else {
       setIsShowing(false);
 
-      // set confirm true
+      // set current to true {meaning proceed to delete the university review}
       confirm.current = true;
 
-      // uni doc ref
+      // university document reference
       const uniRef = doc(
         db,
         "universities",
@@ -85,52 +95,61 @@ const ReviewCard = ({ review, config }) => {
       );
 
       if (confirm) {
-        // reference to university collection
-        const currentUniversityReviewsRef = query(
-          collection(db, "universities", review.nickname, "reviews")
-        );
-
-        // reference to university collection
-        const docRef = doc(db, "universities", review.nickname);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          // get previous total reviews
-          totalReview.current = docSnap.data().totalReviews;
-        }
-
         // overall rating
         const overallRatings = [];
 
-        // subscribe to sub-collection (reviews)
-        const unsubscribe = onSnapshot(
-          currentUniversityReviewsRef,
-          (querySnapshot) => {
-            querySnapshot.forEach((doc_1) => {
-              // push overall ratings from each university into one array
-              overallRatings.push(Number(doc_1.data().overallRating));
-            });
-
-            // delete
-            deleteDoc(uniRef).then(() => {
-              //  update total reviews & rating for current university
-              updateDoc(currentUniversityReviewsRef, {
-                totalReviews: totalReview.current - 1,
-                rating: calculateOverallRating(...overallRatings),
-              });
-            });
-
-            console.log(totalReview);
-          }
+        // reference to current university reviews collection
+        const currentUniversityReviewsRef = await getDocs(
+          query(collection(db, "universities", review.nickname, "reviews"))
         );
-        console.log("okay two");
+
+        // loop through each document
+        currentUniversityReviewsRef.forEach((doc_1) => {
+          // push overall ratings from each university into one array
+          overallRatings.push(Number(doc_1.data().overallRating));
+        });
+
+        // delete
+        deleteDoc(uniRef).then(() => {
+          //  update total reviews & rating for current university
+          updateDoc(doc(db, "universities", review.nickname), {
+            // subtract 1 from total review & update with results {subtract 1 cos one review has been deleted}
+            totalReviews: totalReviews - 1,
+
+            // re-calculate & update rating value {only re-calculate rating if deleting a university review (cos we are computing the rating based on all overall ratings from each specific university review )...}
+            // {return 0 if the length of overall rating equals 1 (which means only one review left) else re-evaluate rating value}
+            rating:
+              overallRatings.length === 1
+                ? 0
+                : calculateOverallRating(...overallRatings),
+          }).then(() => {
+            // reload the page after deleting and updating data
+            window.location.reload();
+          });
+        });
       }
     }
   };
 
+  useEffect(() => {
+    // get total review for current university {ie; already existing total reviews}
+    const getTotalReviews = async () => {
+      // reference to current university document
+      const docRef = doc(db, "universities", review.nickname);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // get previous total reviews
+        setTotalReviews(docSnap.data().totalReviews);
+      }
+    };
+
+    getTotalReviews();
+  }, [review.nickname]);
+
   return (
     <>
-      <Card className="bg-white shadow-sm border rounded-lg mb-10 h-fit p-5 hover:cursor-pointer">
+      <Card className="bg-white shadow-sm border rounded-lg  h-fit p-5 hover:cursor-pointer">
         <section>
           <div>
             <div className="flex gap-5 items-center">

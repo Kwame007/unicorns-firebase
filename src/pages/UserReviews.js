@@ -80,10 +80,11 @@ const UserReviews = () => {
   }, [userID]);
 
   useEffect(() => {
+    setLoading(true);
     // execute both promises at once
-    Promise.all([getUserReviews(), getCourseInfo()]);
-
-    setLoading(false);
+    Promise.all([getUserReviews(), getCourseInfo()]).then(() =>
+      setLoading(false)
+    );
   }, [getUserReviews, getCourseInfo]);
 
   return (
@@ -99,7 +100,7 @@ const UserReviews = () => {
 
         {/* show placeholder when empty */}
         {userReviews.length === 0 &&
-          !loading &&
+          loading &&
           Array.from(Array(2).keys()).map(() => <UserReviewsPlaceHolder />)}
       </div>
     </div>
