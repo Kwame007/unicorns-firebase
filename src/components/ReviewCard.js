@@ -14,19 +14,13 @@ import {
   getDocs,
 } from "firebase/firestore";
 import Modal from "./Modal";
-
-// calculate overall rating
-function calculateOverallRating(...ratings) {
-  let totalRating = 0;
-  ratings.forEach((rating) => {
-    totalRating += rating;
-  });
-  return totalRating / ratings.length;
-}
+import { calculateOverallRating } from "../helpers/app";
 
 const ReviewCard = ({ review, config }) => {
   const [isShowing, setIsShowing] = useState(false);
   const [totalReviews, setTotalReviews] = useState(0);
+
+  // ref
   const confirm = useRef(false);
 
   // show line clamp hook
@@ -48,7 +42,7 @@ const ReviewCard = ({ review, config }) => {
     if (review.course) {
       setIsShowing(false);
 
-      // set current to true {meaning proceed to delete the course review}
+      // set confirm to true {meaning proceed to delete the course review}
       confirm.current = true;
 
       // construct current user course ID from the review
@@ -65,6 +59,8 @@ const ReviewCard = ({ review, config }) => {
           "reviews",
           review.id
         );
+
+        // document snapshot
         const docSnap = await getDoc(courseRef);
 
         if (docSnap.exists()) {
@@ -82,7 +78,7 @@ const ReviewCard = ({ review, config }) => {
     } else {
       setIsShowing(false);
 
-      // set current to true {meaning proceed to delete the university review}
+      // set confirm to true {meaning proceed to delete the university review}
       confirm.current = true;
 
       // university document reference

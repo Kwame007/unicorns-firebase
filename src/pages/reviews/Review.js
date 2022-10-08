@@ -4,10 +4,8 @@ import {
   CoursesList,
   FilterBy,
   Header,
-  Modal,
   RatingBreakDownPlaceHolder,
   RatingPlaceHolder,
-  ReviewCard,
   SignIn,
   Stats,
   UniReviews,
@@ -17,27 +15,10 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 import ReactStars from "react-rating-stars-component";
 import { db } from "../../firebase";
-import {
-  collection,
-  updateDoc,
-  query,
-  onSnapshot,
-  doc,
-  getDocs,
-  orderBy,
-  limit,
-} from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { context } from "../../store";
-
-// calculate overall rating
-function calculateOverallRating(...ratings) {
-  let totalRating = 0;
-  ratings.forEach((rating) => {
-    totalRating += rating;
-  });
-  return totalRating / ratings.length;
-}
+import { calculateOverallRating } from "../../helpers/app";
 
 const Review = () => {
   const [uni, setUni] = useState("uni");
@@ -48,7 +29,7 @@ const Review = () => {
   const [university, setUniversity] = useState([]);
   const [ratingBreakDown, setRatingBreakDown] = useState([]);
 
-  // test
+  // filter config object
   const config = {
     filter: course,
     setCourse,
@@ -56,6 +37,7 @@ const Review = () => {
     setFilter,
   };
 
+  // login status
   const { isLoggedIn } = useContext(context);
 
   const { ID } = useParams();
@@ -228,7 +210,10 @@ const Review = () => {
                 />
               </svg>
             </button>
-            <button className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-100">
+            <button
+              className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-100 disabled:cursor-not-allowed"
+              disabled
+            >
               Add photos
               <UploadIcon className="w-6 inline-block ml-3" />
             </button>

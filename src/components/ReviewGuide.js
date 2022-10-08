@@ -83,27 +83,14 @@ const ReviewGuide = () => {
             <h3 className=" text-xl leading-6 font-medium text-gray-800">
               Read students reviews
             </h3>
-            <p className="mt-2 text-base text-gray-700 line-clamp-2">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore
-              ex quod delectus magnam illum. At tenetur porro architecto quas
-              explicabo! Vero aspernatur ipsam id earum soluta at repellendus,
-              nemo aperiam.
+            <p className="mt-2 text-base text-gray-700 ">
+              We've collected reviews for different universities and courses
+              across the country. Find schools and courses and browse our
+              student-generated reviews to help you find your university.
             </p>
           </div>
         </div>
-        <div className="flex gap-5 mb-5 md:mb-10">
-          <div className="text-3xl">📚</div>
-          <div className="text-left">
-            <h3 className=" text-xl leading-6 font-medium text-gray-800">
-              Read course reviews
-            </h3>
-            <p className="mt-2 text-base text-gray-700">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore
-              ex quod delectus magnam illum. At tenetur porro architecto quas
-              explicabo! Vero aspernatur ipsam id earum soluta.
-            </p>
-          </div>
-        </div>
+
         <div className="flex gap-5 mb-5 ">
           <div className="text-3xl">📝</div>
           <div className="text-left">
@@ -111,9 +98,9 @@ const ReviewGuide = () => {
               Write reviews anonymously
             </h3>
             <p className="mt-2 text-base  text-gray-700 ">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore
-              ex quod delectus magnam illum. At tenetur porro architecto quas
-              explicabo! Vero aspernatur ipsam id earum soluta at repellendus.
+              How was your experience at your university? You can help new
+              candidates by writing a completely anonymous review. We just
+              require that you sign in with your email.
             </p>
           </div>
         </div>
