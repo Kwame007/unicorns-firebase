@@ -42,7 +42,6 @@ const Account = () => {
                     <button
                       className=" py-2 px-8 rounded font-medium 
         text-white  bg-indigo-400 duration-500 transition-all hover:bg-indigo-500"
-                      onClick={handleSignOut}
                     >
                       Sign Out
                     </button>
