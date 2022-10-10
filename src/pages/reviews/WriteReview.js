@@ -7,6 +7,7 @@ import {
   Step2,
   Step4,
   StepControl,
+  Modal,
 } from "../../components";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { Link, useNavigate } from "react-router-dom";
@@ -110,6 +111,7 @@ const WriteReview = () => {
 
   // track the current step state
   const [currentStep, setCurrentStep] = useState(1);
+  const [isShowing, setIsShowing] = useState(false);
   const [reviewSummary, dispatch] = useReducer(reviewReducer, initialState);
 
   // duplicate review
@@ -236,6 +238,8 @@ const WriteReview = () => {
 
   // submit review function
   const createReview = async () => {
+    // show feed back modal
+    setIsShowing(true);
     // wait for all promises to resolve
     Promise.all([createCourseReview(), createUniReview()]).then(() => {
       // current university reference
@@ -268,6 +272,8 @@ const WriteReview = () => {
           }
         }
       );
+
+      setIsShowing(false);
 
       //  redirect to review page
       navigate(`/reviews/${nickname}`, { replace: true });
@@ -340,6 +346,18 @@ const WriteReview = () => {
           />
         </div>
       </section>
+
+      <Modal isShowing={isShowing}>
+        <div className="bg-white  fixed top-1/2 left-1/3 z-50 rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+          <div className="h-36 text-center  mt-5">
+            <div class="progress"></div>
+
+            <p className="font-semibold text-lg text-indigo-500">
+              Creating your review
+            </p>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

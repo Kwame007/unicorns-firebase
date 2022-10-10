@@ -1,11 +1,5 @@
 {
   "projects": {
     "default": "unicorns-firebase"
-  },
-  "emulators": {
-    "hosting": {
-      "port": 5000,
-      "host": "http://localhost"
-    }
   }
 }

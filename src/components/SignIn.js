@@ -111,15 +111,12 @@ const SignIn = ({ isShowing, showModal }) => {
 
           // check signed user exists or not
           if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
+            // console.log("Document data:", docSnap.data());
           } else {
             await setDoc(docRef, {
               email,
               createdAt: serverTimestamp(),
             });
-
-            console.log("No such document!");
-            console.log("new user");
           }
 
           setSigningIn(false);

@@ -126,14 +126,6 @@ const AddCourse = ({ isShowing, toggleModal, name, nickname }) => {
             Programme already exists
           </p>
         )}
-
-        {/* <div className="h-36 mt-20 text-center">
-        //   <CheckCircleIcon className="w-10 text-indigo-500 mx-auto" />
-        //   <p className={`font-semibold text-lg ${"text-indigo-500"}`}>Done</p>
-        //   <button className="w-36 mx-auto px-10 mt-3 rounded-lg text-white bg-indigo-400 h-12 transition-all duration-500 hover:bg-indigo-500">
-        //     Close
-        //   </button>
-        // </div> */}
       </div>
     </Modal>
   );

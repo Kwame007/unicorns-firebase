@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 
 const useSendEmailLink = (email, callbackFn) => {
@@ -14,7 +14,7 @@ const useSendEmailLink = (email, callbackFn) => {
       const auth = getAuth();
 
       await sendSignInLinkToEmail(auth, email, {
-        url: "https://unicorns-firebase.web.app",
+        url: "http://localhost:3000/",
         handleCodeInApp: true,
       });
 
@@ -32,8 +32,6 @@ const useSendEmailLink = (email, callbackFn) => {
 
       // clear input value
       callbackFn.setEmail("");
-
-      console.log(emailSentStatus);
     } catch (error) {
       const errorMessage = error.message;
       setError(errorMessage);

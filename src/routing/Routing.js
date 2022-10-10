@@ -15,7 +15,6 @@ import {
 
 const Routing = () => {
   const { isLoggedIn } = useContext(context);
-  console.log(isLoggedIn);
 
   return (
     <Layout>
