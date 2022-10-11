@@ -327,10 +327,10 @@ const WriteReview = () => {
   return (
     <div>
       <Header title={name} image={imageUrl} />
-      <section className="max-w-4xl mx-auto my-20">
+      <section className="max-w-4xl my-20 mx-3 md:mx-auto ">
         <div className=" flex gap-3 mb-5 text-xl hover:text-indigo-500 ">
           <ArrowLeftIcon className="w-6 " />{" "}
-          <Link to={`/reviews/${nickname}`}>All reviews {name}</Link>
+          <Link to={`/reviews/${nickname}`} className='text-lg'>All reviews {name}</Link>
         </div>
         <StepIndicator steps={steps} currentStep={currentStep} />
 

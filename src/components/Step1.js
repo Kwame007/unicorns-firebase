@@ -119,11 +119,11 @@ function Step1({
   return (
     <>
       {/* select uni & course */}
-      <h1 className="text-left px-6 mt-10 text-3xl text-stone-800 font-semibold mx-auto max-w-4xl">
+      <h1 className="text-left mt-10 text-2xl text-stone-800 font-semibold mx-auto max-w-4xl md:text-3xl md:px-6">
         {" "}
         Add your review
       </h1>
-      <div className="px-6 flex  space-y-8 mx-auto my-12 justify-between max-w-4xl gap-x-0 md:gap-x-4 md:flex-row md:space-y-0">
+      <div className=" flex flex-col space-y-8 mx-auto my-12 justify-between max-w-4xl gap-x-0 md:gap-x-4 md:flex-row md:space-y-0 md:px-6">
         <div className="w-full">
           <select
             className="w-full p-2 text-base font-semibold text-slate-700  border border-slate-400 h-12 rounded-lg focus:outline-none focus:border-indigo-500 "
@@ -170,7 +170,7 @@ function Step1({
       </div>
 
       {/* rating course */}
-      <div className="flex flex-col max-w-4xl mx-auto px-6 space-y-12 mt-20 items-center">
+      <div className="flex flex-col max-w-4xl mx-auto  space-y-12 mt-20 items-center md:px-6">
         <div className="w-full flex flex-col space-y-5 md:flex-row md:space-y-0">
           <div className="flex flex-col flex-1 text-left">
             <h2 className="text-2xl text-slate-700 font-semibold">

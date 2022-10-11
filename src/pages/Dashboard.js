@@ -4,11 +4,11 @@ import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
-    <main className="flex ">
-      <section className="w-4/12">
+    <main className="flex flex-col md:flex-row">
+      <section className="w-full md:w-4/12">
         <SideBar />
       </section>
-      <section className="py-10 px-40 w-full h-100">
+      <section className="p-5 w-full h-fit md:py-10 md:px-40 md:h-100">
         <Outlet />
       </section>
     </main>

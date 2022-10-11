@@ -112,7 +112,7 @@ const CoursesList = () => {
 
       {/* show course component */}
       {!isCourseClicked && (
-        <div className="grid grid-cols-4 gap-5 h-fit mb-36">
+        <div className="grid grid-cols-2 gap-5 h-fit mb-36 md:grid-cols-4">
           {courses
             // return all courses that matches the search query
             .filter((item) => item.title.toLowerCase().includes(searchQuery))

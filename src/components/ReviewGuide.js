@@ -72,7 +72,7 @@ const ReviewGuide = () => {
             </defs>
           </svg>
         </span>
-        <h2 className="font-semibold mb-10 text-3xl text-left text-gray-800 uppercase leading-normal md:mb-20 md:text-4xl ">
+        <h2 className="font-semibold mb-10 text-2xl text-left text-gray-800 uppercase leading-normal md:mb-20 md:text-4xl ">
           {" "}
           Choosing a university or course with less hassle
         </h2>

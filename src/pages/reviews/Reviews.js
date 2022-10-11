@@ -21,8 +21,7 @@ import {
 import { db } from "../../firebase";
 import { SearchIcon } from "@heroicons/react/outline";
 import { context } from "../../store";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { useCallback } from "react";
 import { useGetCollectionSize } from "../../hooks";
 
@@ -44,7 +43,6 @@ const Reviews = () => {
   const changeSortingHandler = (event) => {
     setSortBy(event.target.value);
   };
-  console.log(sortBy);
 
   // global state
   const { isShowing, toggleModal, universities, setUniversities } =
@@ -164,7 +162,7 @@ const Reviews = () => {
     <>
       <Header title="All university reviews" image={img} />
       <div className="max-w-5xl mx-auto p-5 text-gray-800 my-10">
-        <div className="flex justify-between mb-20 ">
+        <div className="flex flex-col gap-5 mb-20 md:justify-between md:flex-row">
           <h2 className="text-2xl font-semibold">
             Browse universities in Ghana
           </h2>
@@ -185,7 +183,7 @@ const Reviews = () => {
           </div>
         </div>
 
-        <div className="w-1/2 text-center mx-auto mb-20">
+        <div className="w-full text-center  mb-20 md:w-1/2 md:mx-auto">
           <label htmlFor="" className="w-full relative">
             <SearchIcon className="h-5 w-5 absolute text-slate-500 top-4 ml-2 md:h-6 md:w-6" />
             <Input
@@ -218,7 +216,7 @@ const Reviews = () => {
                   />
                 </div>
                 <div className="w-full grid grid-rows-2 items-center gap-11">
-                  <h3 className="text-lg font-medium">{data.name}</h3>
+                  <h3 className="text-base font-medium">{data.name}</h3>
                   <Stats
                     rating={data.rating}
                     totalReviews={data.totalReviews}

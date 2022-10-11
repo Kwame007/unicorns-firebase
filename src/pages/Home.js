@@ -15,13 +15,12 @@ import {
   startAfter,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { data } from "autoprefixer";
-import Reviews from "./reviews/Reviews";
 
 const Home = () => {
-  const [trendingUniversities, setTrendingUniversities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [allReviews, setAllReviews] = useState([]);
+  const [trendingUniversities, setTrendingUniversities] = useState([]);
+  const [allUniversities, setAllUniversities] = useState([]);
   const [recentUniversitiesReviews, setRecentUniversitiesReviews] = useState(
     []
   );
@@ -85,6 +84,34 @@ const Home = () => {
     };
     getAllUniversities();
   }, []);
+
+  // fetch all added universities
+  useEffect(() => {
+    const getAvailableUniversities = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "universities"));
+
+        // results
+        const results = [];
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          results.push(doc.data());
+          setAllUniversities(results);
+
+          // store the available universities
+          localStorage.setItem(
+            "availableUniversities",
+            JSON.stringify(results)
+          );
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAvailableUniversities();
+  }, []);
+
+  console.log(allUniversities);
 
   // fetch trending universities
   useEffect(() => {
@@ -199,7 +226,7 @@ const Home = () => {
 
   return (
     <>
-      <Hero results={trendingUniversities} />
+      <Hero results={allUniversities} />
       <TrendingUniversities
         data={trendingUniversities}
         loadMore={loadMore}

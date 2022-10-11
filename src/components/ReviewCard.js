@@ -180,17 +180,17 @@ const ReviewCard = ({ review, config }) => {
             </div>
             <div class="text-sm text-white mt-5 flex gap-3">
               <span>
-                <span class="inline-flex rounded-full items-center px-2 py-1 text-xs bg-indigo-400  font-light">
+                <span class="inline-flex rounded-full items-center px-3 w-fit py-0.5 text-xxs bg-indigo-400  font-light md:text-xs md:py-1">
                   {review?.year}
                 </span>
               </span>
               <span>
-                <span class="inline-flex rounded-full items-center px-2 py-1 text-xs bg-indigo-400  font-light">
+                <span class="inline-flex rounded-full items-center px-2 py-0.5 text-xxs bg-indigo-400  font-light md:text-xs md:py-1">
                   {review?.course ? `Course` : ` University`}
                 </span>
               </span>
               <span>
-                <span class="inline-flex rounded-full items-center px-2 py-1  text-xs bg-indigo-400 font-light">
+                <span class="inline-flex rounded-full items-center px-2 py-0.5  text-xxs bg-indigo-400 font-light md:text-xs md:py-1">
                   {review?.course
                     ? `${review?.course}`
                     : ` graduating year ${new Date(
@@ -250,14 +250,14 @@ const ReviewCard = ({ review, config }) => {
 
       {/* modal */}
       <Modal isShowing={isShowing}>
-        <div class="fixed z-50 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
-          <h3 class="p-4 bg-white text-center sm:text-left text-xl sm:text-2xl leading-6 font-medium ">
+        <div class="fixed z-50 w-11/12 mx-auto top-20 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+          <h3 class="p-4 bg-white text-left sm:text-left text-xl sm:text-2xl leading-6 font-medium md:text-center">
             Are you sure you want to delete this review?
           </h3>
-          <div class="bg-gray-100 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div class="bg-gray-100 flex gap-5 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-400 text-base font-medium text-white transition-all duration-500 hover:bg-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 mt-3 bg-indigo-400 text-base font-medium text-white transition-all duration-500 hover:bg-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={() => deleteReview(review)}
             >
               Confirm

@@ -16,7 +16,7 @@ const Input = ({
   const keys = ["name", "nickname"];
 
   // nothing found
-  const noResults = useRef();
+  // const noResults = useRef();
 
   return (
     <>

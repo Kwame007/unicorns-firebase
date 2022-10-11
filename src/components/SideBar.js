@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <aside className="bg-slate-100 text-white shadow-sm border h-full top-0 bottom-0 font-semibold p-10 text-primary">
+    <aside className="bg-slate-100 text-white shadow-sm border h-full top-0 bottom-0 font-semibold p-5 text-primary md:p-10">
       <div>
         <div className=" mb-10 rounded-lg  cursor-pointer">
           <Link

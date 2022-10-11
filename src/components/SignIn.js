@@ -24,7 +24,7 @@ import { useSendEmailLink } from "../hooks";
 const FeedBack = ({ isShowing = true, setEmailSentStatus, showModal }) => {
   return (
     <Modal isShowing={isShowing}>
-      <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-5/12 m-auto  shadow-md z-50 rounded-lg ">
+      <div className="px-5 py-5 bg-white fixed inset-0 max-h-fit w-11/12 m-auto  shadow-md z-50 rounded-lg md:w-5/12 md:px-10">
         <div className="text-center">
           <h1 className="text-3xl font-semibold mb-3 leading-7">
             Email link successfully sent 📧
@@ -36,7 +36,7 @@ const FeedBack = ({ isShowing = true, setEmailSentStatus, showModal }) => {
           </p>
 
           <button
-            className="bg-red-500  transition-all duration-500 text-md text-white w-32 h-12 mt-5 mb-3 rounded-lg font-semibold hover:bg-red-600"
+            className="bg-red-500  transition-all duration-500 text-md text-white w-full h-12 mt-5 mb-3 rounded-md font-semibold hover:bg-red-600 md:w-32"
             onClick={() => {
               showModal();
               setEmailSentStatus(false);
@@ -150,7 +150,7 @@ const SignIn = ({ isShowing, showModal }) => {
     <>
       {!emailSentStatus && isShowing && (
         <Modal isShowing={isShowing}>
-          <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-5/12 m-auto  shadow-md z-50 rounded-lg ">
+          <div className="px-5 py-5 bg-white fixed inset-0 max-h-fit w-11/12 m-auto  shadow-md z-50 rounded-lg md:w-5/12 md:px-10">
             <XIcon
               className="w-6 absolute top-2 right-2 cursor-pointer"
               onClick={showModal}
@@ -169,7 +169,7 @@ const SignIn = ({ isShowing, showModal }) => {
                 <div className="mb-0">
                   <label htmlFor="email">
                     <Input
-                      className="border-2 w-full h-12 px-2 rounded-lg focus:border-3 focus:border-indigo-500 focus:outline-none"
+                      className="border w-full h-12 px-2 rounded-lg focus:border-3 focus:border-indigo-500 focus:outline-none"
                       placeholder="Enter your email"
                       type="email"
                       value={email}
@@ -179,7 +179,7 @@ const SignIn = ({ isShowing, showModal }) => {
                 </div>
 
                 <button
-                  className="bg-indigo-500  transition-all duration-500 text-white w-32 h-12 mt-5 mb-3 rounded-lg font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-indigo-700"
+                  className="bg-indigo-500  transition-all duration-500 text-white w-full h-12 mt-5 mb-3 rounded-md font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-indigo-700 md:w-32"
                   type="submit"
                   disabled={!emailIsValid}
                 >

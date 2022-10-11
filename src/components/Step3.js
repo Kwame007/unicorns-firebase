@@ -13,13 +13,13 @@ const Step3 = ({ dispatch, courseSummary, universitySummary }) => {
   return (
     <>
       <div className="max-w-4xl my-12 mx-auto">
-        <h1 className="text-left px-6 mt-10 text-3xl font-bold mx-auto max-w-4xl">
+        <h1 className="text-left  mt-10 text-2xl font-bold mx-auto max-w-4xl md:px-6 md:text-3xl">
           {" "}
           Add your reviews
         </h1>
-        <form className="flex flex-col px-6">
+        <form className="flex flex-col md:px-6">
           <div className="w-full my-10">
-            <h2 className="text-left text-2xl text-slate-800 font-semibold">
+            <h2 className="text-left text-lg text-slate-800 font-semibold md:text-2xl">
               Write your <span className="text-indigo-500">Course</span>{" "}
               comments
             </h2>
@@ -30,7 +30,7 @@ const Step3 = ({ dispatch, courseSummary, universitySummary }) => {
               concise and helpful information.
             </p>
             <textarea
-              className="w-full h-40 mt-10 p-5 border-2 rounded-lg text-xl  focus:outline-indigo-500 focus:border-0 focus:ring-2 placeholder:font-semibold placeholder:text-slate-500 placeholder:text-base"
+              className="w-full h-40 mt-10 p-5 border rounded-lg text-xl  focus:outline-indigo-500 focus:border-0 focus:ring-2 placeholder:font-semibold placeholder:text-slate-500 placeholder:text-base"
               type="text"
               placeholder="Please provide your review summary here..."
               ref={courseRef}
@@ -40,7 +40,7 @@ const Step3 = ({ dispatch, courseSummary, universitySummary }) => {
           </div>
 
           <div className="w-full my-6">
-            <h2 className="text-left text-2xl text-slate-800 font-semibold">
+            <h2 className="text-left text-lg text-slate-800 font-semibold md:text-2xl">
               Write your <span className="text-indigo-500">University</span>{" "}
               comments
             </h2>
@@ -51,7 +51,7 @@ const Step3 = ({ dispatch, courseSummary, universitySummary }) => {
               helpful information.
             </p>
             <textarea
-              className="w-full h-40 mt-10 p-5 border-2 rounded-lg text-xl  focus:outline-indigo-500 focus:border-0 focus:ring-2 placeholder:font-semibold placeholder:text-slate-500 placeholder:text-base"
+              className="w-full h-40 mt-10 p-5 border rounded-lg text-xl  focus:outline-indigo-500 focus:border-0 focus:ring-2 placeholder:font-semibold placeholder:text-slate-500 placeholder:text-base"
               type="text"
               placeholder="Please provide your review summary here..."
               ref={uniRef}

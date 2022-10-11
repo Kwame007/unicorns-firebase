@@ -10,7 +10,7 @@ import {
   Stats,
   UniReviews,
 } from "../../components";
-import { UploadIcon } from "@heroicons/react/outline";
+import { PhotographIcon, UploadIcon } from "@heroicons/react/outline";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 import ReactStars from "react-rating-stars-component";
@@ -29,6 +29,12 @@ const Review = () => {
   const [university, setUniversity] = useState([]);
   const [ratingBreakDown, setRatingBreakDown] = useState([]);
 
+  // login status
+  const { isLoggedIn } = useContext(context);
+
+  const { ID } = useParams();
+  const navigate = useNavigate();
+
   // filter config object
   const config = {
     filter: course,
@@ -36,12 +42,6 @@ const Review = () => {
     setUni,
     setFilter,
   };
-
-  // login status
-  const { isLoggedIn } = useContext(context);
-
-  const { ID } = useParams();
-  const navigate = useNavigate();
 
   // toggle modal
   const showModal = () => {
@@ -94,7 +94,7 @@ const Review = () => {
     };
 
     getUniversity();
-  }, [ID]);
+  }, [ID, navigate, university.length]);
 
   useEffect(() => {
     const getAllReviews = async () => {
@@ -167,11 +167,11 @@ const Review = () => {
   return (
     <>
       <Header title={university?.name} image={university?.imageUrl} />
-      <div className=" mx-10 p-5 text-gray-800 my-10">
-        <div className="flex justify-between mb-28 ">
+      <div className=" mx-4 pt-5 text-gray-800 md:m-10 md:p-5">
+        <div className="flex justify-between items-center mb-10 md:mb-28 ">
           <div>
             <div className=" flex gap-3 mb-5">
-              <ArrowLeftIcon className="w-6 " />{" "}
+              <ArrowLeftIcon className="w-4 " />{" "}
               <Link to="/reviews">All reviews</Link>
             </div>
             {ratingBreakDown.length > 0 && (
@@ -192,7 +192,7 @@ const Review = () => {
                   setIsShowing(true);
                 }
               }}
-              className="flex items-center gap-3 px-5 rounded-lg text-white bg-indigo-400 h-12 transition-all duration-500 hover:bg-indigo-500"
+              className=" items-center gap-3 px-3 rounded-lg text-white bg-indigo-400 h-12 hidden  hover:bg-indigo-500 md:p-5 md:transition-all md:duration-500 md:flex"
             >
               <p>Write Review</p>
               <svg
@@ -211,26 +211,74 @@ const Review = () => {
               </svg>
             </button>
             <button
-              className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hover:bg-slate-100 disabled:cursor-not-allowed"
+              className="border-2 h-12 cursor-pointer px-8 rounded-lg transition-all duration-500 hidden hover:bg-slate-100 disabled:cursor-not-allowed md:block"
               disabled
             >
               Add photos
               <UploadIcon className="w-6 inline-block ml-3" />
             </button>
+
+            {/* show on mobile */}
+            <button
+              className="border h-10 cursor-pointer px-2 rounded-md transition-all duration-500 hover:bg-slate-100 disabled:cursor-not-allowed md:hidden"
+              disabled
+            >
+              <PhotographIcon className="w-6 inline-block" />{" "}
+              <small> 0 photos</small>
+            </button>
           </div>
         </div>
-        <div className="flex gap-20">
-          <div className="w-6/12">
+
+        {/* show this on  mobile screen */}
+        <div className=" flex gap-5 mb-10 md:hidden">
+          <button
+            onClick={() => {
+              // user logged in ? proceed else prompt user to login
+              if (isLoggedIn) {
+                navigate("write-review");
+              } else {
+                setIsShowing(true);
+              }
+            }}
+            className="flex items-center gap-3 px-3 rounded-md text-white bg-indigo-400 h-10  hover:bg-indigo-500 md:p-5 md:transition-all md:duration-500"
+          >
+            <p>Write Review</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+              />
+            </svg>
+          </button>
+          <button
+            className="border h-10 cursor-pointer px-3 rounded-md transition-all duration-500  hover:bg-slate-100 disabled:cursor-not-allowed"
+            disabled
+          >
+            Add photos
+            <UploadIcon className="w-6 inline-block ml-3" />
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-20 md:flex-row">
+          <div className="md:w-6/12">
             <div className=" mb-16">
               <h3 className="font-bold text-xl">Rating Breakdown</h3>
               <div className="mt-5">
                 {ratingBreakDown?.map((rating) => (
-                  <div className="flex items-baseline gap-40">
-                    <h3 className="text-xl font-medium capitalize w-1/3">
+                  <div className="flex items-center gap-10 md:gap-40 md:items-baseline">
+                    <h3 className="text-sm font-medium capitalize w-1/3">
                       {rating.title}
                     </h3>
 
-                    <div className="mb-5">
+                    <div className=" mb-3 md:mb-5">
                       <ReactStars
                         className="text-xl"
                         count={5}

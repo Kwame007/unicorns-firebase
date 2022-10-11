@@ -181,7 +181,7 @@ const StepIndicator = ({ steps, currentStep }) => {
   });
 
   return (
-    <div className="w-3/4 mx-auto p-4 flex justify-between items-center">
+    <div className=" p-4 flex justify-between items-center md:w-3/4 md:mx-auto">
       {stepsDisplay}
     </div>
   );

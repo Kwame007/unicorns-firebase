@@ -2,9 +2,12 @@ import React from "react";
 
 const LoadMore = ({ data, isEmpty, loadMore, type, collectionRef }) => {
   return (
-    <nav class="flex items-center justify-between my-5" aria-label="Pagination">
+    <nav
+      class="flex items-center justify-center my-5 md:justify-between"
+      aria-label="Pagination"
+    >
       <div>
-        <div class="text-sm text-gray-700">
+        <div class="text-sm text-gray-700 hidden md:block">
           Showing <span class="font-medium">{data.length}</span> of{" "}
           <span class="font-medium">{collectionRef} </span> {type}
         </div>

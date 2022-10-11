@@ -15,15 +15,15 @@ const Step4 = ({
 }) => {
   return (
     <>
-      <div className="max-w-4xl my-12 mx-auto px-6">
-        <h2 className="w-full text-left text-2xl text-semibold font-bold mb-10">
+      <div className="max-w-4xl my-12 mx-auto md:px-6">
+        <h2 className="w-full text-left text-xl text-semibold font-bold mb-10 md:text-2xl">
           You are about to submit your review entry for the{" "}
           <span className="text-indigo-500">{programme}</span> &{" "}
           <span className="text-indigo-500">{university} </span>{" "}
         </h2>
 
         <div className=" bg-slate-100 p-5 mt-4 rounded-2xl font-medium">
-          <div className="flex">
+          <div className="flex flex-col md:flex-row">
             <div className="w-4/5 space-y-2">
               <p className="text-left font-medium text-lg">Ratings</p>
               <div className="flex flex-col sm:items-center sm:flex-row">
@@ -76,22 +76,22 @@ const Step4 = ({
               </div>
             </div>
             <div className="w-2/5 mt-6 ml-0 space-y-2 ">
-              <div className="flex flex-col">
+              <div className="flex flex-row md:flex-col">
                 <p className="text-left text-lg">Graduation year :</p>{" "}
-                <span className="py-1 px-5 rounded-md text-sm mt-3 w-fit max-h-min bg-indigo-300 text-white font-semibold">
+                <span className="py-1 px-5 rounded-md text-sm  w-fit max-h-min bg-indigo-300 text-white font-semibold md:mt-3">
                   {date}
                 </span>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-row md:flex-col">
                 <p className="text-left text-lg">Level :</p>{" "}
-                <span className="py-1 px-5 rounded-md text-sm mt-3 w-fit max-h-min bg-indigo-300 text-white font-semibold">
+                <span className="py-1 px-5 rounded-md text-sm  w-fit max-h-min bg-indigo-300 text-white font-semibold md:mt-3">
                   {year}
                 </span>
               </div>
             </div>
           </div>
         </div>
-        <div className=" bg-slate-100 py-5 px-10 mt-4 rounded-2xl">
+        <div className=" bg-slate-100 py-5 px-5 mt-4 rounded-2xl md:px-10">
           <div className="mt-2">
             <p className="text-left font-medium text-lg">
               Course Review summary
@@ -103,7 +103,7 @@ const Step4 = ({
             </div>
           </div>
         </div>
-        <div className=" bg-slate-100 py-5 px-10 mt-4 rounded-2xl">
+        <div className=" bg-slate-100 py-5 px-5 mt-4 rounded-2xl md:px-10">
           <div className="mt-2">
             <p className="text-left font-medium text-lg">
               University Review summary

@@ -24,7 +24,7 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
   };
   return (
     <section className="container mx-auto mt-20 mb-10 py-10 relative">
-      <h2 className="font-semibold  container mx-auto p-5 text-3xl text-gray-600 uppercase  leading-normal md:mb-20 md:text-4xl md:text-center">
+      <h2 className="font-semibold  container mx-auto p-5 text-2xl text-gray-600 uppercase  leading-normal md:mb-20 md:text-4xl md:text-center ">
         Best universities based on student reviews
       </h2>
 
