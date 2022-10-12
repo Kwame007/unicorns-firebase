@@ -123,7 +123,7 @@ const Navigation = () => {
             <li className="w-full">
               {!isLoggedIn ? (
                 <li className="bg-indigo-400 text-white text-sm h-10 px-3  flex items-center justify-center rounded-lg font-bold uppercase transition-all duration-500 hover:bg-indigo-500">
-                  <p onClick={showModal} className="hover:cursor-pointer">
+                  <p onClick={showModal} className="hover:cursor-pointer w-full text-center">
                     Sign In
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
