@@ -26,7 +26,6 @@ const CoursesList = () => {
 
   // hook
   const isMobile = useCheckMobileScreen();
-  console.log(isMobile);
 
   // url parameter
   const { ID } = useParams();
@@ -49,7 +48,6 @@ const CoursesList = () => {
   const getCourseID = (course) => {
     courseIdRef.current = course.id;
     setIsCourseClicked(true);
-    console.log(courseIdRef);
   };
 
   useEffect(() => {

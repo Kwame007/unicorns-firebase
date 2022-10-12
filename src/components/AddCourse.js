@@ -44,9 +44,6 @@ const AddCourse = ({ isShowing, toggleModal, name, nickname }) => {
             overallRating: 0,
           }
         );
-        console.log("test");
-        console.log("No such document!");
-        console.log("new user");
 
         setCourseIsNew(true);
       }
@@ -60,7 +57,6 @@ const AddCourse = ({ isShowing, toggleModal, name, nickname }) => {
     }
   };
 
-  console.log(course);
   return (
     <Modal isShowing={isShowing}>
       <div className="px-10 py-5 bg-white fixed inset-0 max-h-fit w-4/12 m-auto  shadow-md z-50 rounded-lg ">

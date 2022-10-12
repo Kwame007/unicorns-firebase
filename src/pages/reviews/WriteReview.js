@@ -1,4 +1,10 @@
-import React, { useState, useReducer, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useReducer,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import {
   Header,
   Step1,
@@ -24,7 +30,7 @@ import {
   query,
   onSnapshot,
 } from "firebase/firestore";
-import { useCallback } from "react";
+import { calculateOverallRating } from "../../helpers/app";
 
 // initial state
 const initialState = {
@@ -96,15 +102,6 @@ const checkUserCourseAssociation = async (nickname, userId, ref) => {
   });
 };
 
-// calculate overall rating
-function calculateOverallRating(...ratings) {
-  let totalRating = 0;
-  ratings.forEach((rating) => {
-    totalRating += rating;
-  });
-  return totalRating / ratings.length;
-}
-
 const WriteReview = () => {
   // current uni
   const current = JSON.parse(localStorage.getItem("currentUniversity"));
@@ -124,7 +121,7 @@ const WriteReview = () => {
   // current user id
   const userId = localStorage.getItem("id");
 
-  // current uni
+  // current university
   const { imageUrl, name, nickname } = currentUniversity.current;
 
   const navigate = useNavigate();

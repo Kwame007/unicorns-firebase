@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 const Step3 = ({ dispatch, courseSummary, universitySummary }) => {
   const courseRef = useRef();
@@ -9,7 +9,6 @@ const Step3 = ({ dispatch, courseSummary, universitySummary }) => {
     dispatch({ type, payload: ref.current.value });
   };
 
-  console.log(courseSummary);
   return (
     <>
       <div className="max-w-4xl my-12 mx-auto">

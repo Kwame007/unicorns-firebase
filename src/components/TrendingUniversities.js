@@ -9,12 +9,12 @@ import { db } from "../firebase";
 import { query, collection } from "firebase/firestore";
 
 const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
-  // hook
+  // hook to get collection size
   const collectionSize = useGetCollectionSize(
     query(collection(db, "universities"))
   );
 
-  // config
+  // load more component config
   const config = {
     data,
     loadMore,
@@ -46,11 +46,12 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
                   </tr>
                 </thead>
                 <tbody class="text-gray-600  text-lg font-light">
+                  {/* show list of universities sorted based on highest rating */}
                   {data?.map((universities, index) => (
                     <>
                       <tr
                         class="border-b w-97 border-gray-200 flex  hover:bg-gray-100 md:w-full"
-                        key={index}
+                        key={index + universities}
                       >
                         <Link
                           to={`reviews/${universities.nickname}`}
@@ -111,7 +112,7 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
               </table>
             </div>
 
-            {/* load more  */}
+            {/* load more component  */}
             <LoadMore {...config} />
           </div>
         </div>

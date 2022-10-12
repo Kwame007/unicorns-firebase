@@ -1,69 +1,3 @@
-// import React, { useCallback, useState } from "react";
-
-// const StepIndicator = () => {
-//   const i = 1;
-//   const [curr, setCurr] = useState(1);
-//   const [isActive, setIsActive] = useState(false);
-
-//   // function renderStep(step) {
-//   //   switch (step) {
-//   //     case 1:
-//   //       return <Step1 />;
-//   //     case 2:
-//   //       return <Step2 />;
-//   //     case 3:
-//   //       return <Step3 />;
-//   //     case 4:
-//   //       return <Step4 />;
-//   //   }
-//   // }
-
-//   function prevStep() {
-//     if (curr != 1) setCurr(curr - 1);
-//   }
-
-//   function nextStep() {
-//     setCurr(curr + 1);
-//   }
-
-//   function submitReview() {}
-
-//   return (
-//     <div>
-//       {/*
-//             step 1: Star rating of course, faculty, facilities, recommendation.
-//             step 2: Comments. Pros, Cons, Suggestions, Review Summary
-//             step 3: Alumni year. Your year of graduation or completion
-//             step 4: Review all provided/submitted info
-//             */}
-//       <ul className="flex justify-center max-w-4xl mx-auto text-2xl space-x-9">
-//         <li className="text-black font-medium bg-white w-9 h-9 border-2 border-black rounded-full">
-//           <button> 1 </button>
-//         </li>
-//         <li
-//           className={`text-black font-medium bg-white w-9 h-9 border-2 border-black rounded-full`}
-//         >
-//           <button> 2 </button>
-//         </li>
-//         <li
-//           className={`text-black font-medium bg-white w-9 h-9 border-2 border-black rounded-full`}
-//         >
-//           <button> 3 </button>
-//         </li>
-//         <li
-//           className={`text-black font-medium bg-white w-9 h-9 border-2 border-black rounded-full`}
-//         >
-//           <button> 4 </button>
-//         </li>
-//       </ul>
-
-//       {/* <div className="w-full max-h-min mb-10">{renderStep(curr)}</div> */}
-//     </div>
-//   );
-// };
-
-// export default StepIndicator;
-
 import React, { useState, useEffect, useRef } from "react";
 
 const StepIndicator = ({ steps, currentStep }) => {
@@ -72,7 +6,7 @@ const StepIndicator = ({ steps, currentStep }) => {
 
   const updateStep = (stepNumber, steps) => {
     const newSteps = [...steps];
-    console.log(newSteps);
+
     let count = 0;
     while (count < newSteps.length) {
       //current step
@@ -113,7 +47,6 @@ const StepIndicator = ({ steps, currentStep }) => {
 
   useEffect(() => {
     const stepsState = steps.map((step, index) => {
-      console.log(step);
       return Object.assign(
         {},
         {

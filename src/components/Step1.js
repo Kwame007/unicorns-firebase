@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { AddCourse } from ".";
 import { context } from "../store";
-import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import ReactStars from "react-rating-stars-component";
+import { averageRating } from "../helpers/app";
 
 function Step1({
   courseRating,
@@ -20,21 +21,7 @@ function Step1({
   const show = useRef(false);
   const [isValid, setIsValid] = useState(false);
   const [programmes, setProgrammes] = useState([]);
-
   const { isShowing, toggleModal } = useContext(context);
-
-  const courseId = localStorage.getItem("courseId");
-
-  // calculate average rating
-  function averageRating(n) {
-    const sum = [...n].reduce((prev, curr) => prev + curr);
-    const avg = sum / [...n].length;
-    if (!avg.isInteger && avg % 1 !== 0) {
-      return avg.toFixed(1);
-    } else {
-      return avg;
-    }
-  }
 
   const handleUniChange = (event) => {
     dispatch({ type: "SET_UNIVERSITY", payload: event.target.value });
@@ -85,8 +72,6 @@ function Step1({
     if (isValid) {
       showOverallRating.classList.replace("hidden", "block");
     }
-
-    console.log(showOverallRating);
   }, [
     recommendationRating,
     overallRating,
@@ -129,6 +114,7 @@ function Step1({
             className="w-full p-2 text-base font-semibold text-slate-700  border border-slate-400 h-12 rounded-lg focus:outline-none focus:border-indigo-500 "
             onChange={handleUniChange}
             value={university}
+            required
           >
             <option value="">Select University</option>
             <option value={name}>{name}</option>
@@ -140,6 +126,7 @@ function Step1({
             className="w-full p-2 text-base font-semibold text-slate-700 border border-slate-400 h-12 rounded-lg focus:outline-none focus:border-indigo-500 "
             onChange={handleProgramChange}
             value={programme}
+            required
           >
             <option>Select Course</option>
             {programmes?.map((data, index) => (

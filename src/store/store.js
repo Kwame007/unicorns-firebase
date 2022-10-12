@@ -32,8 +32,6 @@ const retrieveStoredToken = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationTime");
 
-    console.log("removing token");
-
     return null;
   }
 
@@ -105,8 +103,6 @@ const ContextProvider = ({ children }) => {
       signOutTimer = setTimeout(signOutHandler, tokenData.remainingTime);
     }
   }, [tokenData, signOutHandler]);
-
-  console.log(universities);
 
   const contextValue = {
     isLoggedIn,

@@ -1,5 +1,3 @@
-import React, { useRef, useState, useEffect } from "react";
-
 // test
 const selector = () => {
   return (

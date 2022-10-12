@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import { db } from "../firebase";
-import Card from "./Card";
 import {
   collection,
-  updateDoc,
   query,
-  onSnapshot,
-  doc,
   getDocs,
   orderBy,
   startAfter,
@@ -17,14 +12,7 @@ import ReviewCard from "./ReviewCard";
 import { useGetCollectionSize } from "../hooks";
 import LoadMore from "./LoadMore";
 
-const CourseReviews = ({
-  ID,
-  courseID,
-  filter,
-  setCourse,
-  setUni,
-  setFilter,
-}) => {
+const CourseReviews = ({ ID, courseID }) => {
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   const [lastElement, setLastElement] = useState(null);
@@ -93,7 +81,6 @@ const CourseReviews = ({
       setReviews([]);
     };
   }, [ID, courseID]);
-  console.log(loading);
 
   // config
   const config = {

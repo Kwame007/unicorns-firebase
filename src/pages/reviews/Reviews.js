@@ -130,7 +130,6 @@ const Reviews = () => {
       setUniversities([]);
     };
   }, [setUniversities, sortBy, updateState]);
-  console.log(universities.length);
 
   useEffect(() => {
     const searchUniversity = (uniQuery) => {
@@ -149,7 +148,6 @@ const Reviews = () => {
         setSearchResults(test);
       }
       if (!uniQuery) {
-        console.log("search query is empty");
         setSearchResults(universities);
       }
     };

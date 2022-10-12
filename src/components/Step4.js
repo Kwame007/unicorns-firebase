@@ -1,5 +1,3 @@
-import React from "react";
-
 const Step4 = ({
   recommendationRating,
   overallRating,
@@ -12,7 +10,9 @@ const Step4 = ({
   year,
   university,
   programme,
+  isReviewValid,
 }) => {
+  console.log(isReviewValid);
   return (
     <>
       <div className="max-w-4xl my-12 mx-auto md:px-6">
