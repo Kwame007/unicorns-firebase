@@ -35,32 +35,36 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
               <table class="min-w-max w-full table-auto">
                 <thead>
                   <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th class="py-3 px-6 text-left">Universities</th>
-                    <th class="py-3 px-6 text-left">Location</th>
-                    <th class="py-3 px-6 text-center">Rating</th>
-                    <th class="py-3 px-6 text-center">Reviews</th>
+                    <th class="py-3 px-3 text-left md:px-6">Universities</th>
+                    <th class="py-3 px-6 text-left hidden md:block">
+                      Location
+                    </th>
+                    <th class="py-3 px-6 text-center hidden md:block">
+                      Rating
+                    </th>
+                    <th class="py-3 px-6 text-center ">Reviews</th>
                   </tr>
                 </thead>
-                <tbody class="text-gray-600 text-lg font-light">
+                <tbody class="text-gray-600 text-base font-light md:text-lg">
                   {data?.map((universities, index) => (
                     <>
                       <tr
-                        class="border-b border-gray-200  hover:bg-gray-100"
+                        class="border-b border-gray-200   hover:bg-gray-100"
                         key={index}
                       >
                         <Link
                           to={`reviews/${universities.nickname}`}
                           className="w-full hover:text-indigo-500 hover:underline"
                         >
-                          <td class="py-6 px-6 text-left whitespace-nowrap">
+                          <td class="py-6 px-3 text-left whitespace-pre-line md:whitespace-nowrap md:px-6">
                             <div class="flex items-center">
-                              <span class="font-medium">
+                              <span class="font-medium w-60">
                                 {universities.name}
                               </span>
                             </div>
                           </td>
                         </Link>
-                        <td class="py-6 px-6 text-left">
+                        <td class="py-6 px-6 text-left hidden md:block">
                           <div class="flex items-center">
                             <p className="flex justify-center items-center">
                               <LocationMarkerIcon className="h-5 w-5 pr-0.5" />
@@ -71,7 +75,7 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
                             </p>
                           </div>
                         </td>
-                        <td class="py-6 px-6 text-center">
+                        <td class="py-6 px-6 text-center hidden md:block">
                           <div class="flex items-center justify-center">
                             <p className="flex justify-center items-center">
                               <p className="pr-1">

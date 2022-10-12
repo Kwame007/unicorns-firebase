@@ -22,69 +22,62 @@ const Step4 = ({
           <span className="text-indigo-500">{university} </span>{" "}
         </h2>
 
-        <div className=" bg-slate-100 p-5 mt-4 rounded-2xl font-medium">
+        <div className=" bg-slate-100 p-5 mt-4 rounded-2xl font-medium text-base md:text-lg">
           <div className="flex flex-col md:flex-row">
-            <div className="w-4/5 space-y-2">
+            <div className="w-full space-y-2 md:w-4/5">
               <p className="text-left font-medium text-lg">Ratings</p>
-              <div className="flex flex-col sm:items-center sm:flex-row">
-                <p className="text-left text-lg">Course rating - &nbsp; </p>
-                <span className="text-left pl-0 w-1/2 font-medium text-lg sm:pl-2">
+              <div className="flex flex-row justify-between sm:items-center">
+                <p className="text-left ">Course rating </p>
+                <span className="text-right pl-0 w-1/2 font-medium  sm:pl-2 md:text-left">
                   {" "}
-                  {courseRating}/5
+                  {courseRating} / 5<span className="text-yellow-400">★</span>
+                </span>
+              </div>
+
+              <div className="flex justify-between  sm:flex-row sm:items-center">
+                <p className="text-right md:text-left ">Faculty rating </p>
+                <span className="text-right pl-0 w-1/2 font-medium  sm:pl-2 md:text-left">
+                  {" "}
+                  {facultyRating} / 5<span className="text-yellow-400">★</span>{" "}
+                </span>
+              </div>
+
+              <div className="flex  justify-between sm:flex-row sm:items-center">
+                <p className="text--right md:text-left">Facilities rating </p>
+                <span className="text-right pl-0 w-1/2 sm:pl-2 font-medium md:text-left">
+                  {" "}
+                  {facilityRating} / 5<span className="text-yellow-400">★</span>{" "}
+                </span>
+              </div>
+
+              <div className="flex  justify-between sm:flex-row sm:items-center">
+                <p className="text-left">Recommendation </p>
+                <span className="text-right pl-0 w-1/2 sm:pl-2 font-medium md:text-left">
+                  {" "}
+                  {recommendationRating} / 5
+                  <span className="text-yellow-400">★</span>{" "}
+                </span>
+              </div>
+
+              <div className="flex justify-between sm:flex-row sm:items-center md:justify-start md:gap-40 ">
+                <p className="text-left text-lg font-medium">Overall rating </p>
+                <span className="tracking-widest  text-semibold font-bold">
+                  {" "}
+                  <span className="text-indigo-500">{overallRating}</span>/ 5
                   <span className="text-yellow-400">★</span>
                 </span>
               </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center">
-                <p className="text-left text-lg">Faculty rating - &nbsp; </p>
-                <span className="text-left pl-0 w-1/2 font-medium text-lg sm:pl-2">
-                  {" "}
-                  {facultyRating}/5
-                  <span className="text-yellow-400">★</span>{" "}
-                </span>
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center">
-                <p className="text-left text-lg">Facilities rating - &nbsp; </p>
-                <span className="text-left pl-0 w-1/2 sm:pl-2 font-medium text-lg">
-                  {" "}
-                  {facilityRating}/5
-                  <span className="text-yellow-400">★</span>{" "}
-                </span>
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center">
-                <p className="text-left text-lg">
-                  Recommendation rating - &nbsp;{" "}
-                </p>
-                <span className="text-left pl-0 w-1/2 sm:pl-2 font-medium text-lg">
-                  {" "}
-                  {recommendationRating}/5
-                  <span className="text-yellow-400">★</span>{" "}
-                </span>
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center">
-                <p className="text-left text-lg font-medium">
-                  Overall rating - &nbsp;{" "}
-                </p>
-                <span className="tracking-widest text-lg text-semibold font-bold">
-                  {" "}
-                  <span className="text-indigo-500">{overallRating}</span>
-                  /5<span className="text-yellow-400">★</span>
-                </span>
-              </div>
             </div>
-            <div className="w-2/5 mt-6 ml-0 space-y-2 ">
-              <div className="flex flex-row md:flex-col">
-                <p className="text-left text-lg">Graduation year :</p>{" "}
-                <span className="py-1 px-5 rounded-md text-sm  w-fit max-h-min bg-indigo-300 text-white font-semibold md:mt-3">
+            <div className="w-full mt-6 ml-0 space-y-2  md:w-2/5">
+              <div className="flex justify-between flex-row md:flex-col">
+                <p className="text-left ">Graduation year : </p>{" "}
+                <span className="py-1 px-5 ml-5 rounded-md text-sm  w-fit max-h-min bg-indigo-300 text-white font-semibold md:mt-3 md:ml-0">
                   {date}
                 </span>
               </div>
-              <div className="flex flex-row md:flex-col">
-                <p className="text-left text-lg">Level :</p>{" "}
-                <span className="py-1 px-5 rounded-md text-sm  w-fit max-h-min bg-indigo-300 text-white font-semibold md:mt-3">
+              <div className="flex justify-between flex-row md:flex-col">
+                <p className="text-left ">Level : </p>{" "}
+                <span className="py-1 px-5 ml-5 rounded-md text-sm  w-fit max-h-min bg-indigo-300 text-white font-semibold md:mt-3 md:ml-0">
                   {year}
                 </span>
               </div>

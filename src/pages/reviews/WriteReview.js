@@ -330,13 +330,15 @@ const WriteReview = () => {
       <section className="max-w-4xl my-20 mx-3 md:mx-auto ">
         <div className=" flex gap-3 mb-5 text-xl hover:text-indigo-500 ">
           <ArrowLeftIcon className="w-6 " />{" "}
-          <Link to={`/reviews/${nickname}`} className='text-lg'>All reviews {name}</Link>
+          <Link to={`/reviews/${nickname}`} className="text-lg">
+            All reviews {name}
+          </Link>
         </div>
         <StepIndicator steps={steps} currentStep={currentStep} />
 
         {SwitchStep()}
 
-        <div className="w-1/2 mx-auto my-20">
+        <div className="w-full mx-auto my-20 md:w-1/2">
           <StepControl
             handleStepChange={handleStepChange}
             currentStep={currentStep}
@@ -348,7 +350,7 @@ const WriteReview = () => {
       </section>
 
       <Modal isShowing={isShowing}>
-        <div className="bg-white  fixed top-1/2 left-1/3 z-50 rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+        <div className="bg-white  fixed top-40 left-4 z-50 rounded-md w-11/12 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full md:top-1/2 md:left-1/3">
           <div className="h-36 text-center  mt-5">
             <div class="progress"></div>
 

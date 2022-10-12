@@ -85,7 +85,7 @@ const Step2 = ({ dispatch, year, date }) => {
                     id=""
                     value={date}
                     onChange={handleYearChange}
-                    className="border-2 w-full h-14 px-2 rounded-lg"
+                    className="border w-full h-14 px-2 rounded-lg"
                   />
                 </label>
               </div>
