@@ -16,12 +16,17 @@ import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { SearchIcon } from "@heroicons/react/outline";
 import Input from "./Input";
 import CourseReviews from "./CourseReviews";
+import { useCheckMobileScreen } from "../hooks";
 
 const CoursesList = () => {
   const [loading, setLoading] = useState(false);
   const [courses, setCourses] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCourseClicked, setIsCourseClicked] = useState(false);
+
+  // hook
+  const isMobile = useCheckMobileScreen();
+  console.log(isMobile);
 
   // url parameter
   const { ID } = useParams();
@@ -78,13 +83,13 @@ const CoursesList = () => {
       {/* show search input component*/}
       {!isCourseClicked && (
         <div>
-          <div className="w-2/4 mb-10">
+          <div className="w-full mb-10 md:w-2/4">
             <label htmlFor="" className="w-full relative">
               {/* search icon */}
-              <SearchIcon className="h-5 w-5 absolute top-4 ml-2 md:h-6 md:w-6" />
+              <SearchIcon className="h-5 w-5 absolute top-5 ml-2 md:h-6 md:w-6 md:top-3" />
               <Input
                 type="text"
-                className="pl-10 pr-5 w-full h-10 rounded-xl border-2 md:h-12 placeholder:text-sm focus:border-3 focus:border-indigo-500 focus:outline-none "
+                className="pl-10 pr-5 w-full h-14 rounded-xl border placeholder:text-sm focus:border-3 focus:border-indigo-500 focus:outline-none md:h-12 "
                 placeholder="Search for your course 📚..."
                 onChange={handleInputChange}
               />
@@ -113,23 +118,47 @@ const CoursesList = () => {
       {/* show course component */}
       {!isCourseClicked && (
         <div className="grid grid-cols-2 gap-5 h-fit mb-36 md:grid-cols-4">
-          {courses
-            // return all courses that matches the search query
-            .filter((item) => item.title.toLowerCase().includes(searchQuery))
-            .map((course) => (
-              <div
-                onClick={() => {
-                  // pass the currently clicked course data
-                  getCourseID(course);
-                }}
-              >
-                <Card className=" bg-white shadow-md rounded-xl h-32 p-5 hover:cursor-pointer">
-                  <section className="flex justify-center items-center h-full">
-                    <p className="text-base font-medium"> {course.title}</p>
-                  </section>
-                </Card>
-              </div>
-            ))}
+          {isMobile
+            ? courses
+                // return all courses that matches the search query
+                .filter((item) =>
+                  item.title.toLowerCase().includes(searchQuery)
+                )
+                .slice(0, 4)
+                .map((course) => (
+                  <div
+                    onClick={() => {
+                      // pass the currently clicked course data
+                      getCourseID(course);
+                    }}
+                  >
+                    <Card className=" bg-white shadow-md rounded-xl h-32 p-5 hover:cursor-pointer">
+                      <section className="flex justify-center items-center h-full">
+                        <p className="text-base font-medium"> {course.title}</p>
+                      </section>
+                    </Card>
+                  </div>
+                ))
+            : courses
+                // return all courses that matches the search query
+                .filter((item) =>
+                  item.title.toLowerCase().includes(searchQuery)
+                )
+                .slice(0, 8)
+                .map((course) => (
+                  <div
+                    onClick={() => {
+                      // pass the currently clicked course data
+                      getCourseID(course);
+                    }}
+                  >
+                    <Card className=" bg-white shadow-md rounded-xl h-32 p-5 hover:cursor-pointer">
+                      <section className="flex justify-center items-center h-full">
+                        <p className="text-base font-medium"> {course.title}</p>
+                      </section>
+                    </Card>
+                  </div>
+                ))}
         </div>
       )}
 

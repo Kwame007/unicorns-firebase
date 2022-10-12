@@ -111,8 +111,6 @@ const Home = () => {
     getAvailableUniversities();
   }, []);
 
-  console.log(allUniversities);
-
   // fetch trending universities
   useEffect(() => {
     const getTopUniversities = async () => {

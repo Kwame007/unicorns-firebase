@@ -5,6 +5,7 @@ import useShowLineClamp from "./useShowLineClamp";
 import useDatePosted from "./useDatePosted";
 import useLikeReviews from "./useLikeReviews";
 import useGetCollectionSize from "./useGetCollectionSize";
+import useCheckMobileScreen from "./useCheckMobileScreen";
 
 export {
   useSendEmailLink,
@@ -14,4 +15,5 @@ export {
   useShowLineClamp,
   useDatePosted,
   useLikeReviews,
+  useCheckMobileScreen,
 };
