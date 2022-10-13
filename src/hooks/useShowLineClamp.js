@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const useShowLineClamp = (config) => {
   const [showMore, setShowMore] = useState(false);
-  const [showMoreBtn, setShowMoreBtn] = useState(false);
 
   useEffect(() => {
     // check if text is more than max text ? then show line clamp
     const isTextTooLong = (text, max) =>
-      text?.length > max ? setShowMoreBtn(true) : "";
+      text?.length > max ? setShowMore(true) : setShowMore(false);
 
-    isTextTooLong(config.par, config.maxNum);
-  }, [config.maxNum, config.par]);
-  return { showMore, showMoreBtn, setShowMore };
+    // return if text is too long when the text is greater then max text length
+    isTextTooLong(config.paragraph, config.maxNum);
+  }, [config.maxNum, config.paragraph]);
+  return { showMore, setShowMore };
 };
 
 export default useShowLineClamp;

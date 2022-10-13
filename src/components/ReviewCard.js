@@ -24,8 +24,8 @@ const ReviewCard = ({ review, config }) => {
   const confirm = useRef(false);
 
   // show line clamp hook
-  const { showMore, showMoreBtn, setShowMore } = useShowLineClamp({
-    par: review,
+  const { showMore, setShowMore } = useShowLineClamp({
+    paragraph: review.course ? review.courseSummary : review.universitySummary,
     maxNum: 300,
   });
 
@@ -199,27 +199,31 @@ const ReviewCard = ({ review, config }) => {
                 </span>
               </span>
             </div>
+
+            {/* review card */}
             <div className="mt-10">
               <p
                 class={` text-gray-600 font-light text-lg line-clamp-2  ${
-                  showMore ? "line-clamp-none" : "line-clamp-2"
+                  showMore ? "line-clamp-2" : "line-clamp-none"
                 }`}
               >
                 {review?.course
                   ? review?.courseSummary
                   : review?.universitySummary}
-                {/* hide show more button if showMore===true */}
-                {!showMore && showMoreBtn && (
-                  <button
-                    type="button"
-                    class="text-sm text-indigo-500 hover:underline"
-                    onClick={() => setShowMore(true)}
-                  >
-                    See More
-                  </button>
-                )}
               </p>
+
+              {/* hide show more button if showMore===false */}
+              {showMore && (
+                <button
+                  type="button"
+                  class="text-sm text-indigo-500 hover:underline"
+                  onClick={() => setShowMore(false)}
+                >
+                  See More
+                </button>
+              )}
             </div>
+
             <div class="flex justify-between mt-5">
               {/* if config is truthy show delete icon*/}
               {config ? (

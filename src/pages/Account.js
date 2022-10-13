@@ -75,7 +75,7 @@ const Account = () => {
       <div className="">
         <div className="mb-10">
           <h1 className="text-3xl font-medium">My Account</h1>
-          <p className="text-lg pt-2">darteyw@gmail.com</p>
+          <p className="text-lg pt-2">{userID}</p>
         </div>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           <div>

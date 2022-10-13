@@ -12,7 +12,9 @@ const LoadMore = ({ data, isEmpty, loadMore, type, collectionRef }) => {
           <span class="font-medium">{collectionRef} </span> {type}
         </div>
       </div>
-      {data.length !== 0 && !isEmpty && (
+
+      {/* only show the load more button if all conditions are truthy */}
+      {data.length !== 0 && !isEmpty && collectionRef !== data.length && (
         <button
           type="button"
           className="transition-colors py-2 px-8 rounded font-medium hover:bg-gray-100

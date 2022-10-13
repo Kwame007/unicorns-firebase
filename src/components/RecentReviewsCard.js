@@ -7,8 +7,10 @@ import { LikeReview } from ".";
 
 const RecentReviewsCard = ({ review }) => {
   // show line clamp hook
-  const { showMore, showMoreBtn, setShowMore } = useShowLineClamp({
-    par: `${review.course ? review.courseSummary : review.universitySummary}`,
+  const { showMore, setShowMore } = useShowLineClamp({
+    paragraph: `${
+      review.course ? review.courseSummary : review.universitySummary
+    }`,
     maxNum: 100,
   });
 
@@ -73,7 +75,7 @@ const RecentReviewsCard = ({ review }) => {
             <div className="mt-10">
               <p
                 class={`text-gray-600 text-lg font-light ${
-                  showMore ? "line-clamp-none" : "line-clamp-2"
+                  !showMore ? "line-clamp-none" : "line-clamp-2"
                 }`}
               >
                 {review.course
@@ -82,11 +84,11 @@ const RecentReviewsCard = ({ review }) => {
               </p>
 
               {/* hide show more button if showMore===true */}
-              {!showMore && showMoreBtn && (
+              {showMore && (
                 <button
                   type="button"
                   class="text-sm text-indigo-500 hover:underline"
-                  onClick={() => setShowMore(true)}
+                  onClick={() => setShowMore(false)}
                 >
                   See More
                 </button>

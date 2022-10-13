@@ -16,9 +16,9 @@ const RecentReviews = ({ review }) => {
           ? review
               ?.slice(0, 2)
               .map((data) => <RecentReviewsCard review={data} key={data.id} />)
-          : review?.map((data) => (
-              <RecentReviewsCard review={data} key={data.id} />
-            ))}
+          : review
+              ?.slice(0, 6)
+              .map((data) => <RecentReviewsCard review={data} key={data.id} />)}
 
         {review.length === 0 &&
           // create an array with N number of elements

@@ -170,9 +170,13 @@ const Review = () => {
       <div className=" mx-4 pt-5 text-gray-800 md:m-10 md:p-5">
         <div className="flex justify-between items-center mb-10 md:mb-28 ">
           <div>
-            <div className=" flex gap-3 mb-5">
-              <ArrowLeftIcon className="w-4 " />{" "}
-              <Link to="/reviews">All reviews</Link>
+            <div className="mb-5">
+              <Link
+                to="/reviews"
+                className="flex items-center gap-3 transition-all duration-500 hover:text-indigo-500"
+              >
+                <ArrowLeftIcon className="w-4 " /> All reviews
+              </Link>
             </div>
             {ratingBreakDown.length > 0 && (
               <Stats
@@ -316,6 +320,10 @@ const Review = () => {
             <div className="flex justify-between   border-b-2 pb-5 ">
               <h2 className="text-lg font-semibold">
                 All reviews ({university?.totalReviews})
+                <small className="hidden font-light text-sm text-gray-600 md:block">
+                  NB: The total value here includes both courses & universities
+                  reviews
+                </small>
               </h2>
               <div>
                 <label htmlFor="sort">Filter by</label>

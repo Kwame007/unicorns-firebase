@@ -47,6 +47,7 @@ const CourseReviews = ({ ID, courseID }) => {
   const loadMore = () => {
     setLoading(true);
 
+    // fetch one review at a time
     const nextQuery = query(
       collection(db, "universities", ID, "programmes", courseID, "reviews"),
       orderBy("createdAt", "desc"),
@@ -61,10 +62,11 @@ const CourseReviews = ({ ID, courseID }) => {
     const fetchAllReviews = async () => {
       try {
         // reference to university reviews collection
+        // fetch two reviews initially
         const uniQuery = query(
           collection(db, "universities", ID, "programmes", courseID, "reviews"),
           orderBy("createdAt", "desc"),
-          limit(1)
+          limit(2)
         );
 
         updateState(uniQuery);
