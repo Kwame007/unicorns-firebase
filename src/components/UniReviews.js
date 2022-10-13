@@ -3,10 +3,7 @@ import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import {
   collection,
-  updateDoc,
   query,
-  onSnapshot,
-  doc,
   getDocs,
   orderBy,
   startAfter,
@@ -72,7 +69,7 @@ const UniReviews = () => {
         const uniQuery = query(
           collection(db, "universities", ID, "reviews"),
           orderBy("createdAt", "desc"),
-          limit(1)
+          limit(2)
         );
 
         updateState(uniQuery);

@@ -171,7 +171,7 @@ const Account = () => {
           <div class="bg-gray-100 flex gap-10 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 mt-3 bg-indigo-400 text-base font-medium text-white transition-all duration-500 hover:bg-indigo-500 sm:ml-3 sm:w-auto sm:text-sm md:mt-0"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 mt-3 bg-indigo-400 text-base font-medium text-white transition-all duration-500 hover:bg-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={
                 // if isDelete is truthy return signOut func else return deleteAcc func
                 !isDelete.current ? handleSignOut : handleDeleteUserAccount

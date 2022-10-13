@@ -132,9 +132,10 @@ const Reviews = () => {
   }, [setUniversities, sortBy, updateState]);
 
   useEffect(() => {
+    // filter university based on search query
     const searchUniversity = (uniQuery) => {
       if (uniQuery) {
-        const test = universities?.filter((uni) => {
+        const filteredUniversity = universities?.filter((uni) => {
           const name = uni?.name.toLowerCase();
           const slug = uni?.nickname.toLowerCase();
 
@@ -144,8 +145,7 @@ const Reviews = () => {
           );
         });
 
-        console.log(test);
-        setSearchResults(test);
+        setSearchResults(filteredUniversity);
       }
       if (!uniQuery) {
         setSearchResults(universities);
@@ -176,7 +176,6 @@ const Reviews = () => {
             >
               <option value="all">All</option>
               <option value="name">Names</option>
-              {/* <option value="reviews">Number of reviews</option> */}
             </select>
           </div>
         </div>

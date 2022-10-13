@@ -145,7 +145,7 @@ const ReviewCard = ({ review, config }) => {
 
   return (
     <>
-      <Card className="bg-white shadow-sm border rounded-lg  h-fit p-5 hover:cursor-pointer">
+      <Card className="bg-white shadow-sm border rounded-lg  h-fit p-5 hover:cursor-pointer mb-5">
         <section>
           <div>
             <div className="flex gap-5 items-center">
@@ -257,7 +257,7 @@ const ReviewCard = ({ review, config }) => {
           <div class="bg-gray-100 flex gap-5 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 mt-3 bg-indigo-400 text-base font-medium text-white transition-all duration-500 hover:bg-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 mt-3 bg-indigo-400 text-base font-medium text-white transition-all duration-500 hover:bg-indigo-500 sm:ml-3 sm:w-auto sm:text-sm "
               onClick={() => deleteReview(review)}
             >
               Confirm
@@ -265,7 +265,7 @@ const ReviewCard = ({ review, config }) => {
             <button
               type="button"
               class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 
-              transition-all duration-500 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              transition-all duration-500 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm "
               onClick={showModal}
             >
               Cancel
