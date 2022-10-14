@@ -14,7 +14,7 @@ const useSendEmailLink = (email, callbackFn) => {
       const auth = getAuth();
 
       await sendSignInLinkToEmail(auth, email, {
-        url: "http://localhost:3000/",
+        url: "https://unicorns-firebase.web.app/",
         handleCodeInApp: true,
       });
 
