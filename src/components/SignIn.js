@@ -16,7 +16,7 @@ import {
   getAuth,
   isSignInWithEmailLink,
   signInWithEmailLink,
-  getAdditionalUserInfo,
+  // getAdditionalUserInfo,
 } from "firebase/auth";
 import { useSendEmailLink } from "../hooks";
 
@@ -92,7 +92,7 @@ const SignIn = ({ isShowing, showModal }) => {
           );
 
           // signed in user additional data
-          const userInfo = getAdditionalUserInfo(result);
+          // const userInfo = getAdditionalUserInfo(result);
 
           // destructure accessToken & expiration date from results
           const { accessToken, expirationTime } = result.user.stsTokenManager;

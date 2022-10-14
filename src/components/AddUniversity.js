@@ -77,6 +77,8 @@ const AddUniversity = ({ isShowing, toggleModal }) => {
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
         console.log("document already exists");
+        // redirect to review page
+        navigate(`${uniID}`, { replace: true });
       } else {
         // Add a new document in collection "universities"
         await setDoc(doc(db, "universities", uniID), {

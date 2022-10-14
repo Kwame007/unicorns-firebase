@@ -93,7 +93,7 @@ const UserReviews = () => {
         <h1 className="text-3xl font-medium">{`My Reviews (${userReviews.length})`}</h1>
         <p className="text-lg pt-2">{userID}</p>
       </div>
-      <div className="grid grid-cols-1 gap-10">
+      <div className="grid grid-cols-1 gap-5">
         {/* show all current user reviews */}
         {!loading &&
           userReviews.map((data) => <ReviewCard review={data} config={true} />)}

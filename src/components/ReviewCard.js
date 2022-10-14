@@ -145,7 +145,7 @@ const ReviewCard = ({ review, config }) => {
 
   return (
     <>
-      <Card className="bg-white shadow-sm border rounded-lg  h-fit p-5 hover:cursor-pointer mb-5">
+      <Card className="bg-white shadow-sm border rounded-lg  h-fit p-5 hover:cursor-pointer mb-3">
         <section>
           <div>
             <div className="flex gap-5 items-center">

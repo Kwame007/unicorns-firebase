@@ -29,7 +29,7 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
       </h2>
 
       <div class="overflow-x-auto ">
-        <div class="min-w-screen h-100 bg-gray-100 flex items-start justify-center  font-sans  overflow-scroll">
+        <div class="min-w-screen h-fit bg-gray-100 flex items-start justify-center  font-sans overflow-hidden md:100 md:overflow-scroll">
           <div class="w-full lg:w-5/6">
             <div class="bg-white shadow-md rounded md:my-6">
               <table class="min-w-max w-full table-auto">
@@ -59,7 +59,7 @@ const TrendingUniversities = ({ data, loadMore, isEmpty }) => {
                         >
                           <td class="py-6 px-6 text-left whitespace-pre-line ">
                             <div class="flex items-center">
-                              <span class="font-medium">
+                              <span class="font-light md:font-medium">
                                 {universities.name}
                               </span>
                             </div>
